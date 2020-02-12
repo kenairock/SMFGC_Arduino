@@ -29,7 +29,8 @@
             System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("515", 1);
             System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("516", 2);
             System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("517", 3);
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toplabel = new System.Windows.Forms.Label();
             this.pnlTop = new System.Windows.Forms.Panel();
             this.btnAbout = new System.Windows.Forms.Button();
@@ -213,6 +214,7 @@
             this.Exit = new System.Windows.Forms.Button();
             this.spRFID = new System.IO.Ports.SerialPort(this.components);
             this.tmrRooms = new System.Windows.Forms.Timer(this.components);
+            this.dgProfSched = new System.Windows.Forms.DataGridView();
             this.pnlTop.SuspendLayout();
             this.pnlTime.SuspendLayout();
             this.tabMain.SuspendLayout();
@@ -240,6 +242,7 @@
             this.tabReports.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgSysLogs)).BeginInit();
             this.tabReport.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgProfSched)).BeginInit();
             this.SuspendLayout();
             // 
             // toplabel
@@ -266,7 +269,7 @@
             this.pnlTop.Controls.Add(this.btnHome);
             this.pnlTop.Location = new System.Drawing.Point(12, 30);
             this.pnlTop.Name = "pnlTop";
-            this.pnlTop.Size = new System.Drawing.Size(679, 100);
+            this.pnlTop.Size = new System.Drawing.Size(713, 100);
             this.pnlTop.TabIndex = 4;
             // 
             // btnAbout
@@ -279,7 +282,7 @@
             this.btnAbout.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnAbout.ImageIndex = 0;
             this.btnAbout.ImageList = this.ilBtns;
-            this.btnAbout.Location = new System.Drawing.Point(451, 1);
+            this.btnAbout.Location = new System.Drawing.Point(485, 1);
             this.btnAbout.Name = "btnAbout";
             this.btnAbout.Size = new System.Drawing.Size(96, 96);
             this.btnAbout.TabIndex = 4;
@@ -310,7 +313,7 @@
             this.btnLogout.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnLogout.ImageIndex = 3;
             this.btnLogout.ImageList = this.ilBtns;
-            this.btnLogout.Location = new System.Drawing.Point(553, 1);
+            this.btnLogout.Location = new System.Drawing.Point(587, 1);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(96, 96);
             this.btnLogout.TabIndex = 3;
@@ -402,7 +405,7 @@
             this.pnlTime.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlTime.Controls.Add(this.lblDate);
             this.pnlTime.Controls.Add(this.lblTime);
-            this.pnlTime.Location = new System.Drawing.Point(697, 30);
+            this.pnlTime.Location = new System.Drawing.Point(731, 30);
             this.pnlTime.Name = "pnlTime";
             this.pnlTime.Size = new System.Drawing.Size(265, 100);
             this.pnlTime.TabIndex = 7;
@@ -420,7 +423,7 @@
             this.tabMain.Location = new System.Drawing.Point(12, 136);
             this.tabMain.Name = "tabMain";
             this.tabMain.SelectedIndex = 0;
-            this.tabMain.Size = new System.Drawing.Size(950, 525);
+            this.tabMain.Size = new System.Drawing.Size(984, 525);
             this.tabMain.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabMain.TabIndex = 16;
             // 
@@ -1165,6 +1168,7 @@
             // tabMFaculty
             // 
             this.tabMFaculty.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tabMFaculty.Controls.Add(this.dgProfSched);
             this.tabMFaculty.Controls.Add(this.tabFaculty);
             this.tabMFaculty.Controls.Add(this.groupBox15);
             this.tabMFaculty.Controls.Add(this.btnClearSearch);
@@ -1176,7 +1180,7 @@
             this.tabMFaculty.Controls.Add(this.label12);
             this.tabMFaculty.Location = new System.Drawing.Point(4, 24);
             this.tabMFaculty.Name = "tabMFaculty";
-            this.tabMFaculty.Size = new System.Drawing.Size(942, 497);
+            this.tabMFaculty.Size = new System.Drawing.Size(976, 497);
             this.tabMFaculty.TabIndex = 2;
             this.tabMFaculty.Text = "FACULTY";
             // 
@@ -2270,14 +2274,14 @@
             this.dataGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
             this.dataGrid.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGrid.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGrid.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGrid.Location = new System.Drawing.Point(22, 59);
             this.dataGrid.MultiSelect = false;
             this.dataGrid.Name = "dataGrid";
@@ -2476,7 +2480,7 @@
             this.Minimize.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Minimize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Minimize.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Minimize.Location = new System.Drawing.Point(917, 3);
+            this.Minimize.Location = new System.Drawing.Point(951, 3);
             this.Minimize.Name = "Minimize";
             this.Minimize.Size = new System.Drawing.Size(20, 23);
             this.Minimize.TabIndex = 18;
@@ -2491,7 +2495,7 @@
             this.Exit.Cursor = System.Windows.Forms.Cursors.Hand;
             this.Exit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Exit.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Exit.Location = new System.Drawing.Point(942, 3);
+            this.Exit.Location = new System.Drawing.Point(976, 3);
             this.Exit.Name = "Exit";
             this.Exit.Size = new System.Drawing.Size(20, 23);
             this.Exit.TabIndex = 17;
@@ -2510,12 +2514,40 @@
             this.tmrRooms.Interval = 5000;
             this.tmrRooms.Tick += new System.EventHandler(this.tmrRooms_Tick);
             // 
+            // dgProfSched
+            // 
+            this.dgProfSched.AllowUserToAddRows = false;
+            this.dgProfSched.AllowUserToDeleteRows = false;
+            this.dgProfSched.AllowUserToResizeRows = false;
+            this.dgProfSched.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgProfSched.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
+            this.dgProfSched.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.dgProfSched.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgProfSched.DefaultCellStyle = dataGridViewCellStyle1;
+            this.dgProfSched.Location = new System.Drawing.Point(906, 37);
+            this.dgProfSched.MultiSelect = false;
+            this.dgProfSched.Name = "dgProfSched";
+            this.dgProfSched.ReadOnly = true;
+            this.dgProfSched.RowHeadersVisible = false;
+            this.dgProfSched.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgProfSched.Size = new System.Drawing.Size(60, 278);
+            this.dgProfSched.TabIndex = 21;
+            this.dgProfSched.Visible = false;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(974, 671);
+            this.ClientSize = new System.Drawing.Size(1008, 671);
             this.Controls.Add(this.Minimize);
             this.Controls.Add(this.Exit);
             this.Controls.Add(this.tabMain);
@@ -2524,7 +2556,7 @@
             this.Controls.Add(this.toplabel);
             this.ForeColor = System.Drawing.Color.Black;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(990, 480);
+            this.MinimumSize = new System.Drawing.Size(1024, 480);
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Main";
@@ -2570,6 +2602,7 @@
             this.tabReports.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgSysLogs)).EndInit();
             this.tabReport.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgProfSched)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2760,5 +2793,6 @@
         private System.Windows.Forms.TabPage tabLogSystem;
         private System.Windows.Forms.Label lblLogCount;
         private System.Windows.Forms.Button bExport;
+        private System.Windows.Forms.DataGridView dgProfSched;
     }
 }
