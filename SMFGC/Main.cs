@@ -21,7 +21,13 @@ namespace SMFGC {
         public Main() {
             InitializeComponent();
             if (pVariables.AdminMode) this.Text = "Administrator - " + pVariables.Project_Name;
-            if (pVariables.DeptMode) this.Text = "Dashboard - " + pVariables.Project_Name;
+            if (pVariables.DeptMode) {
+                this.Text = "Department - " + pVariables.Project_Name;
+                toplabel.Text = "College of Arts, Science and Engineering";
+
+                btnFaculty.Hide();
+                btnReports.Hide();
+            }
         }
 
         private void Main_Load(object sender, EventArgs e) {
@@ -46,5 +52,9 @@ namespace SMFGC {
             Environment.Exit(0);
         }
 
+        private void tmrClock_Tick(object sender, EventArgs e) {
+            lblDate.Text = DateTime.Now.ToString("dddd, dd MMMM yyyy");
+            lblTime.Text = DateTime.Now.ToString("hh:mm tt");
+        }
     }
 }

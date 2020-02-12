@@ -43,7 +43,7 @@ namespace SMFGC {
                     handleClient hc = new handleClient();
                     hc.startClient(this.cl);
 
-                    Console.WriteLine("Client IP: {0} - Connected!", ((IPEndPoint)this.cl.Client.RemoteEndPoint).Address.ToString());
+                    Console.WriteLine("Client IP: {0} - Listened by the servers!", ((IPEndPoint)this.cl.Client.RemoteEndPoint).Address.ToString());
 
                     Thread.Sleep(1000);
                 }

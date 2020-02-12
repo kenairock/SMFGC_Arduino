@@ -62,7 +62,7 @@ namespace SMFGC {
                         Console.WriteLine(reply.Status);
 
                         cmd = conn.CreateCommand();
-                        cmd.CommandText = pVariables.qRoomUpdateStatus;
+                        cmd.CommandText = pVariables.qRoomPingUpdateStatus;
 
                         if (reply.Status == IPStatus.Success) {
                             cmd.Parameters.Add("@p1", MySqlDbType.Int32).Value = 1;
