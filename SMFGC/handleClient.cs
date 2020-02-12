@@ -96,7 +96,7 @@ namespace SMFGC {
 
                         if (tdiff.Minutes < 10 && timeleft_led <= 0) {
                             // Send command to blink LEDs
-                            if (tdiff.Minutes <= 0 && tdiff.Seconds <= 0) {
+                            if (tdiff.Minutes < 0) {
                                 // Turn off all relays
                                 msg = System.Text.Encoding.ASCII.GetBytes("d");
                                 stream.Write(msg, 0, msg.Length);
@@ -109,7 +109,7 @@ namespace SMFGC {
                                 stream.Write(msg, 0, msg.Length);
 
                                 timeleft_led = 3; //reset
-                                Console.WriteLine("Schedule started on Room: {0} -> {1} Minutes and {2} Left.", room_name, tdiff.Minutes, tdiff.Seconds);
+                                Console.WriteLine("Schedule started on Room: {0} -> {1} Minutes and {2} Seconds Left.", room_name, tdiff.Minutes, tdiff.Seconds);
                             }
                         }
                         else {
