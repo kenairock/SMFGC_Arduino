@@ -33,8 +33,8 @@ namespace SMFGC {
 
         public static readonly String qRoomUpdateSingle = @"UPDATE `classroom_tb` SET `status`=@p1, `uptime`= IF(@p1 = 1, NOW(), `uptime`) WHERE `room_id`=@p2;";
 
-        public static readonly String qRoomPing = @"SELECT `ip_add` FROM `classroom_tb`;";
-        public static readonly String qRoomPingUpdateStatus = @"UPDATE LOW_PRIORITY `classroom_tb` SET `status` = IF (((@p1 < `status`) AND ( @p1 = 1 )), `status`, @p1) WHERE `ip_add`=@p2;";
+        public static readonly String qRoomPing = @"SELECT `ip_add` FROM `classroom_tb` WHERE `status` IN(0, 1);";
+        public static readonly String qRoomPingUpdateStatus = @"UPDATE LOW_PRIORITY `classroom_tb` SET `status` = IF (((@p1 < `status`) AND ( @p1 = 1 )), `status`, @p1)  WHERE `ip_add` =@p2;";
 
         public static readonly String qLogger = @"INSERT INTO `logs_tb` (`dev_id`, `uid`, `process`, `alert`, `message`) VALUES (@p1, @p2, @p3, @p4, @p5);";
 

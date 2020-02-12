@@ -229,6 +229,10 @@ namespace SMFGC {
                 }
                 else if (tabFaculty.SelectedTab.Text == "Classroom") {
                     FillComboBox(cbRMDept, "department_tb", "dept_id", "dept_name");
+
+                } else if (tabFaculty.SelectedTab.Text == "Information") {
+                    dgProfSched.DataSource = null;
+                    dgProfSched.Show();
                 }
                 btnDel.Enabled = false;
                 btnSave.Enabled = false;
@@ -274,6 +278,36 @@ namespace SMFGC {
                                 profpic.Image = byteArrayToImage((byte[])reader["picture"]);
                             }
                             btnImgBrowse.Enabled = true;
+                            conn.Close();
+
+                            string query = @"SELECT
+                                              `ct`.`sched_id`     AS `ID`,
+                                              `cr`.`classroom`    AS `Room`,
+                                              `crt`.`course_name` AS `Course`,
+                                              `st`.`code`         AS `Subject`,
+                                              `ct`.`day`          AS `Day`,
+                                              TIME_FORMAT(`ct`.`start_time`, '%h:%i %p') AS `Start Time`,
+                                               TIME_FORMAT(`ct`.`end_time`, '%h:%i %p') AS `End Time`
+                                            FROM((((`class_sched_tb` `ct`
+                                                  JOIN `classroom_tb` `cr`
+                                                    ON((`cr`.`room_id` = `ct`.`room_id`)))
+                                                 JOIN `subject_tb` `st`
+                                                   ON((`st`.`subject_id` = `ct`.`subject_id`)))
+                                                JOIN `course_tb` `crt`
+                                                  ON((`crt`.`course_id` = `ct`.`course_id`)))
+                                               JOIN `users_tb` `ut`
+                                                 ON((`ut`.`users_id` = `ct`.`faculty`)))
+                                            WHERE `ut`.`users_id` = @p1;";
+
+                            conn.Open();
+                            DataTable dt = new DataTable();
+                            MySqlDataAdapter oda = new MySqlDataAdapter(query, conn);
+                            oda.SelectCommand.Parameters.AddWithValue("@p1", s_id);
+                            oda.Fill(dt);
+                            dgProfSched.DataSource = dt;
+                            conn.Close();
+
+                            if (dgProfSched.Rows.Count > 0) dgProfSched.Show(); else dgProfSched.Hide();
                         }
                         break;
 
@@ -420,6 +454,7 @@ namespace SMFGC {
         }
 
         private void btnNew_Click(object sender, EventArgs e) {
+            dgProfSched.Hide();
             btnDel.Enabled = false;
             btnSave.Enabled = true;
             btnCancel.Enabled = true;
@@ -520,6 +555,8 @@ namespace SMFGC {
                 string tmp_res = "ID: ";
                 switch (tabFaculty.SelectedTab.Text) {
                     case "Information":
+                        dgProfSched.Hide();
+
                         cmd = new MySqlCommand("DELETE FROM users_tb WHERE users_id = " + txtUid.Text, conn);
                         tmp_res += txtUid.Text;
                         tmp_res += ", Name: " + cbtitle.SelectedItem + " " + txtULN.Text + ", " + txtUFN.Text + " " + txtUMI.Text;
