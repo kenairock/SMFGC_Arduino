@@ -96,10 +96,21 @@ namespace SMFGC {
 
                         if (tdiff.Minutes < 10 && timeleft_led <= 0) {
                             // Send command to blink LEDs
-                            msg = System.Text.Encoding.ASCII.GetBytes("f");
-                            stream.Write(msg, 0, msg.Length);
+                            if (tdiff.Minutes <= 0 && tdiff.Seconds <= 0) {
+                                // Turn off all relays
+                                msg = System.Text.Encoding.ASCII.GetBytes("d");
+                                stream.Write(msg, 0, msg.Length);
 
-                            timeleft_led = 3; //reset
+                                sysLog(dev_id, "", "userauth", "Room: " + room_name + ", Faulty: " + faculty + ", Shedule Ended.", 64);
+                                Console.WriteLine("Schedule ended on Room: {0} automatically.", room_name);
+                            }
+                            else { 
+                                msg = System.Text.Encoding.ASCII.GetBytes("f");
+                                stream.Write(msg, 0, msg.Length);
+
+                                timeleft_led = 3; //reset
+                                Console.WriteLine("Schedule started on Room: {0} -> {1} Minutes and {2} Left.", room_name, tdiff.Minutes, tdiff.Seconds);
+                            }
                         }
                         else {
                             timeleft_led -= 1;
