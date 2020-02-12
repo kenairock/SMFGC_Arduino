@@ -25,19 +25,22 @@
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("RM 514", 0);
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("514", 0);
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("515", 1);
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("516", 2);
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("517", 3);
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toplabel = new System.Windows.Forms.Label();
             this.pnlTop = new System.Windows.Forms.Panel();
+            this.btnAbout = new System.Windows.Forms.Button();
+            this.ilBtns = new System.Windows.Forms.ImageList(this.components);
+            this.btnLogout = new System.Windows.Forms.Button();
+            this.btnReports = new System.Windows.Forms.Button();
+            this.btnFaculty = new System.Windows.Forms.Button();
+            this.btnHome = new System.Windows.Forms.Button();
             this.lblDate = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
             this.pnlTime = new System.Windows.Forms.Panel();
-            this.btnHome = new System.Windows.Forms.Button();
-            this.ilBtns = new System.Windows.Forms.ImageList(this.components);
-            this.btnFaculty = new System.Windows.Forms.Button();
-            this.btnReports = new System.Windows.Forms.Button();
-            this.btnLogout = new System.Windows.Forms.Button();
-            this.btnAbout = new System.Windows.Forms.Button();
             this.tabMain = new System.Windows.Forms.TabControl();
             this.tabHome = new System.Windows.Forms.TabPage();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -48,7 +51,7 @@
             this.label121 = new System.Windows.Forms.Label();
             this.txtTStart = new System.Windows.Forms.TextBox();
             this.txtDay = new System.Windows.Forms.TextBox();
-            this.txtSubDesc = new System.Windows.Forms.TextBox();
+            this.txtSubjDesc = new System.Windows.Forms.TextBox();
             this.label125 = new System.Windows.Forms.Label();
             this.txtCourse = new System.Windows.Forms.TextBox();
             this.label126 = new System.Windows.Forms.Label();
@@ -69,18 +72,18 @@
             this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.label98 = new System.Windows.Forms.Label();
             this.label99 = new System.Windows.Forms.Label();
-            this.textBox10 = new System.Windows.Forms.TextBox();
+            this.txtPF = new System.Windows.Forms.TextBox();
             this.label100 = new System.Windows.Forms.Label();
-            this.textBox11 = new System.Windows.Forms.TextBox();
+            this.txtFreq = new System.Windows.Forms.TextBox();
             this.label101 = new System.Windows.Forms.Label();
             this.label102 = new System.Windows.Forms.Label();
-            this.textBox12 = new System.Windows.Forms.TextBox();
+            this.txtEnergy = new System.Windows.Forms.TextBox();
             this.label103 = new System.Windows.Forms.Label();
-            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.txtPower = new System.Windows.Forms.TextBox();
             this.label104 = new System.Windows.Forms.Label();
-            this.textBox14 = new System.Windows.Forms.TextBox();
+            this.txtCurr = new System.Windows.Forms.TextBox();
             this.label105 = new System.Windows.Forms.Label();
-            this.textBox15 = new System.Windows.Forms.TextBox();
+            this.txtVolt = new System.Windows.Forms.TextBox();
             this.label106 = new System.Windows.Forms.Label();
             this.label107 = new System.Windows.Forms.Label();
             this.label108 = new System.Windows.Forms.Label();
@@ -93,17 +96,18 @@
             this.label113 = new System.Windows.Forms.Label();
             this.label114 = new System.Windows.Forms.Label();
             this.label115 = new System.Windows.Forms.Label();
-            this.textBox16 = new System.Windows.Forms.TextBox();
+            this.txtExpense = new System.Windows.Forms.TextBox();
             this.label116 = new System.Windows.Forms.Label();
-            this.textBox17 = new System.Windows.Forms.TextBox();
+            this.txtVat = new System.Windows.Forms.TextBox();
             this.label117 = new System.Windows.Forms.Label();
-            this.textBox18 = new System.Windows.Forms.TextBox();
-            this.textBox19 = new System.Windows.Forms.TextBox();
+            this.txtMS = new System.Windows.Forms.TextBox();
+            this.txtFT = new System.Windows.Forms.TextBox();
             this.groupBox14 = new System.Windows.Forms.GroupBox();
             this.btnISmall = new System.Windows.Forms.Button();
-            this.btnILarge = new System.Windows.Forms.Button();
-            this.lvDoor = new System.Windows.Forms.ListView();
-            this.tabDashboard = new System.Windows.Forms.TabPage();
+            this.ilBtnsmall = new System.Windows.Forms.ImageList(this.components);
+            this.lvRooms = new System.Windows.Forms.ListView();
+            this.imgLarge = new System.Windows.Forms.ImageList(this.components);
+            this.imgSmall = new System.Windows.Forms.ImageList(this.components);
             this.tabMFaculty = new System.Windows.Forms.TabPage();
             this.tabFaculty = new System.Windows.Forms.TabControl();
             this.Classroom = new System.Windows.Forms.TabPage();
@@ -171,7 +175,7 @@
             this.txtSHid = new System.Windows.Forms.TextBox();
             this.Subject = new System.Windows.Forms.TabPage();
             this.label34 = new System.Windows.Forms.Label();
-            this.txtSubdes = new System.Windows.Forms.TextBox();
+            this.txtSubDesc = new System.Windows.Forms.TextBox();
             this.label33 = new System.Windows.Forms.Label();
             this.txtSubcode = new System.Windows.Forms.TextBox();
             this.label32 = new System.Windows.Forms.Label();
@@ -189,7 +193,7 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnClearSearch = new System.Windows.Forms.Button();
-            this.button20 = new System.Windows.Forms.Button();
+            this.bRefresh = new System.Windows.Forms.Button();
             this.dataGrid = new System.Windows.Forms.DataGridView();
             this.cbSearch = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -198,115 +202,13 @@
             this.tabReports = new System.Windows.Forms.TabPage();
             this.reporttab = new System.Windows.Forms.TabControl();
             this.tabProf = new System.Windows.Forms.TabPage();
-            this.label7 = new System.Windows.Forms.Label();
-            this.tabElect = new System.Windows.Forms.TabPage();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.label92 = new System.Windows.Forms.Label();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.label65 = new System.Windows.Forms.Label();
-            this.label66 = new System.Windows.Forms.Label();
-            this.connect2 = new System.Windows.Forms.Button();
-            this.ip3_2 = new System.Windows.Forms.TextBox();
-            this.portInput2 = new System.Windows.Forms.TextBox();
-            this.ip2_2 = new System.Windows.Forms.TextBox();
-            this.ip4_2 = new System.Windows.Forms.TextBox();
-            this.label67 = new System.Windows.Forms.Label();
-            this.label68 = new System.Windows.Forms.Label();
-            this.ip1_2 = new System.Windows.Forms.TextBox();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.label69 = new System.Windows.Forms.Label();
-            this.label70 = new System.Windows.Forms.Label();
-            this.secondsText2 = new System.Windows.Forms.TextBox();
-            this.hoursText2 = new System.Windows.Forms.TextBox();
-            this.minutesText2 = new System.Windows.Forms.TextBox();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.label71 = new System.Windows.Forms.Label();
-            this.label72 = new System.Windows.Forms.Label();
-            this.pf2 = new System.Windows.Forms.TextBox();
-            this.label73 = new System.Windows.Forms.Label();
-            this.frequency2 = new System.Windows.Forms.TextBox();
-            this.label74 = new System.Windows.Forms.Label();
-            this.label75 = new System.Windows.Forms.Label();
-            this.energy2 = new System.Windows.Forms.TextBox();
-            this.label76 = new System.Windows.Forms.Label();
-            this.power2 = new System.Windows.Forms.TextBox();
-            this.label77 = new System.Windows.Forms.Label();
-            this.current2 = new System.Windows.Forms.TextBox();
-            this.label78 = new System.Windows.Forms.Label();
-            this.voltage2 = new System.Windows.Forms.TextBox();
-            this.label79 = new System.Windows.Forms.Label();
-            this.label80 = new System.Windows.Forms.Label();
-            this.label81 = new System.Windows.Forms.Label();
-            this.label82 = new System.Windows.Forms.Label();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.cmdResetEnergy2 = new System.Windows.Forms.Button();
-            this.label83 = new System.Windows.Forms.Label();
-            this.label84 = new System.Windows.Forms.Label();
-            this.label85 = new System.Windows.Forms.Label();
-            this.label86 = new System.Windows.Forms.Label();
-            this.label87 = new System.Windows.Forms.Label();
-            this.label88 = new System.Windows.Forms.Label();
-            this.totalexp2 = new System.Windows.Forms.TextBox();
-            this.label89 = new System.Windows.Forms.Label();
-            this.vat2 = new System.Windows.Forms.TextBox();
-            this.label90 = new System.Windows.Forms.Label();
-            this.monthsv2 = new System.Windows.Forms.TextBox();
-            this.unitpeso2 = new System.Windows.Forms.TextBox();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.label91 = new System.Windows.Forms.Label();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label40 = new System.Windows.Forms.Label();
-            this.connect1 = new System.Windows.Forms.Button();
-            this.ip3_1 = new System.Windows.Forms.TextBox();
-            this.portInput1 = new System.Windows.Forms.TextBox();
-            this.ip2_1 = new System.Windows.Forms.TextBox();
-            this.ip4_1 = new System.Windows.Forms.TextBox();
-            this.label41 = new System.Windows.Forms.Label();
-            this.label42 = new System.Windows.Forms.Label();
-            this.ip1_1 = new System.Windows.Forms.TextBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.label43 = new System.Windows.Forms.Label();
-            this.label44 = new System.Windows.Forms.Label();
-            this.secondsText1 = new System.Windows.Forms.TextBox();
-            this.hoursText1 = new System.Windows.Forms.TextBox();
-            this.minutesText1 = new System.Windows.Forms.TextBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label45 = new System.Windows.Forms.Label();
-            this.label46 = new System.Windows.Forms.Label();
-            this.pf1 = new System.Windows.Forms.TextBox();
-            this.label47 = new System.Windows.Forms.Label();
-            this.frequency1 = new System.Windows.Forms.TextBox();
-            this.label48 = new System.Windows.Forms.Label();
-            this.label49 = new System.Windows.Forms.Label();
-            this.energy1 = new System.Windows.Forms.TextBox();
-            this.label50 = new System.Windows.Forms.Label();
-            this.power1 = new System.Windows.Forms.TextBox();
-            this.label51 = new System.Windows.Forms.Label();
-            this.current1 = new System.Windows.Forms.TextBox();
-            this.label52 = new System.Windows.Forms.Label();
-            this.voltage1 = new System.Windows.Forms.TextBox();
-            this.label53 = new System.Windows.Forms.Label();
-            this.label54 = new System.Windows.Forms.Label();
-            this.label55 = new System.Windows.Forms.Label();
-            this.label56 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.cmdResetEnergy1 = new System.Windows.Forms.Button();
-            this.label57 = new System.Windows.Forms.Label();
-            this.label58 = new System.Windows.Forms.Label();
-            this.label59 = new System.Windows.Forms.Label();
-            this.label60 = new System.Windows.Forms.Label();
-            this.label61 = new System.Windows.Forms.Label();
-            this.label62 = new System.Windows.Forms.Label();
-            this.totalexp1 = new System.Windows.Forms.TextBox();
-            this.label63 = new System.Windows.Forms.Label();
-            this.vat1 = new System.Windows.Forms.TextBox();
-            this.label64 = new System.Windows.Forms.Label();
-            this.monthsv1 = new System.Windows.Forms.TextBox();
-            this.unitpeso1 = new System.Windows.Forms.TextBox();
             this.tabLogs = new System.Windows.Forms.TabPage();
-            this.txtLogs = new System.Windows.Forms.TextBox();
             this.tmrClock = new System.Windows.Forms.Timer(this.components);
+            this.Minimize = new System.Windows.Forms.Button();
+            this.Exit = new System.Windows.Forms.Button();
+            this.spRFID = new System.IO.Ports.SerialPort(this.components);
+            this.tmrRooms = new System.Windows.Forms.Timer(this.components);
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.pnlTop.SuspendLayout();
             this.pnlTime.SuspendLayout();
             this.tabMain.SuspendLayout();
@@ -334,18 +236,7 @@
             this.tabReports.SuspendLayout();
             this.reporttab.SuspendLayout();
             this.tabProf.SuspendLayout();
-            this.tabElect.SuspendLayout();
-            this.panel6.SuspendLayout();
-            this.groupBox5.SuspendLayout();
-            this.groupBox6.SuspendLayout();
-            this.groupBox7.SuspendLayout();
-            this.groupBox8.SuspendLayout();
-            this.panel4.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.tabLogs.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // toplabel
@@ -374,6 +265,108 @@
             this.pnlTop.Name = "pnlTop";
             this.pnlTop.Size = new System.Drawing.Size(679, 100);
             this.pnlTop.TabIndex = 4;
+            // 
+            // btnAbout
+            // 
+            this.btnAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAbout.FlatAppearance.BorderSize = 0;
+            this.btnAbout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAbout.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAbout.ForeColor = System.Drawing.Color.White;
+            this.btnAbout.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnAbout.ImageIndex = 0;
+            this.btnAbout.ImageList = this.ilBtns;
+            this.btnAbout.Location = new System.Drawing.Point(451, 1);
+            this.btnAbout.Name = "btnAbout";
+            this.btnAbout.Size = new System.Drawing.Size(96, 96);
+            this.btnAbout.TabIndex = 4;
+            this.btnAbout.Text = "About Us";
+            this.btnAbout.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnAbout.UseVisualStyleBackColor = true;
+            // 
+            // ilBtns
+            // 
+            this.ilBtns.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ilBtns.ImageStream")));
+            this.ilBtns.TransparentColor = System.Drawing.Color.Transparent;
+            this.ilBtns.Images.SetKeyName(0, "about.png");
+            this.ilBtns.Images.SetKeyName(1, "faculty.png");
+            this.ilBtns.Images.SetKeyName(2, "home.png");
+            this.ilBtns.Images.SetKeyName(3, "logout.png");
+            this.ilBtns.Images.SetKeyName(4, "reports.png");
+            this.ilBtns.Images.SetKeyName(5, "small_icons.png");
+            this.ilBtns.Images.SetKeyName(6, "large_icons.png");
+            // 
+            // btnLogout
+            // 
+            this.btnLogout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLogout.FlatAppearance.BorderSize = 0;
+            this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLogout.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLogout.ForeColor = System.Drawing.Color.White;
+            this.btnLogout.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnLogout.ImageIndex = 3;
+            this.btnLogout.ImageList = this.ilBtns;
+            this.btnLogout.Location = new System.Drawing.Point(553, 1);
+            this.btnLogout.Name = "btnLogout";
+            this.btnLogout.Size = new System.Drawing.Size(96, 96);
+            this.btnLogout.TabIndex = 3;
+            this.btnLogout.Text = "Logout";
+            this.btnLogout.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnLogout.UseVisualStyleBackColor = true;
+            // 
+            // btnReports
+            // 
+            this.btnReports.FlatAppearance.BorderSize = 0;
+            this.btnReports.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReports.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReports.ForeColor = System.Drawing.Color.White;
+            this.btnReports.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnReports.ImageIndex = 4;
+            this.btnReports.ImageList = this.ilBtns;
+            this.btnReports.Location = new System.Drawing.Point(227, 1);
+            this.btnReports.Name = "btnReports";
+            this.btnReports.Size = new System.Drawing.Size(96, 96);
+            this.btnReports.TabIndex = 2;
+            this.btnReports.Text = "Reports";
+            this.btnReports.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnReports.UseVisualStyleBackColor = true;
+            this.btnReports.Click += new System.EventHandler(this.btnReports_Click);
+            // 
+            // btnFaculty
+            // 
+            this.btnFaculty.FlatAppearance.BorderSize = 0;
+            this.btnFaculty.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFaculty.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFaculty.ForeColor = System.Drawing.Color.White;
+            this.btnFaculty.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnFaculty.ImageIndex = 1;
+            this.btnFaculty.ImageList = this.ilBtns;
+            this.btnFaculty.Location = new System.Drawing.Point(125, 1);
+            this.btnFaculty.Name = "btnFaculty";
+            this.btnFaculty.Size = new System.Drawing.Size(96, 96);
+            this.btnFaculty.TabIndex = 1;
+            this.btnFaculty.Text = "Faculty";
+            this.btnFaculty.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnFaculty.UseVisualStyleBackColor = true;
+            this.btnFaculty.Click += new System.EventHandler(this.btnFaculty_Click);
+            // 
+            // btnHome
+            // 
+            this.btnHome.FlatAppearance.BorderSize = 0;
+            this.btnHome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnHome.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHome.ForeColor = System.Drawing.Color.White;
+            this.btnHome.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnHome.ImageIndex = 2;
+            this.btnHome.ImageList = this.ilBtns;
+            this.btnHome.Location = new System.Drawing.Point(23, 1);
+            this.btnHome.Name = "btnHome";
+            this.btnHome.Size = new System.Drawing.Size(96, 96);
+            this.btnHome.TabIndex = 0;
+            this.btnHome.Text = "Classrooms";
+            this.btnHome.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnHome.UseVisualStyleBackColor = true;
+            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
             // 
             // lblDate
             // 
@@ -409,103 +402,6 @@
             this.pnlTime.Size = new System.Drawing.Size(265, 100);
             this.pnlTime.TabIndex = 7;
             // 
-            // btnHome
-            // 
-            this.btnHome.FlatAppearance.BorderSize = 0;
-            this.btnHome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHome.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnHome.ForeColor = System.Drawing.Color.White;
-            this.btnHome.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnHome.ImageIndex = 2;
-            this.btnHome.ImageList = this.ilBtns;
-            this.btnHome.Location = new System.Drawing.Point(23, 1);
-            this.btnHome.Name = "btnHome";
-            this.btnHome.Size = new System.Drawing.Size(96, 96);
-            this.btnHome.TabIndex = 0;
-            this.btnHome.Text = "Classrooms";
-            this.btnHome.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnHome.UseVisualStyleBackColor = true;
-            // 
-            // ilBtns
-            // 
-            this.ilBtns.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ilBtns.ImageStream")));
-            this.ilBtns.TransparentColor = System.Drawing.Color.Transparent;
-            this.ilBtns.Images.SetKeyName(0, "about.png");
-            this.ilBtns.Images.SetKeyName(1, "faculty.png");
-            this.ilBtns.Images.SetKeyName(2, "home.png");
-            this.ilBtns.Images.SetKeyName(3, "logout.png");
-            this.ilBtns.Images.SetKeyName(4, "reports.png");
-            // 
-            // btnFaculty
-            // 
-            this.btnFaculty.FlatAppearance.BorderSize = 0;
-            this.btnFaculty.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFaculty.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFaculty.ForeColor = System.Drawing.Color.White;
-            this.btnFaculty.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnFaculty.ImageIndex = 1;
-            this.btnFaculty.ImageList = this.ilBtns;
-            this.btnFaculty.Location = new System.Drawing.Point(125, 1);
-            this.btnFaculty.Name = "btnFaculty";
-            this.btnFaculty.Size = new System.Drawing.Size(96, 96);
-            this.btnFaculty.TabIndex = 1;
-            this.btnFaculty.Text = "Faculty";
-            this.btnFaculty.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnFaculty.UseVisualStyleBackColor = true;
-            // 
-            // btnReports
-            // 
-            this.btnReports.FlatAppearance.BorderSize = 0;
-            this.btnReports.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnReports.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReports.ForeColor = System.Drawing.Color.White;
-            this.btnReports.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnReports.ImageIndex = 4;
-            this.btnReports.ImageList = this.ilBtns;
-            this.btnReports.Location = new System.Drawing.Point(227, 1);
-            this.btnReports.Name = "btnReports";
-            this.btnReports.Size = new System.Drawing.Size(96, 96);
-            this.btnReports.TabIndex = 2;
-            this.btnReports.Text = "Reports";
-            this.btnReports.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnReports.UseVisualStyleBackColor = true;
-            // 
-            // btnLogout
-            // 
-            this.btnLogout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLogout.FlatAppearance.BorderSize = 0;
-            this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLogout.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLogout.ForeColor = System.Drawing.Color.White;
-            this.btnLogout.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnLogout.ImageIndex = 3;
-            this.btnLogout.ImageList = this.ilBtns;
-            this.btnLogout.Location = new System.Drawing.Point(553, 1);
-            this.btnLogout.Name = "btnLogout";
-            this.btnLogout.Size = new System.Drawing.Size(96, 96);
-            this.btnLogout.TabIndex = 3;
-            this.btnLogout.Text = "Logout";
-            this.btnLogout.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnLogout.UseVisualStyleBackColor = true;
-            // 
-            // btnAbout
-            // 
-            this.btnAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAbout.FlatAppearance.BorderSize = 0;
-            this.btnAbout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAbout.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAbout.ForeColor = System.Drawing.Color.White;
-            this.btnAbout.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnAbout.ImageIndex = 0;
-            this.btnAbout.ImageList = this.ilBtns;
-            this.btnAbout.Location = new System.Drawing.Point(451, 1);
-            this.btnAbout.Name = "btnAbout";
-            this.btnAbout.Size = new System.Drawing.Size(96, 96);
-            this.btnAbout.TabIndex = 4;
-            this.btnAbout.Text = "About Us";
-            this.btnAbout.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnAbout.UseVisualStyleBackColor = true;
-            // 
             // tabMain
             // 
             this.tabMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -513,10 +409,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabMain.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
             this.tabMain.Controls.Add(this.tabHome);
-            this.tabMain.Controls.Add(this.tabDashboard);
             this.tabMain.Controls.Add(this.tabMFaculty);
             this.tabMain.Controls.Add(this.tabReports);
-            this.tabMain.ItemSize = new System.Drawing.Size(0, 1);
+            this.tabMain.ItemSize = new System.Drawing.Size(50, 20);
             this.tabMain.Location = new System.Drawing.Point(12, 136);
             this.tabMain.Name = "tabMain";
             this.tabMain.SelectedIndex = 0;
@@ -529,11 +424,11 @@
             this.tabHome.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.tabHome.Controls.Add(this.panel3);
             this.tabHome.Controls.Add(this.groupBox14);
-            this.tabHome.Controls.Add(this.lvDoor);
-            this.tabHome.Location = new System.Drawing.Point(4, 5);
+            this.tabHome.Controls.Add(this.lvRooms);
+            this.tabHome.Location = new System.Drawing.Point(4, 24);
             this.tabHome.Name = "tabHome";
             this.tabHome.Padding = new System.Windows.Forms.Padding(3);
-            this.tabHome.Size = new System.Drawing.Size(942, 516);
+            this.tabHome.Size = new System.Drawing.Size(942, 497);
             this.tabHome.TabIndex = 0;
             this.tabHome.Text = "HOME";
             // 
@@ -552,7 +447,7 @@
             this.panel3.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.panel3.Location = new System.Drawing.Point(3, 4);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(370, 506);
+            this.panel3.Size = new System.Drawing.Size(370, 487);
             this.panel3.TabIndex = 6;
             // 
             // groupBox13
@@ -563,7 +458,7 @@
             this.groupBox13.Controls.Add(this.label121);
             this.groupBox13.Controls.Add(this.txtTStart);
             this.groupBox13.Controls.Add(this.txtDay);
-            this.groupBox13.Controls.Add(this.txtSubDesc);
+            this.groupBox13.Controls.Add(this.txtSubjDesc);
             this.groupBox13.Controls.Add(this.label125);
             this.groupBox13.Controls.Add(this.txtCourse);
             this.groupBox13.Controls.Add(this.label126);
@@ -595,7 +490,7 @@
             this.txtFaculty.ReadOnly = true;
             this.txtFaculty.Size = new System.Drawing.Size(221, 20);
             this.txtFaculty.TabIndex = 2;
-            this.txtFaculty.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtFaculty.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txtTEnd
             // 
@@ -606,7 +501,7 @@
             this.txtTEnd.ReadOnly = true;
             this.txtTEnd.Size = new System.Drawing.Size(60, 20);
             this.txtTEnd.TabIndex = 2;
-            this.txtTEnd.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtTEnd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label121
             // 
@@ -625,7 +520,7 @@
             this.txtTStart.ReadOnly = true;
             this.txtTStart.Size = new System.Drawing.Size(60, 20);
             this.txtTStart.TabIndex = 2;
-            this.txtTStart.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtTStart.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txtDay
             // 
@@ -636,18 +531,18 @@
             this.txtDay.ReadOnly = true;
             this.txtDay.Size = new System.Drawing.Size(91, 20);
             this.txtDay.TabIndex = 2;
-            this.txtDay.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtDay.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // txtSubDesc
+            // txtSubjDesc
             // 
-            this.txtSubDesc.BackColor = System.Drawing.Color.White;
-            this.txtSubDesc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.txtSubDesc.Location = new System.Drawing.Point(119, 21);
-            this.txtSubDesc.Name = "txtSubDesc";
-            this.txtSubDesc.ReadOnly = true;
-            this.txtSubDesc.Size = new System.Drawing.Size(221, 20);
-            this.txtSubDesc.TabIndex = 2;
-            this.txtSubDesc.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtSubjDesc.BackColor = System.Drawing.Color.White;
+            this.txtSubjDesc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.txtSubjDesc.Location = new System.Drawing.Point(119, 21);
+            this.txtSubjDesc.Name = "txtSubjDesc";
+            this.txtSubjDesc.ReadOnly = true;
+            this.txtSubjDesc.Size = new System.Drawing.Size(221, 20);
+            this.txtSubjDesc.TabIndex = 2;
+            this.txtSubjDesc.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label125
             // 
@@ -667,7 +562,7 @@
             this.txtCourse.ReadOnly = true;
             this.txtCourse.Size = new System.Drawing.Size(91, 20);
             this.txtCourse.TabIndex = 2;
-            this.txtCourse.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtCourse.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label126
             // 
@@ -713,7 +608,7 @@
             this.lblRmName.Name = "lblRmName";
             this.lblRmName.Size = new System.Drawing.Size(349, 21);
             this.lblRmName.TabIndex = 29;
-            this.lblRmName.Text = "ROOM 514";
+            this.lblRmName.Text = "LOADING ROOMS";
             this.lblRmName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // groupBox9
@@ -752,7 +647,6 @@
             this.txtMAC.ReadOnly = true;
             this.txtMAC.Size = new System.Drawing.Size(167, 20);
             this.txtMAC.TabIndex = 24;
-            this.txtMAC.Text = "192";
             // 
             // lblStatus
             // 
@@ -761,7 +655,7 @@
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(81, 20);
             this.lblStatus.TabIndex = 22;
-            this.lblStatus.Text = "Connected!";
+            this.lblStatus.Text = "...";
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // txtPort
@@ -773,7 +667,6 @@
             this.txtPort.ReadOnly = true;
             this.txtPort.Size = new System.Drawing.Size(48, 20);
             this.txtPort.TabIndex = 13;
-            this.txtPort.Text = "23";
             // 
             // label94
             // 
@@ -802,7 +695,6 @@
             this.txtIP.ReadOnly = true;
             this.txtIP.Size = new System.Drawing.Size(167, 20);
             this.txtIP.TabIndex = 9;
-            this.txtIP.Text = "192";
             // 
             // groupBox10
             // 
@@ -829,18 +721,18 @@
             // 
             this.groupBox11.Controls.Add(this.label98);
             this.groupBox11.Controls.Add(this.label99);
-            this.groupBox11.Controls.Add(this.textBox10);
+            this.groupBox11.Controls.Add(this.txtPF);
             this.groupBox11.Controls.Add(this.label100);
-            this.groupBox11.Controls.Add(this.textBox11);
+            this.groupBox11.Controls.Add(this.txtFreq);
             this.groupBox11.Controls.Add(this.label101);
             this.groupBox11.Controls.Add(this.label102);
-            this.groupBox11.Controls.Add(this.textBox12);
+            this.groupBox11.Controls.Add(this.txtEnergy);
             this.groupBox11.Controls.Add(this.label103);
-            this.groupBox11.Controls.Add(this.textBox13);
+            this.groupBox11.Controls.Add(this.txtPower);
             this.groupBox11.Controls.Add(this.label104);
-            this.groupBox11.Controls.Add(this.textBox14);
+            this.groupBox11.Controls.Add(this.txtCurr);
             this.groupBox11.Controls.Add(this.label105);
-            this.groupBox11.Controls.Add(this.textBox15);
+            this.groupBox11.Controls.Add(this.txtVolt);
             this.groupBox11.Controls.Add(this.label106);
             this.groupBox11.Controls.Add(this.label107);
             this.groupBox11.Controls.Add(this.label108);
@@ -871,15 +763,16 @@
             this.label99.TabIndex = 1;
             this.label99.Text = "V";
             // 
-            // textBox10
+            // txtPF
             // 
-            this.textBox10.BackColor = System.Drawing.Color.White;
-            this.textBox10.Location = new System.Drawing.Point(70, 149);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.ReadOnly = true;
-            this.textBox10.Size = new System.Drawing.Size(47, 20);
-            this.textBox10.TabIndex = 2;
-            this.textBox10.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtPF.BackColor = System.Drawing.Color.White;
+            this.txtPF.Location = new System.Drawing.Point(70, 149);
+            this.txtPF.Name = "txtPF";
+            this.txtPF.ReadOnly = true;
+            this.txtPF.Size = new System.Drawing.Size(47, 20);
+            this.txtPF.TabIndex = 2;
+            this.txtPF.Text = "0.0";
+            this.txtPF.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label100
             // 
@@ -890,16 +783,17 @@
             this.label100.TabIndex = 1;
             this.label100.Text = "W";
             // 
-            // textBox11
+            // txtFreq
             // 
-            this.textBox11.BackColor = System.Drawing.Color.White;
-            this.textBox11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.textBox11.Location = new System.Drawing.Point(70, 123);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.ReadOnly = true;
-            this.textBox11.Size = new System.Drawing.Size(47, 20);
-            this.textBox11.TabIndex = 2;
-            this.textBox11.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtFreq.BackColor = System.Drawing.Color.White;
+            this.txtFreq.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.txtFreq.Location = new System.Drawing.Point(70, 123);
+            this.txtFreq.Name = "txtFreq";
+            this.txtFreq.ReadOnly = true;
+            this.txtFreq.Size = new System.Drawing.Size(47, 20);
+            this.txtFreq.TabIndex = 2;
+            this.txtFreq.Text = "0.0";
+            this.txtFreq.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label101
             // 
@@ -918,16 +812,17 @@
             this.label102.TabIndex = 1;
             this.label102.Text = "Hz";
             // 
-            // textBox12
+            // txtEnergy
             // 
-            this.textBox12.BackColor = System.Drawing.Color.White;
-            this.textBox12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.textBox12.Location = new System.Drawing.Point(70, 97);
-            this.textBox12.Name = "textBox12";
-            this.textBox12.ReadOnly = true;
-            this.textBox12.Size = new System.Drawing.Size(47, 20);
-            this.textBox12.TabIndex = 2;
-            this.textBox12.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtEnergy.BackColor = System.Drawing.Color.White;
+            this.txtEnergy.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.txtEnergy.Location = new System.Drawing.Point(70, 97);
+            this.txtEnergy.Name = "txtEnergy";
+            this.txtEnergy.ReadOnly = true;
+            this.txtEnergy.Size = new System.Drawing.Size(47, 20);
+            this.txtEnergy.TabIndex = 2;
+            this.txtEnergy.Text = "0.0";
+            this.txtEnergy.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label103
             // 
@@ -938,16 +833,17 @@
             this.label103.TabIndex = 1;
             this.label103.Text = "A";
             // 
-            // textBox13
+            // txtPower
             // 
-            this.textBox13.BackColor = System.Drawing.Color.White;
-            this.textBox13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.textBox13.Location = new System.Drawing.Point(70, 71);
-            this.textBox13.Name = "textBox13";
-            this.textBox13.ReadOnly = true;
-            this.textBox13.Size = new System.Drawing.Size(47, 20);
-            this.textBox13.TabIndex = 2;
-            this.textBox13.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtPower.BackColor = System.Drawing.Color.White;
+            this.txtPower.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.txtPower.Location = new System.Drawing.Point(70, 71);
+            this.txtPower.Name = "txtPower";
+            this.txtPower.ReadOnly = true;
+            this.txtPower.Size = new System.Drawing.Size(47, 20);
+            this.txtPower.TabIndex = 2;
+            this.txtPower.Text = "0.0";
+            this.txtPower.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label104
             // 
@@ -958,16 +854,17 @@
             this.label104.TabIndex = 1;
             this.label104.Text = "Wh";
             // 
-            // textBox14
+            // txtCurr
             // 
-            this.textBox14.BackColor = System.Drawing.Color.White;
-            this.textBox14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.textBox14.Location = new System.Drawing.Point(70, 45);
-            this.textBox14.Name = "textBox14";
-            this.textBox14.ReadOnly = true;
-            this.textBox14.Size = new System.Drawing.Size(47, 20);
-            this.textBox14.TabIndex = 2;
-            this.textBox14.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtCurr.BackColor = System.Drawing.Color.White;
+            this.txtCurr.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.txtCurr.Location = new System.Drawing.Point(70, 45);
+            this.txtCurr.Name = "txtCurr";
+            this.txtCurr.ReadOnly = true;
+            this.txtCurr.Size = new System.Drawing.Size(47, 20);
+            this.txtCurr.TabIndex = 2;
+            this.txtCurr.Text = "0.0";
+            this.txtCurr.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label105
             // 
@@ -978,16 +875,18 @@
             this.label105.TabIndex = 1;
             this.label105.Text = "Power:";
             // 
-            // textBox15
+            // txtVolt
             // 
-            this.textBox15.BackColor = System.Drawing.Color.White;
-            this.textBox15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.textBox15.Location = new System.Drawing.Point(70, 19);
-            this.textBox15.Name = "textBox15";
-            this.textBox15.ReadOnly = true;
-            this.textBox15.Size = new System.Drawing.Size(47, 20);
-            this.textBox15.TabIndex = 2;
-            this.textBox15.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtVolt.BackColor = System.Drawing.Color.White;
+            this.txtVolt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.txtVolt.Location = new System.Drawing.Point(70, 19);
+            this.txtVolt.Name = "txtVolt";
+            this.txtVolt.ReadOnly = true;
+            this.txtVolt.Size = new System.Drawing.Size(47, 20);
+            this.txtVolt.TabIndex = 2;
+            this.txtVolt.Tag = "";
+            this.txtVolt.Text = "0.0";
+            this.txtVolt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label106
             // 
@@ -1034,12 +933,12 @@
             this.groupBox12.Controls.Add(this.label113);
             this.groupBox12.Controls.Add(this.label114);
             this.groupBox12.Controls.Add(this.label115);
-            this.groupBox12.Controls.Add(this.textBox16);
+            this.groupBox12.Controls.Add(this.txtExpense);
             this.groupBox12.Controls.Add(this.label116);
-            this.groupBox12.Controls.Add(this.textBox17);
+            this.groupBox12.Controls.Add(this.txtVat);
             this.groupBox12.Controls.Add(this.label117);
-            this.groupBox12.Controls.Add(this.textBox18);
-            this.groupBox12.Controls.Add(this.textBox19);
+            this.groupBox12.Controls.Add(this.txtMS);
+            this.groupBox12.Controls.Add(this.txtFT);
             this.groupBox12.ForeColor = System.Drawing.SystemColors.HighlightText;
             this.groupBox12.Location = new System.Drawing.Point(171, 254);
             this.groupBox12.Name = "groupBox12";
@@ -1116,16 +1015,17 @@
             this.label115.TabIndex = 0;
             this.label115.Text = "VAT (12%):";
             // 
-            // textBox16
+            // txtExpense
             // 
-            this.textBox16.BackColor = System.Drawing.Color.White;
-            this.textBox16.ForeColor = System.Drawing.Color.Red;
-            this.textBox16.Location = new System.Drawing.Point(98, 97);
-            this.textBox16.Name = "textBox16";
-            this.textBox16.ReadOnly = true;
-            this.textBox16.Size = new System.Drawing.Size(60, 20);
-            this.textBox16.TabIndex = 2;
-            this.textBox16.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtExpense.BackColor = System.Drawing.Color.White;
+            this.txtExpense.ForeColor = System.Drawing.Color.Red;
+            this.txtExpense.Location = new System.Drawing.Point(98, 97);
+            this.txtExpense.Name = "txtExpense";
+            this.txtExpense.ReadOnly = true;
+            this.txtExpense.Size = new System.Drawing.Size(60, 20);
+            this.txtExpense.TabIndex = 2;
+            this.txtExpense.Text = "0.0";
+            this.txtExpense.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label116
             // 
@@ -1136,15 +1036,16 @@
             this.label116.TabIndex = 0;
             this.label116.Text = "Monthly Service:";
             // 
-            // textBox17
+            // txtVat
             // 
-            this.textBox17.BackColor = System.Drawing.Color.White;
-            this.textBox17.Location = new System.Drawing.Point(98, 71);
-            this.textBox17.Name = "textBox17";
-            this.textBox17.ReadOnly = true;
-            this.textBox17.Size = new System.Drawing.Size(60, 20);
-            this.textBox17.TabIndex = 2;
-            this.textBox17.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtVat.BackColor = System.Drawing.Color.White;
+            this.txtVat.Location = new System.Drawing.Point(98, 71);
+            this.txtVat.Name = "txtVat";
+            this.txtVat.ReadOnly = true;
+            this.txtVat.Size = new System.Drawing.Size(60, 20);
+            this.txtVat.TabIndex = 2;
+            this.txtVat.Text = "0.0";
+            this.txtVat.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label117
             // 
@@ -1155,27 +1056,27 @@
             this.label117.TabIndex = 0;
             this.label117.Text = "FT (KWh/₱):";
             // 
-            // textBox18
+            // txtMS
             // 
-            this.textBox18.BackColor = System.Drawing.Color.White;
-            this.textBox18.Location = new System.Drawing.Point(98, 45);
-            this.textBox18.Name = "textBox18";
-            this.textBox18.ReadOnly = true;
-            this.textBox18.Size = new System.Drawing.Size(60, 20);
-            this.textBox18.TabIndex = 2;
-            this.textBox18.Text = "0.0";
-            this.textBox18.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtMS.BackColor = System.Drawing.Color.White;
+            this.txtMS.Location = new System.Drawing.Point(98, 45);
+            this.txtMS.Name = "txtMS";
+            this.txtMS.ReadOnly = true;
+            this.txtMS.Size = new System.Drawing.Size(60, 20);
+            this.txtMS.TabIndex = 2;
+            this.txtMS.Text = "0.0";
+            this.txtMS.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // textBox19
+            // txtFT
             // 
-            this.textBox19.BackColor = System.Drawing.Color.White;
-            this.textBox19.Location = new System.Drawing.Point(98, 19);
-            this.textBox19.Name = "textBox19";
-            this.textBox19.ReadOnly = true;
-            this.textBox19.Size = new System.Drawing.Size(60, 20);
-            this.textBox19.TabIndex = 2;
-            this.textBox19.Text = "9.56";
-            this.textBox19.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtFT.BackColor = System.Drawing.Color.White;
+            this.txtFT.Location = new System.Drawing.Point(98, 19);
+            this.txtFT.Name = "txtFT";
+            this.txtFT.ReadOnly = true;
+            this.txtFT.Size = new System.Drawing.Size(60, 20);
+            this.txtFT.TabIndex = 2;
+            this.txtFT.Text = "0.0";
+            this.txtFT.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // groupBox14
             // 
@@ -1183,7 +1084,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.groupBox14.Controls.Add(this.btnISmall);
-            this.groupBox14.Controls.Add(this.btnILarge);
             this.groupBox14.ForeColor = System.Drawing.SystemColors.HighlightText;
             this.groupBox14.Location = new System.Drawing.Point(379, -2);
             this.groupBox14.Name = "groupBox14";
@@ -1194,56 +1094,67 @@
             // btnISmall
             // 
             this.btnISmall.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnISmall.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnISmall.FlatAppearance.BorderSize = 0;
+            this.btnISmall.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnISmall.ForeColor = System.Drawing.Color.White;
-            this.btnISmall.Location = new System.Drawing.Point(448, 14);
+            this.btnISmall.ImageIndex = 1;
+            this.btnISmall.ImageList = this.ilBtnsmall;
+            this.btnISmall.Location = new System.Drawing.Point(501, 12);
             this.btnISmall.Name = "btnISmall";
-            this.btnISmall.Size = new System.Drawing.Size(100, 20);
+            this.btnISmall.Size = new System.Drawing.Size(50, 45);
             this.btnISmall.TabIndex = 17;
-            this.btnISmall.Text = "SMALL ICONS";
             this.btnISmall.UseVisualStyleBackColor = true;
+            this.btnISmall.Click += new System.EventHandler(this.btnISmall_Click);
             // 
-            // btnILarge
+            // ilBtnsmall
             // 
-            this.btnILarge.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnILarge.Enabled = false;
-            this.btnILarge.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnILarge.ForeColor = System.Drawing.Color.White;
-            this.btnILarge.Location = new System.Drawing.Point(448, 38);
-            this.btnILarge.Name = "btnILarge";
-            this.btnILarge.Size = new System.Drawing.Size(100, 20);
-            this.btnILarge.TabIndex = 16;
-            this.btnILarge.Text = "LARGE ICONS";
-            this.btnILarge.UseVisualStyleBackColor = true;
+            this.ilBtnsmall.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ilBtnsmall.ImageStream")));
+            this.ilBtnsmall.TransparentColor = System.Drawing.Color.Transparent;
+            this.ilBtnsmall.Images.SetKeyName(0, "large_icons.png");
+            this.ilBtnsmall.Images.SetKeyName(1, "small_icons.png");
             // 
-            // lvDoor
+            // lvRooms
             // 
-            this.lvDoor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.lvRooms.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.lvDoor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.lvDoor.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lvDoor.ForeColor = System.Drawing.Color.White;
-            this.lvDoor.HideSelection = false;
-            this.lvDoor.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem2});
-            this.lvDoor.LabelWrap = false;
-            this.lvDoor.Location = new System.Drawing.Point(379, 66);
-            this.lvDoor.MultiSelect = false;
-            this.lvDoor.Name = "lvDoor";
-            this.lvDoor.Size = new System.Drawing.Size(557, 447);
-            this.lvDoor.TabIndex = 13;
-            this.lvDoor.UseCompatibleStateImageBehavior = false;
+            this.lvRooms.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.lvRooms.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lvRooms.ForeColor = System.Drawing.Color.White;
+            this.lvRooms.HideSelection = false;
+            this.lvRooms.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem5,
+            listViewItem6,
+            listViewItem7,
+            listViewItem8});
+            this.lvRooms.LabelWrap = false;
+            this.lvRooms.LargeImageList = this.imgLarge;
+            this.lvRooms.Location = new System.Drawing.Point(379, 66);
+            this.lvRooms.MultiSelect = false;
+            this.lvRooms.Name = "lvRooms";
+            this.lvRooms.Size = new System.Drawing.Size(557, 428);
+            this.lvRooms.SmallImageList = this.imgSmall;
+            this.lvRooms.TabIndex = 13;
+            this.lvRooms.UseCompatibleStateImageBehavior = false;
+            this.lvRooms.SelectedIndexChanged += new System.EventHandler(this.lvRooms_SelectedIndexChanged);
             // 
-            // tabDashboard
+            // imgLarge
             // 
-            this.tabDashboard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.tabDashboard.Location = new System.Drawing.Point(4, 5);
-            this.tabDashboard.Name = "tabDashboard";
-            this.tabDashboard.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDashboard.Size = new System.Drawing.Size(1212, 576);
-            this.tabDashboard.TabIndex = 1;
-            this.tabDashboard.Text = "DASHBOARD";
+            this.imgLarge.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgLarge.ImageStream")));
+            this.imgLarge.TransparentColor = System.Drawing.Color.Transparent;
+            this.imgLarge.Images.SetKeyName(0, "door_red_large.png");
+            this.imgLarge.Images.SetKeyName(1, "door_green_large_alert.png");
+            this.imgLarge.Images.SetKeyName(2, "door_green_large.png");
+            this.imgLarge.Images.SetKeyName(3, "door_blue_large.png");
+            // 
+            // imgSmall
+            // 
+            this.imgSmall.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgSmall.ImageStream")));
+            this.imgSmall.TransparentColor = System.Drawing.Color.Transparent;
+            this.imgSmall.Images.SetKeyName(0, "door_red_small.png");
+            this.imgSmall.Images.SetKeyName(1, "door_green_small_alert.png");
+            this.imgSmall.Images.SetKeyName(2, "door_green_small.png");
+            this.imgSmall.Images.SetKeyName(3, "door_blue_small.png");
             // 
             // tabMFaculty
             // 
@@ -1251,22 +1162,22 @@
             this.tabMFaculty.Controls.Add(this.tabFaculty);
             this.tabMFaculty.Controls.Add(this.groupBox15);
             this.tabMFaculty.Controls.Add(this.btnClearSearch);
-            this.tabMFaculty.Controls.Add(this.button20);
+            this.tabMFaculty.Controls.Add(this.bRefresh);
             this.tabMFaculty.Controls.Add(this.dataGrid);
             this.tabMFaculty.Controls.Add(this.cbSearch);
             this.tabMFaculty.Controls.Add(this.label6);
             this.tabMFaculty.Controls.Add(this.txtSearch);
             this.tabMFaculty.Controls.Add(this.label12);
-            this.tabMFaculty.Location = new System.Drawing.Point(4, 5);
+            this.tabMFaculty.Location = new System.Drawing.Point(4, 24);
             this.tabMFaculty.Name = "tabMFaculty";
-            this.tabMFaculty.Size = new System.Drawing.Size(1212, 576);
+            this.tabMFaculty.Size = new System.Drawing.Size(942, 497);
             this.tabMFaculty.TabIndex = 2;
             this.tabMFaculty.Text = "FACULTY";
             // 
             // tabFaculty
             // 
-            this.tabFaculty.Controls.Add(this.Classroom);
             this.tabFaculty.Controls.Add(this.Information);
+            this.tabFaculty.Controls.Add(this.Classroom);
             this.tabFaculty.Controls.Add(this.Schedule);
             this.tabFaculty.Controls.Add(this.Subject);
             this.tabFaculty.Controls.Add(this.Department);
@@ -1278,7 +1189,7 @@
             // 
             // Classroom
             // 
-            this.Classroom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Classroom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.Classroom.Controls.Add(this.ckRelay2);
             this.Classroom.Controls.Add(this.ckRelay1);
             this.Classroom.Controls.Add(this.label96);
@@ -1508,7 +1419,7 @@
             // 
             // Information
             // 
-            this.Information.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Information.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.Information.Controls.Add(this.groupBox16);
             this.Information.Controls.Add(this.label5);
             this.Information.Controls.Add(this.txtUid);
@@ -1537,9 +1448,9 @@
             this.groupBox16.Controls.Add(this.btnReloadPort);
             this.groupBox16.Controls.Add(this.cboPort);
             this.groupBox16.ForeColor = System.Drawing.Color.White;
-            this.groupBox16.Location = new System.Drawing.Point(226, 6);
+            this.groupBox16.Location = new System.Drawing.Point(6, 183);
             this.groupBox16.Name = "groupBox16";
-            this.groupBox16.Size = new System.Drawing.Size(111, 93);
+            this.groupBox16.Size = new System.Drawing.Size(100, 85);
             this.groupBox16.TabIndex = 26;
             this.groupBox16.TabStop = false;
             this.groupBox16.Text = "RFID";
@@ -1547,22 +1458,24 @@
             // lblRFIDStatus
             // 
             this.lblRFIDStatus.ForeColor = System.Drawing.Color.Lime;
-            this.lblRFIDStatus.Location = new System.Drawing.Point(14, 21);
+            this.lblRFIDStatus.Location = new System.Drawing.Point(7, 15);
             this.lblRFIDStatus.Name = "lblRFIDStatus";
             this.lblRFIDStatus.Size = new System.Drawing.Size(83, 14);
             this.lblRFIDStatus.TabIndex = 23;
-            this.lblRFIDStatus.Text = "Connected!";
+            this.lblRFIDStatus.Text = "???";
             this.lblRFIDStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnReloadPort
             // 
+            this.btnReloadPort.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnReloadPort.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnReloadPort.Location = new System.Drawing.Point(17, 65);
+            this.btnReloadPort.Location = new System.Drawing.Point(9, 57);
             this.btnReloadPort.Name = "btnReloadPort";
             this.btnReloadPort.Size = new System.Drawing.Size(80, 22);
             this.btnReloadPort.TabIndex = 24;
             this.btnReloadPort.Text = "REFRESH";
-            this.btnReloadPort.UseVisualStyleBackColor = true;
+            this.btnReloadPort.UseVisualStyleBackColor = false;
+            this.btnReloadPort.Click += new System.EventHandler(this.btnReloadPort_Click);
             // 
             // cboPort
             // 
@@ -1579,10 +1492,11 @@
             "Lastname",
             "Firstname",
             "MI"});
-            this.cboPort.Location = new System.Drawing.Point(17, 40);
+            this.cboPort.Location = new System.Drawing.Point(9, 31);
             this.cboPort.Name = "cboPort";
             this.cboPort.Size = new System.Drawing.Size(80, 21);
             this.cboPort.TabIndex = 17;
+            this.cboPort.Click += new System.EventHandler(this.cboPort_Click);
             // 
             // label5
             // 
@@ -1642,39 +1556,42 @@
             this.groupBox17.ForeColor = System.Drawing.Color.White;
             this.groupBox17.Location = new System.Drawing.Point(360, 6);
             this.groupBox17.Name = "groupBox17";
-            this.groupBox17.Size = new System.Drawing.Size(183, 194);
+            this.groupBox17.Size = new System.Drawing.Size(170, 190);
             this.groupBox17.TabIndex = 18;
             this.groupBox17.TabStop = false;
             this.groupBox17.Text = "Picture";
             // 
             // btnImgBrowse
             // 
+            this.btnImgBrowse.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnImgBrowse.Enabled = false;
             this.btnImgBrowse.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnImgBrowse.Location = new System.Drawing.Point(17, 155);
+            this.btnImgBrowse.Location = new System.Drawing.Point(11, 153);
             this.btnImgBrowse.Name = "btnImgBrowse";
             this.btnImgBrowse.Size = new System.Drawing.Size(65, 28);
             this.btnImgBrowse.TabIndex = 17;
             this.btnImgBrowse.Text = "BROWSE";
-            this.btnImgBrowse.UseVisualStyleBackColor = true;
+            this.btnImgBrowse.UseVisualStyleBackColor = false;
             // 
             // btnImgRemove
             // 
+            this.btnImgRemove.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnImgRemove.Enabled = false;
             this.btnImgRemove.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnImgRemove.Location = new System.Drawing.Point(102, 155);
+            this.btnImgRemove.Location = new System.Drawing.Point(96, 153);
             this.btnImgRemove.Name = "btnImgRemove";
             this.btnImgRemove.Size = new System.Drawing.Size(65, 28);
             this.btnImgRemove.TabIndex = 16;
             this.btnImgRemove.Text = "REMOVE";
-            this.btnImgRemove.UseVisualStyleBackColor = true;
+            this.btnImgRemove.UseVisualStyleBackColor = false;
             // 
             // profpic
             // 
             this.profpic.BackColor = System.Drawing.Color.Transparent;
             this.profpic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.profpic.Image = global::SMFGC.Properties.Resources.user;
             this.profpic.InitialImage = null;
-            this.profpic.Location = new System.Drawing.Point(17, 19);
+            this.profpic.Location = new System.Drawing.Point(11, 16);
             this.profpic.Name = "profpic";
             this.profpic.Size = new System.Drawing.Size(150, 130);
             this.profpic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1771,7 +1688,7 @@
             // 
             // Schedule
             // 
-            this.Schedule.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Schedule.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.Schedule.Controls.Add(this.cbSHSubj);
             this.Schedule.Controls.Add(this.dtTimeEnd);
             this.Schedule.Controls.Add(this.dtTimeStart);
@@ -2068,9 +1985,9 @@
             // 
             // Subject
             // 
-            this.Subject.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Subject.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.Subject.Controls.Add(this.label34);
-            this.Subject.Controls.Add(this.txtSubdes);
+            this.Subject.Controls.Add(this.txtSubDesc);
             this.Subject.Controls.Add(this.label33);
             this.Subject.Controls.Add(this.txtSubcode);
             this.Subject.Controls.Add(this.label32);
@@ -2094,15 +2011,15 @@
             this.label34.Text = "Description :";
             this.label34.UseWaitCursor = true;
             // 
-            // txtSubdes
+            // txtSubDesc
             // 
-            this.txtSubdes.BackColor = System.Drawing.Color.Black;
-            this.txtSubdes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSubdes.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.txtSubdes.Location = new System.Drawing.Point(131, 78);
-            this.txtSubdes.Name = "txtSubdes";
-            this.txtSubdes.Size = new System.Drawing.Size(180, 20);
-            this.txtSubdes.TabIndex = 35;
+            this.txtSubDesc.BackColor = System.Drawing.Color.Black;
+            this.txtSubDesc.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtSubDesc.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.txtSubDesc.Location = new System.Drawing.Point(131, 78);
+            this.txtSubDesc.Name = "txtSubDesc";
+            this.txtSubDesc.Size = new System.Drawing.Size(180, 20);
+            this.txtSubDesc.TabIndex = 35;
             // 
             // label33
             // 
@@ -2151,7 +2068,7 @@
             // 
             // Department
             // 
-            this.Department.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Department.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.Department.Controls.Add(this.label35);
             this.Department.Controls.Add(this.txtDeptflr);
             this.Department.Controls.Add(this.label36);
@@ -2234,6 +2151,7 @@
             // 
             // groupBox15
             // 
+            this.groupBox15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.groupBox15.Controls.Add(this.btnNew);
             this.groupBox15.Controls.Add(this.btnDel);
             this.groupBox15.Controls.Add(this.btnCancel);
@@ -2246,6 +2164,7 @@
             // 
             // btnNew
             // 
+            this.btnNew.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnNew.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnNew.ForeColor = System.Drawing.Color.White;
             this.btnNew.Location = new System.Drawing.Point(6, 14);
@@ -2253,10 +2172,12 @@
             this.btnNew.Size = new System.Drawing.Size(65, 28);
             this.btnNew.TabIndex = 17;
             this.btnNew.Text = "NEW";
-            this.btnNew.UseVisualStyleBackColor = true;
+            this.btnNew.UseVisualStyleBackColor = false;
+            this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
             // 
             // btnDel
             // 
+            this.btnDel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnDel.Enabled = false;
             this.btnDel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnDel.ForeColor = System.Drawing.Color.White;
@@ -2265,10 +2186,12 @@
             this.btnDel.Size = new System.Drawing.Size(65, 28);
             this.btnDel.TabIndex = 15;
             this.btnDel.Text = "DELETE";
-            this.btnDel.UseVisualStyleBackColor = true;
+            this.btnDel.UseVisualStyleBackColor = false;
+            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
             // 
             // btnCancel
             // 
+            this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnCancel.Enabled = false;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnCancel.ForeColor = System.Drawing.Color.White;
@@ -2277,10 +2200,12 @@
             this.btnCancel.Size = new System.Drawing.Size(65, 28);
             this.btnCancel.TabIndex = 14;
             this.btnCancel.Text = "CANCEL";
-            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.UseVisualStyleBackColor = false;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnSave
             // 
+            this.btnSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnSave.Enabled = false;
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnSave.ForeColor = System.Drawing.Color.White;
@@ -2289,7 +2214,8 @@
             this.btnSave.Size = new System.Drawing.Size(65, 28);
             this.btnSave.TabIndex = 13;
             this.btnSave.Text = "SAVE";
-            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.UseVisualStyleBackColor = false;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnClearSearch
             // 
@@ -2302,17 +2228,18 @@
             this.btnClearSearch.Text = "X";
             this.btnClearSearch.UseVisualStyleBackColor = true;
             this.btnClearSearch.Visible = false;
+            this.btnClearSearch.Click += new System.EventHandler(this.btnClearSearch_Click);
             // 
-            // button20
+            // bRefresh
             // 
-            this.button20.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button20.ForeColor = System.Drawing.Color.White;
-            this.button20.Location = new System.Drawing.Point(22, 541);
-            this.button20.Name = "button20";
-            this.button20.Size = new System.Drawing.Size(313, 28);
-            this.button20.TabIndex = 18;
-            this.button20.Text = "REFRESH";
-            this.button20.UseVisualStyleBackColor = true;
+            this.bRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.bRefresh.ForeColor = System.Drawing.Color.White;
+            this.bRefresh.Location = new System.Drawing.Point(22, 461);
+            this.bRefresh.Name = "bRefresh";
+            this.bRefresh.Size = new System.Drawing.Size(313, 28);
+            this.bRefresh.TabIndex = 18;
+            this.bRefresh.Text = "REFRESH";
+            this.bRefresh.UseVisualStyleBackColor = true;
             // 
             // dataGrid
             // 
@@ -2325,22 +2252,23 @@
             this.dataGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
             this.dataGrid.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGrid.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGrid.DefaultCellStyle = dataGridViewCellStyle4;
             this.dataGrid.Location = new System.Drawing.Point(22, 59);
             this.dataGrid.MultiSelect = false;
             this.dataGrid.Name = "dataGrid";
             this.dataGrid.ReadOnly = true;
             this.dataGrid.RowHeadersVisible = false;
             this.dataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGrid.Size = new System.Drawing.Size(312, 476);
+            this.dataGrid.Size = new System.Drawing.Size(312, 397);
             this.dataGrid.TabIndex = 8;
+            this.dataGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_CellClick);
             // 
             // cbSearch
             // 
@@ -2400,9 +2328,9 @@
             // 
             this.tabReports.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.tabReports.Controls.Add(this.reporttab);
-            this.tabReports.Location = new System.Drawing.Point(4, 5);
+            this.tabReports.Location = new System.Drawing.Point(4, 24);
             this.tabReports.Name = "tabReports";
-            this.tabReports.Size = new System.Drawing.Size(1212, 576);
+            this.tabReports.Size = new System.Drawing.Size(942, 497);
             this.tabReports.TabIndex = 3;
             this.tabReports.Text = "REPORTS";
             // 
@@ -2412,1145 +2340,35 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.reporttab.Controls.Add(this.tabProf);
-            this.reporttab.Controls.Add(this.tabElect);
             this.reporttab.Controls.Add(this.tabLogs);
             this.reporttab.Cursor = System.Windows.Forms.Cursors.Hand;
             this.reporttab.Location = new System.Drawing.Point(3, 3);
             this.reporttab.Name = "reporttab";
             this.reporttab.SelectedIndex = 0;
-            this.reporttab.Size = new System.Drawing.Size(1206, 570);
+            this.reporttab.Size = new System.Drawing.Size(936, 491);
             this.reporttab.TabIndex = 0;
             // 
             // tabProf
             // 
             this.tabProf.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tabProf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tabProf.Controls.Add(this.label7);
+            this.tabProf.Controls.Add(this.dataGridView1);
             this.tabProf.ForeColor = System.Drawing.SystemColors.HighlightText;
             this.tabProf.Location = new System.Drawing.Point(4, 22);
             this.tabProf.Name = "tabProf";
             this.tabProf.Padding = new System.Windows.Forms.Padding(3);
-            this.tabProf.Size = new System.Drawing.Size(1198, 544);
+            this.tabProf.Size = new System.Drawing.Size(928, 465);
             this.tabProf.TabIndex = 0;
             this.tabProf.Text = "Attendance";
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(539, 180);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(126, 20);
-            this.label7.TabIndex = 0;
-            this.label7.Text = "ATTENDANCE";
-            // 
-            // tabElect
-            // 
-            this.tabElect.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.tabElect.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tabElect.Controls.Add(this.panel6);
-            this.tabElect.Controls.Add(this.panel4);
-            this.tabElect.Location = new System.Drawing.Point(4, 22);
-            this.tabElect.Name = "tabElect";
-            this.tabElect.Padding = new System.Windows.Forms.Padding(3);
-            this.tabElect.Size = new System.Drawing.Size(1198, 544);
-            this.tabElect.TabIndex = 1;
-            this.tabElect.Text = "Electric Used";
-            // 
-            // panel6
-            // 
-            this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel6.Controls.Add(this.label92);
-            this.panel6.Controls.Add(this.groupBox5);
-            this.panel6.Controls.Add(this.groupBox6);
-            this.panel6.Controls.Add(this.groupBox7);
-            this.panel6.Controls.Add(this.groupBox8);
-            this.panel6.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.panel6.Location = new System.Drawing.Point(542, 41);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(402, 413);
-            this.panel6.TabIndex = 1;
-            // 
-            // label92
-            // 
-            this.label92.AutoSize = true;
-            this.label92.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label92.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.label92.Location = new System.Drawing.Point(72, 10);
-            this.label92.Name = "label92";
-            this.label92.Size = new System.Drawing.Size(97, 20);
-            this.label92.TabIndex = 33;
-            this.label92.Text = "ROOM 515";
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.groupBox5.Controls.Add(this.label65);
-            this.groupBox5.Controls.Add(this.label66);
-            this.groupBox5.Controls.Add(this.connect2);
-            this.groupBox5.Controls.Add(this.ip3_2);
-            this.groupBox5.Controls.Add(this.portInput2);
-            this.groupBox5.Controls.Add(this.ip2_2);
-            this.groupBox5.Controls.Add(this.ip4_2);
-            this.groupBox5.Controls.Add(this.label67);
-            this.groupBox5.Controls.Add(this.label68);
-            this.groupBox5.Controls.Add(this.ip1_2);
-            this.groupBox5.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.groupBox5.Location = new System.Drawing.Point(7, 35);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(384, 87);
-            this.groupBox5.TabIndex = 32;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Connect";
-            // 
-            // label65
-            // 
-            this.label65.AutoSize = true;
-            this.label65.Location = new System.Drawing.Point(54, 58);
-            this.label65.Name = "label65";
-            this.label65.Size = new System.Drawing.Size(62, 13);
-            this.label65.TabIndex = 22;
-            this.label65.Text = "Connected!";
-            // 
-            // label66
-            // 
-            this.label66.AutoSize = true;
-            this.label66.Location = new System.Drawing.Point(8, 58);
-            this.label66.Name = "label66";
-            this.label66.Size = new System.Drawing.Size(40, 13);
-            this.label66.TabIndex = 3;
-            this.label66.Text = "Status:";
-            // 
-            // connect2
-            // 
-            this.connect2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.connect2.Location = new System.Drawing.Point(227, 53);
-            this.connect2.Name = "connect2";
-            this.connect2.Size = new System.Drawing.Size(104, 23);
-            this.connect2.TabIndex = 21;
-            this.connect2.Text = "Test Connection";
-            this.connect2.UseVisualStyleBackColor = true;
-            // 
-            // ip3_2
-            // 
-            this.ip3_2.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.ip3_2.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.ip3_2.Location = new System.Drawing.Point(164, 20);
-            this.ip3_2.Name = "ip3_2";
-            this.ip3_2.Size = new System.Drawing.Size(40, 20);
-            this.ip3_2.TabIndex = 11;
-            this.ip3_2.Text = "1";
-            // 
-            // portInput2
-            // 
-            this.portInput2.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.portInput2.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.portInput2.Location = new System.Drawing.Point(291, 20);
-            this.portInput2.Name = "portInput2";
-            this.portInput2.Size = new System.Drawing.Size(40, 20);
-            this.portInput2.TabIndex = 13;
-            this.portInput2.Text = "23";
-            // 
-            // ip2_2
-            // 
-            this.ip2_2.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.ip2_2.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.ip2_2.Location = new System.Drawing.Point(118, 20);
-            this.ip2_2.Name = "ip2_2";
-            this.ip2_2.Size = new System.Drawing.Size(40, 20);
-            this.ip2_2.TabIndex = 10;
-            this.ip2_2.Text = "168";
-            // 
-            // ip4_2
-            // 
-            this.ip4_2.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.ip4_2.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.ip4_2.Location = new System.Drawing.Point(210, 20);
-            this.ip4_2.Name = "ip4_2";
-            this.ip4_2.Size = new System.Drawing.Size(40, 20);
-            this.ip4_2.TabIndex = 12;
-            this.ip4_2.Text = "110";
-            // 
-            // label67
-            // 
-            this.label67.AutoSize = true;
-            this.label67.Location = new System.Drawing.Point(256, 23);
-            this.label67.Name = "label67";
-            this.label67.Size = new System.Drawing.Size(29, 13);
-            this.label67.TabIndex = 5;
-            this.label67.Text = "Port:";
-            // 
-            // label68
-            // 
-            this.label68.AutoSize = true;
-            this.label68.Location = new System.Drawing.Point(6, 23);
-            this.label68.Name = "label68";
-            this.label68.Size = new System.Drawing.Size(60, 13);
-            this.label68.TabIndex = 0;
-            this.label68.Text = "IP address:";
-            // 
-            // ip1_2
-            // 
-            this.ip1_2.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.ip1_2.Cursor = System.Windows.Forms.Cursors.Default;
-            this.ip1_2.Location = new System.Drawing.Point(72, 20);
-            this.ip1_2.Name = "ip1_2";
-            this.ip1_2.Size = new System.Drawing.Size(40, 20);
-            this.ip1_2.TabIndex = 9;
-            this.ip1_2.Text = "192";
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.label69);
-            this.groupBox6.Controls.Add(this.label70);
-            this.groupBox6.Controls.Add(this.secondsText2);
-            this.groupBox6.Controls.Add(this.hoursText2);
-            this.groupBox6.Controls.Add(this.minutesText2);
-            this.groupBox6.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.groupBox6.Location = new System.Drawing.Point(7, 315);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(267, 58);
-            this.groupBox6.TabIndex = 31;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Up Time";
-            // 
-            // label69
-            // 
-            this.label69.AutoSize = true;
-            this.label69.Location = new System.Drawing.Point(142, 23);
-            this.label69.Name = "label69";
-            this.label69.Size = new System.Drawing.Size(10, 13);
-            this.label69.TabIndex = 7;
-            this.label69.Text = ":";
-            // 
-            // label70
-            // 
-            this.label70.AutoSize = true;
-            this.label70.Location = new System.Drawing.Point(99, 22);
-            this.label70.Name = "label70";
-            this.label70.Size = new System.Drawing.Size(10, 13);
-            this.label70.TabIndex = 6;
-            this.label70.Text = ":";
-            // 
-            // secondsText2
-            // 
-            this.secondsText2.Location = new System.Drawing.Point(154, 20);
-            this.secondsText2.Name = "secondsText2";
-            this.secondsText2.Size = new System.Drawing.Size(27, 20);
-            this.secondsText2.TabIndex = 5;
-            this.secondsText2.Text = "00";
-            this.secondsText2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // hoursText2
-            // 
-            this.hoursText2.Location = new System.Drawing.Point(69, 19);
-            this.hoursText2.Name = "hoursText2";
-            this.hoursText2.Size = new System.Drawing.Size(27, 20);
-            this.hoursText2.TabIndex = 3;
-            this.hoursText2.Text = "00";
-            this.hoursText2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // minutesText2
-            // 
-            this.minutesText2.Location = new System.Drawing.Point(111, 19);
-            this.minutesText2.Name = "minutesText2";
-            this.minutesText2.Size = new System.Drawing.Size(27, 20);
-            this.minutesText2.TabIndex = 4;
-            this.minutesText2.Text = "00";
-            this.minutesText2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.label71);
-            this.groupBox7.Controls.Add(this.label72);
-            this.groupBox7.Controls.Add(this.pf2);
-            this.groupBox7.Controls.Add(this.label73);
-            this.groupBox7.Controls.Add(this.frequency2);
-            this.groupBox7.Controls.Add(this.label74);
-            this.groupBox7.Controls.Add(this.label75);
-            this.groupBox7.Controls.Add(this.energy2);
-            this.groupBox7.Controls.Add(this.label76);
-            this.groupBox7.Controls.Add(this.power2);
-            this.groupBox7.Controls.Add(this.label77);
-            this.groupBox7.Controls.Add(this.current2);
-            this.groupBox7.Controls.Add(this.label78);
-            this.groupBox7.Controls.Add(this.voltage2);
-            this.groupBox7.Controls.Add(this.label79);
-            this.groupBox7.Controls.Add(this.label80);
-            this.groupBox7.Controls.Add(this.label81);
-            this.groupBox7.Controls.Add(this.label82);
-            this.groupBox7.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.groupBox7.Location = new System.Drawing.Point(7, 128);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(158, 181);
-            this.groupBox7.TabIndex = 30;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "RealTime Value";
-            // 
-            // label71
-            // 
-            this.label71.AutoSize = true;
-            this.label71.Location = new System.Drawing.Point(6, 26);
-            this.label71.Name = "label71";
-            this.label71.Size = new System.Drawing.Size(43, 13);
-            this.label71.TabIndex = 1;
-            this.label71.Text = "Voltage";
-            // 
-            // label72
-            // 
-            this.label72.AutoSize = true;
-            this.label72.Location = new System.Drawing.Point(121, 26);
-            this.label72.Name = "label72";
-            this.label72.Size = new System.Drawing.Size(14, 13);
-            this.label72.TabIndex = 1;
-            this.label72.Text = "V";
-            // 
-            // pf2
-            // 
-            this.pf2.Location = new System.Drawing.Point(70, 153);
-            this.pf2.Name = "pf2";
-            this.pf2.Size = new System.Drawing.Size(47, 20);
-            this.pf2.TabIndex = 2;
-            this.pf2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label73
-            // 
-            this.label73.AutoSize = true;
-            this.label73.Location = new System.Drawing.Point(121, 82);
-            this.label73.Name = "label73";
-            this.label73.Size = new System.Drawing.Size(18, 13);
-            this.label73.TabIndex = 1;
-            this.label73.Text = "W";
-            // 
-            // frequency2
-            // 
-            this.frequency2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.frequency2.Location = new System.Drawing.Point(70, 127);
-            this.frequency2.Name = "frequency2";
-            this.frequency2.Size = new System.Drawing.Size(47, 20);
-            this.frequency2.TabIndex = 2;
-            this.frequency2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label74
-            // 
-            this.label74.AutoSize = true;
-            this.label74.Location = new System.Drawing.Point(123, 156);
-            this.label74.Name = "label74";
-            this.label74.Size = new System.Drawing.Size(0, 13);
-            this.label74.TabIndex = 1;
-            // 
-            // label75
-            // 
-            this.label75.AutoSize = true;
-            this.label75.Location = new System.Drawing.Point(121, 137);
-            this.label75.Name = "label75";
-            this.label75.Size = new System.Drawing.Size(20, 13);
-            this.label75.TabIndex = 1;
-            this.label75.Text = "Hz";
-            // 
-            // energy2
-            // 
-            this.energy2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.energy2.Location = new System.Drawing.Point(70, 101);
-            this.energy2.Name = "energy2";
-            this.energy2.Size = new System.Drawing.Size(47, 20);
-            this.energy2.TabIndex = 2;
-            this.energy2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label76
-            // 
-            this.label76.AutoSize = true;
-            this.label76.Location = new System.Drawing.Point(121, 52);
-            this.label76.Name = "label76";
-            this.label76.Size = new System.Drawing.Size(14, 13);
-            this.label76.TabIndex = 1;
-            this.label76.Text = "A";
-            // 
-            // power2
-            // 
-            this.power2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.power2.Location = new System.Drawing.Point(70, 75);
-            this.power2.Name = "power2";
-            this.power2.Size = new System.Drawing.Size(47, 20);
-            this.power2.TabIndex = 2;
-            this.power2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label77
-            // 
-            this.label77.AutoSize = true;
-            this.label77.Location = new System.Drawing.Point(121, 108);
-            this.label77.Name = "label77";
-            this.label77.Size = new System.Drawing.Size(24, 13);
-            this.label77.TabIndex = 1;
-            this.label77.Text = "Wh";
-            // 
-            // current2
-            // 
-            this.current2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.current2.Location = new System.Drawing.Point(70, 45);
-            this.current2.Name = "current2";
-            this.current2.Size = new System.Drawing.Size(47, 20);
-            this.current2.TabIndex = 2;
-            this.current2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label78
-            // 
-            this.label78.AutoSize = true;
-            this.label78.Location = new System.Drawing.Point(6, 82);
-            this.label78.Name = "label78";
-            this.label78.Size = new System.Drawing.Size(37, 13);
-            this.label78.TabIndex = 1;
-            this.label78.Text = "Power";
-            // 
-            // voltage2
-            // 
-            this.voltage2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.voltage2.Location = new System.Drawing.Point(70, 19);
-            this.voltage2.Name = "voltage2";
-            this.voltage2.Size = new System.Drawing.Size(47, 20);
-            this.voltage2.TabIndex = 2;
-            this.voltage2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label79
-            // 
-            this.label79.AutoSize = true;
-            this.label79.Location = new System.Drawing.Point(6, 52);
-            this.label79.Name = "label79";
-            this.label79.Size = new System.Drawing.Size(41, 13);
-            this.label79.TabIndex = 1;
-            this.label79.Text = "Current";
-            // 
-            // label80
-            // 
-            this.label80.AutoSize = true;
-            this.label80.Location = new System.Drawing.Point(6, 162);
-            this.label80.Name = "label80";
-            this.label80.Size = new System.Drawing.Size(20, 13);
-            this.label80.TabIndex = 1;
-            this.label80.Text = "PF";
-            // 
-            // label81
-            // 
-            this.label81.AutoSize = true;
-            this.label81.Location = new System.Drawing.Point(6, 108);
-            this.label81.Name = "label81";
-            this.label81.Size = new System.Drawing.Size(40, 13);
-            this.label81.TabIndex = 1;
-            this.label81.Text = "Energy";
-            // 
-            // label82
-            // 
-            this.label82.AutoSize = true;
-            this.label82.Location = new System.Drawing.Point(6, 137);
-            this.label82.Name = "label82";
-            this.label82.Size = new System.Drawing.Size(57, 13);
-            this.label82.TabIndex = 1;
-            this.label82.Text = "Frequency";
-            // 
-            // groupBox8
-            // 
-            this.groupBox8.Controls.Add(this.cmdResetEnergy2);
-            this.groupBox8.Controls.Add(this.label83);
-            this.groupBox8.Controls.Add(this.label84);
-            this.groupBox8.Controls.Add(this.label85);
-            this.groupBox8.Controls.Add(this.label86);
-            this.groupBox8.Controls.Add(this.label87);
-            this.groupBox8.Controls.Add(this.label88);
-            this.groupBox8.Controls.Add(this.totalexp2);
-            this.groupBox8.Controls.Add(this.label89);
-            this.groupBox8.Controls.Add(this.vat2);
-            this.groupBox8.Controls.Add(this.label90);
-            this.groupBox8.Controls.Add(this.monthsv2);
-            this.groupBox8.Controls.Add(this.unitpeso2);
-            this.groupBox8.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.groupBox8.Location = new System.Drawing.Point(171, 128);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(220, 181);
-            this.groupBox8.TabIndex = 29;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "Energy Control";
-            // 
-            // cmdResetEnergy2
-            // 
-            this.cmdResetEnergy2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cmdResetEnergy2.Location = new System.Drawing.Point(6, 136);
-            this.cmdResetEnergy2.Name = "cmdResetEnergy2";
-            this.cmdResetEnergy2.Size = new System.Drawing.Size(203, 39);
-            this.cmdResetEnergy2.TabIndex = 3;
-            this.cmdResetEnergy2.Text = "Clear";
-            this.cmdResetEnergy2.UseVisualStyleBackColor = true;
-            // 
-            // label83
-            // 
-            this.label83.AutoSize = true;
-            this.label83.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label83.Location = new System.Drawing.Point(193, 105);
-            this.label83.Name = "label83";
-            this.label83.Size = new System.Drawing.Size(16, 18);
-            this.label83.TabIndex = 0;
-            this.label83.Text = "₱";
-            // 
-            // label84
-            // 
-            this.label84.AutoSize = true;
-            this.label84.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label84.Location = new System.Drawing.Point(193, 75);
-            this.label84.Name = "label84";
-            this.label84.Size = new System.Drawing.Size(16, 18);
-            this.label84.TabIndex = 0;
-            this.label84.Text = "₱";
-            // 
-            // label85
-            // 
-            this.label85.AutoSize = true;
-            this.label85.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label85.Location = new System.Drawing.Point(193, 49);
-            this.label85.Name = "label85";
-            this.label85.Size = new System.Drawing.Size(16, 18);
-            this.label85.TabIndex = 0;
-            this.label85.Text = "₱";
-            // 
-            // label86
-            // 
-            this.label86.AutoSize = true;
-            this.label86.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label86.Location = new System.Drawing.Point(193, 23);
-            this.label86.Name = "label86";
-            this.label86.Size = new System.Drawing.Size(16, 18);
-            this.label86.TabIndex = 0;
-            this.label86.Text = "₱";
-            // 
-            // label87
-            // 
-            this.label87.AutoSize = true;
-            this.label87.Location = new System.Drawing.Point(16, 108);
-            this.label87.Name = "label87";
-            this.label87.Size = new System.Drawing.Size(80, 13);
-            this.label87.TabIndex = 0;
-            this.label87.Text = "Total Expenses";
-            // 
-            // label88
-            // 
-            this.label88.AutoSize = true;
-            this.label88.Location = new System.Drawing.Point(16, 78);
-            this.label88.Name = "label88";
-            this.label88.Size = new System.Drawing.Size(57, 13);
-            this.label88.TabIndex = 0;
-            this.label88.Text = "VAT (12%)";
-            // 
-            // totalexp2
-            // 
-            this.totalexp2.ForeColor = System.Drawing.Color.Red;
-            this.totalexp2.Location = new System.Drawing.Point(127, 105);
-            this.totalexp2.Name = "totalexp2";
-            this.totalexp2.Size = new System.Drawing.Size(60, 20);
-            this.totalexp2.TabIndex = 2;
-            this.totalexp2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label89
-            // 
-            this.label89.AutoSize = true;
-            this.label89.Location = new System.Drawing.Point(16, 52);
-            this.label89.Name = "label89";
-            this.label89.Size = new System.Drawing.Size(83, 13);
-            this.label89.TabIndex = 0;
-            this.label89.Text = "Monthly Service";
-            // 
-            // vat2
-            // 
-            this.vat2.Location = new System.Drawing.Point(127, 75);
-            this.vat2.Name = "vat2";
-            this.vat2.Size = new System.Drawing.Size(60, 20);
-            this.vat2.TabIndex = 2;
-            this.vat2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label90
-            // 
-            this.label90.AutoSize = true;
-            this.label90.Location = new System.Drawing.Point(16, 26);
-            this.label90.Name = "label90";
-            this.label90.Size = new System.Drawing.Size(65, 13);
-            this.label90.TabIndex = 0;
-            this.label90.Text = "FT (KWh/₱)";
-            // 
-            // monthsv2
-            // 
-            this.monthsv2.Location = new System.Drawing.Point(127, 49);
-            this.monthsv2.Name = "monthsv2";
-            this.monthsv2.Size = new System.Drawing.Size(60, 20);
-            this.monthsv2.TabIndex = 2;
-            this.monthsv2.Text = "0.0";
-            this.monthsv2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // unitpeso2
-            // 
-            this.unitpeso2.Location = new System.Drawing.Point(127, 23);
-            this.unitpeso2.Name = "unitpeso2";
-            this.unitpeso2.Size = new System.Drawing.Size(60, 20);
-            this.unitpeso2.TabIndex = 2;
-            this.unitpeso2.Text = "9.56";
-            this.unitpeso2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // panel4
-            // 
-            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel4.Controls.Add(this.label91);
-            this.panel4.Controls.Add(this.groupBox3);
-            this.panel4.Controls.Add(this.groupBox4);
-            this.panel4.Controls.Add(this.groupBox2);
-            this.panel4.Controls.Add(this.groupBox1);
-            this.panel4.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.panel4.Location = new System.Drawing.Point(91, 41);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(402, 413);
-            this.panel4.TabIndex = 0;
-            // 
-            // label91
-            // 
-            this.label91.AutoSize = true;
-            this.label91.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label91.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.label91.Location = new System.Drawing.Point(68, 12);
-            this.label91.Name = "label91";
-            this.label91.Size = new System.Drawing.Size(97, 20);
-            this.label91.TabIndex = 29;
-            this.label91.Text = "ROOM 514";
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.groupBox3.Controls.Add(this.label8);
-            this.groupBox3.Controls.Add(this.label40);
-            this.groupBox3.Controls.Add(this.connect1);
-            this.groupBox3.Controls.Add(this.ip3_1);
-            this.groupBox3.Controls.Add(this.portInput1);
-            this.groupBox3.Controls.Add(this.ip2_1);
-            this.groupBox3.Controls.Add(this.ip4_1);
-            this.groupBox3.Controls.Add(this.label41);
-            this.groupBox3.Controls.Add(this.label42);
-            this.groupBox3.Controls.Add(this.ip1_1);
-            this.groupBox3.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.groupBox3.Location = new System.Drawing.Point(7, 35);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(384, 87);
-            this.groupBox3.TabIndex = 28;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Connect";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(54, 58);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(62, 13);
-            this.label8.TabIndex = 22;
-            this.label8.Text = "Connected!";
-            // 
-            // label40
-            // 
-            this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(8, 58);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(40, 13);
-            this.label40.TabIndex = 3;
-            this.label40.Text = "Status:";
-            // 
-            // connect1
-            // 
-            this.connect1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.connect1.Location = new System.Drawing.Point(227, 53);
-            this.connect1.Name = "connect1";
-            this.connect1.Size = new System.Drawing.Size(104, 23);
-            this.connect1.TabIndex = 21;
-            this.connect1.Text = "Test Connection";
-            this.connect1.UseVisualStyleBackColor = true;
-            // 
-            // ip3_1
-            // 
-            this.ip3_1.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.ip3_1.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.ip3_1.Location = new System.Drawing.Point(164, 20);
-            this.ip3_1.Name = "ip3_1";
-            this.ip3_1.Size = new System.Drawing.Size(40, 20);
-            this.ip3_1.TabIndex = 11;
-            this.ip3_1.Text = "1";
-            // 
-            // portInput1
-            // 
-            this.portInput1.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.portInput1.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.portInput1.Location = new System.Drawing.Point(291, 20);
-            this.portInput1.Name = "portInput1";
-            this.portInput1.Size = new System.Drawing.Size(40, 20);
-            this.portInput1.TabIndex = 13;
-            this.portInput1.Text = "23";
-            // 
-            // ip2_1
-            // 
-            this.ip2_1.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.ip2_1.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.ip2_1.Location = new System.Drawing.Point(118, 20);
-            this.ip2_1.Name = "ip2_1";
-            this.ip2_1.Size = new System.Drawing.Size(40, 20);
-            this.ip2_1.TabIndex = 10;
-            this.ip2_1.Text = "168";
-            // 
-            // ip4_1
-            // 
-            this.ip4_1.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.ip4_1.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.ip4_1.Location = new System.Drawing.Point(210, 20);
-            this.ip4_1.Name = "ip4_1";
-            this.ip4_1.Size = new System.Drawing.Size(40, 20);
-            this.ip4_1.TabIndex = 12;
-            this.ip4_1.Text = "110";
-            // 
-            // label41
-            // 
-            this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(256, 23);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(29, 13);
-            this.label41.TabIndex = 5;
-            this.label41.Text = "Port:";
-            // 
-            // label42
-            // 
-            this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(6, 23);
-            this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(60, 13);
-            this.label42.TabIndex = 0;
-            this.label42.Text = "IP address:";
-            // 
-            // ip1_1
-            // 
-            this.ip1_1.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.ip1_1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.ip1_1.Location = new System.Drawing.Point(72, 20);
-            this.ip1_1.Name = "ip1_1";
-            this.ip1_1.Size = new System.Drawing.Size(40, 20);
-            this.ip1_1.TabIndex = 9;
-            this.ip1_1.Text = "192";
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.label43);
-            this.groupBox4.Controls.Add(this.label44);
-            this.groupBox4.Controls.Add(this.secondsText1);
-            this.groupBox4.Controls.Add(this.hoursText1);
-            this.groupBox4.Controls.Add(this.minutesText1);
-            this.groupBox4.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.groupBox4.Location = new System.Drawing.Point(7, 315);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(267, 58);
-            this.groupBox4.TabIndex = 27;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Up Time";
-            // 
-            // label43
-            // 
-            this.label43.AutoSize = true;
-            this.label43.Location = new System.Drawing.Point(142, 23);
-            this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(10, 13);
-            this.label43.TabIndex = 7;
-            this.label43.Text = ":";
-            // 
-            // label44
-            // 
-            this.label44.AutoSize = true;
-            this.label44.Location = new System.Drawing.Point(99, 22);
-            this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(10, 13);
-            this.label44.TabIndex = 6;
-            this.label44.Text = ":";
-            // 
-            // secondsText1
-            // 
-            this.secondsText1.Location = new System.Drawing.Point(154, 20);
-            this.secondsText1.Name = "secondsText1";
-            this.secondsText1.Size = new System.Drawing.Size(27, 20);
-            this.secondsText1.TabIndex = 5;
-            this.secondsText1.Text = "00";
-            this.secondsText1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // hoursText1
-            // 
-            this.hoursText1.Location = new System.Drawing.Point(69, 19);
-            this.hoursText1.Name = "hoursText1";
-            this.hoursText1.Size = new System.Drawing.Size(27, 20);
-            this.hoursText1.TabIndex = 3;
-            this.hoursText1.Text = "00";
-            this.hoursText1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // minutesText1
-            // 
-            this.minutesText1.Location = new System.Drawing.Point(111, 19);
-            this.minutesText1.Name = "minutesText1";
-            this.minutesText1.Size = new System.Drawing.Size(27, 20);
-            this.minutesText1.TabIndex = 4;
-            this.minutesText1.Text = "00";
-            this.minutesText1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.label45);
-            this.groupBox2.Controls.Add(this.label46);
-            this.groupBox2.Controls.Add(this.pf1);
-            this.groupBox2.Controls.Add(this.label47);
-            this.groupBox2.Controls.Add(this.frequency1);
-            this.groupBox2.Controls.Add(this.label48);
-            this.groupBox2.Controls.Add(this.label49);
-            this.groupBox2.Controls.Add(this.energy1);
-            this.groupBox2.Controls.Add(this.label50);
-            this.groupBox2.Controls.Add(this.power1);
-            this.groupBox2.Controls.Add(this.label51);
-            this.groupBox2.Controls.Add(this.current1);
-            this.groupBox2.Controls.Add(this.label52);
-            this.groupBox2.Controls.Add(this.voltage1);
-            this.groupBox2.Controls.Add(this.label53);
-            this.groupBox2.Controls.Add(this.label54);
-            this.groupBox2.Controls.Add(this.label55);
-            this.groupBox2.Controls.Add(this.label56);
-            this.groupBox2.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.groupBox2.Location = new System.Drawing.Point(7, 128);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(158, 181);
-            this.groupBox2.TabIndex = 26;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "RealTime Value";
-            // 
-            // label45
-            // 
-            this.label45.AutoSize = true;
-            this.label45.Location = new System.Drawing.Point(6, 26);
-            this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(43, 13);
-            this.label45.TabIndex = 1;
-            this.label45.Text = "Voltage";
-            // 
-            // label46
-            // 
-            this.label46.AutoSize = true;
-            this.label46.Location = new System.Drawing.Point(121, 26);
-            this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(14, 13);
-            this.label46.TabIndex = 1;
-            this.label46.Text = "V";
-            // 
-            // pf1
-            // 
-            this.pf1.Location = new System.Drawing.Point(70, 153);
-            this.pf1.Name = "pf1";
-            this.pf1.Size = new System.Drawing.Size(47, 20);
-            this.pf1.TabIndex = 2;
-            this.pf1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label47
-            // 
-            this.label47.AutoSize = true;
-            this.label47.Location = new System.Drawing.Point(121, 82);
-            this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(18, 13);
-            this.label47.TabIndex = 1;
-            this.label47.Text = "W";
-            // 
-            // frequency1
-            // 
-            this.frequency1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.frequency1.Location = new System.Drawing.Point(70, 127);
-            this.frequency1.Name = "frequency1";
-            this.frequency1.Size = new System.Drawing.Size(47, 20);
-            this.frequency1.TabIndex = 2;
-            this.frequency1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label48
-            // 
-            this.label48.AutoSize = true;
-            this.label48.Location = new System.Drawing.Point(123, 156);
-            this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(0, 13);
-            this.label48.TabIndex = 1;
-            // 
-            // label49
-            // 
-            this.label49.AutoSize = true;
-            this.label49.Location = new System.Drawing.Point(121, 137);
-            this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(20, 13);
-            this.label49.TabIndex = 1;
-            this.label49.Text = "Hz";
-            // 
-            // energy1
-            // 
-            this.energy1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.energy1.Location = new System.Drawing.Point(70, 101);
-            this.energy1.Name = "energy1";
-            this.energy1.Size = new System.Drawing.Size(47, 20);
-            this.energy1.TabIndex = 2;
-            this.energy1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label50
-            // 
-            this.label50.AutoSize = true;
-            this.label50.Location = new System.Drawing.Point(121, 52);
-            this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(14, 13);
-            this.label50.TabIndex = 1;
-            this.label50.Text = "A";
-            // 
-            // power1
-            // 
-            this.power1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.power1.Location = new System.Drawing.Point(70, 75);
-            this.power1.Name = "power1";
-            this.power1.Size = new System.Drawing.Size(47, 20);
-            this.power1.TabIndex = 2;
-            this.power1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label51
-            // 
-            this.label51.AutoSize = true;
-            this.label51.Location = new System.Drawing.Point(121, 108);
-            this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(24, 13);
-            this.label51.TabIndex = 1;
-            this.label51.Text = "Wh";
-            // 
-            // current1
-            // 
-            this.current1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.current1.Location = new System.Drawing.Point(70, 45);
-            this.current1.Name = "current1";
-            this.current1.Size = new System.Drawing.Size(47, 20);
-            this.current1.TabIndex = 2;
-            this.current1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label52
-            // 
-            this.label52.AutoSize = true;
-            this.label52.Location = new System.Drawing.Point(6, 82);
-            this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(37, 13);
-            this.label52.TabIndex = 1;
-            this.label52.Text = "Power";
-            // 
-            // voltage1
-            // 
-            this.voltage1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.voltage1.Location = new System.Drawing.Point(70, 19);
-            this.voltage1.Name = "voltage1";
-            this.voltage1.Size = new System.Drawing.Size(47, 20);
-            this.voltage1.TabIndex = 2;
-            this.voltage1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label53
-            // 
-            this.label53.AutoSize = true;
-            this.label53.Location = new System.Drawing.Point(6, 52);
-            this.label53.Name = "label53";
-            this.label53.Size = new System.Drawing.Size(41, 13);
-            this.label53.TabIndex = 1;
-            this.label53.Text = "Current";
-            // 
-            // label54
-            // 
-            this.label54.AutoSize = true;
-            this.label54.Location = new System.Drawing.Point(6, 162);
-            this.label54.Name = "label54";
-            this.label54.Size = new System.Drawing.Size(20, 13);
-            this.label54.TabIndex = 1;
-            this.label54.Text = "PF";
-            // 
-            // label55
-            // 
-            this.label55.AutoSize = true;
-            this.label55.Location = new System.Drawing.Point(6, 108);
-            this.label55.Name = "label55";
-            this.label55.Size = new System.Drawing.Size(40, 13);
-            this.label55.TabIndex = 1;
-            this.label55.Text = "Energy";
-            // 
-            // label56
-            // 
-            this.label56.AutoSize = true;
-            this.label56.Location = new System.Drawing.Point(6, 137);
-            this.label56.Name = "label56";
-            this.label56.Size = new System.Drawing.Size(57, 13);
-            this.label56.TabIndex = 1;
-            this.label56.Text = "Frequency";
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.cmdResetEnergy1);
-            this.groupBox1.Controls.Add(this.label57);
-            this.groupBox1.Controls.Add(this.label58);
-            this.groupBox1.Controls.Add(this.label59);
-            this.groupBox1.Controls.Add(this.label60);
-            this.groupBox1.Controls.Add(this.label61);
-            this.groupBox1.Controls.Add(this.label62);
-            this.groupBox1.Controls.Add(this.totalexp1);
-            this.groupBox1.Controls.Add(this.label63);
-            this.groupBox1.Controls.Add(this.vat1);
-            this.groupBox1.Controls.Add(this.label64);
-            this.groupBox1.Controls.Add(this.monthsv1);
-            this.groupBox1.Controls.Add(this.unitpeso1);
-            this.groupBox1.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.groupBox1.Location = new System.Drawing.Point(171, 128);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(220, 181);
-            this.groupBox1.TabIndex = 25;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Energy Control";
-            // 
-            // cmdResetEnergy1
-            // 
-            this.cmdResetEnergy1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cmdResetEnergy1.Location = new System.Drawing.Point(6, 136);
-            this.cmdResetEnergy1.Name = "cmdResetEnergy1";
-            this.cmdResetEnergy1.Size = new System.Drawing.Size(203, 39);
-            this.cmdResetEnergy1.TabIndex = 3;
-            this.cmdResetEnergy1.Text = "Clear";
-            this.cmdResetEnergy1.UseVisualStyleBackColor = true;
-            // 
-            // label57
-            // 
-            this.label57.AutoSize = true;
-            this.label57.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label57.Location = new System.Drawing.Point(193, 105);
-            this.label57.Name = "label57";
-            this.label57.Size = new System.Drawing.Size(16, 18);
-            this.label57.TabIndex = 0;
-            this.label57.Text = "₱";
-            // 
-            // label58
-            // 
-            this.label58.AutoSize = true;
-            this.label58.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label58.Location = new System.Drawing.Point(193, 75);
-            this.label58.Name = "label58";
-            this.label58.Size = new System.Drawing.Size(16, 18);
-            this.label58.TabIndex = 0;
-            this.label58.Text = "₱";
-            // 
-            // label59
-            // 
-            this.label59.AutoSize = true;
-            this.label59.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label59.Location = new System.Drawing.Point(193, 49);
-            this.label59.Name = "label59";
-            this.label59.Size = new System.Drawing.Size(16, 18);
-            this.label59.TabIndex = 0;
-            this.label59.Text = "₱";
-            // 
-            // label60
-            // 
-            this.label60.AutoSize = true;
-            this.label60.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label60.Location = new System.Drawing.Point(193, 23);
-            this.label60.Name = "label60";
-            this.label60.Size = new System.Drawing.Size(16, 18);
-            this.label60.TabIndex = 0;
-            this.label60.Text = "₱";
-            // 
-            // label61
-            // 
-            this.label61.AutoSize = true;
-            this.label61.Location = new System.Drawing.Point(16, 108);
-            this.label61.Name = "label61";
-            this.label61.Size = new System.Drawing.Size(80, 13);
-            this.label61.TabIndex = 0;
-            this.label61.Text = "Total Expenses";
-            // 
-            // label62
-            // 
-            this.label62.AutoSize = true;
-            this.label62.Location = new System.Drawing.Point(16, 78);
-            this.label62.Name = "label62";
-            this.label62.Size = new System.Drawing.Size(57, 13);
-            this.label62.TabIndex = 0;
-            this.label62.Text = "VAT (12%)";
-            // 
-            // totalexp1
-            // 
-            this.totalexp1.ForeColor = System.Drawing.Color.Red;
-            this.totalexp1.Location = new System.Drawing.Point(127, 105);
-            this.totalexp1.Name = "totalexp1";
-            this.totalexp1.Size = new System.Drawing.Size(60, 20);
-            this.totalexp1.TabIndex = 2;
-            this.totalexp1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label63
-            // 
-            this.label63.AutoSize = true;
-            this.label63.Location = new System.Drawing.Point(16, 52);
-            this.label63.Name = "label63";
-            this.label63.Size = new System.Drawing.Size(83, 13);
-            this.label63.TabIndex = 0;
-            this.label63.Text = "Monthly Service";
-            // 
-            // vat1
-            // 
-            this.vat1.Location = new System.Drawing.Point(127, 75);
-            this.vat1.Name = "vat1";
-            this.vat1.Size = new System.Drawing.Size(60, 20);
-            this.vat1.TabIndex = 2;
-            this.vat1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label64
-            // 
-            this.label64.AutoSize = true;
-            this.label64.Location = new System.Drawing.Point(16, 26);
-            this.label64.Name = "label64";
-            this.label64.Size = new System.Drawing.Size(65, 13);
-            this.label64.TabIndex = 0;
-            this.label64.Text = "FT (KWh/₱)";
-            // 
-            // monthsv1
-            // 
-            this.monthsv1.Location = new System.Drawing.Point(127, 49);
-            this.monthsv1.Name = "monthsv1";
-            this.monthsv1.Size = new System.Drawing.Size(60, 20);
-            this.monthsv1.TabIndex = 2;
-            this.monthsv1.Text = "0.0";
-            this.monthsv1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // unitpeso1
-            // 
-            this.unitpeso1.Location = new System.Drawing.Point(127, 23);
-            this.unitpeso1.Name = "unitpeso1";
-            this.unitpeso1.Size = new System.Drawing.Size(60, 20);
-            this.unitpeso1.TabIndex = 2;
-            this.unitpeso1.Text = "9.56";
-            this.unitpeso1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
             // tabLogs
             // 
-            this.tabLogs.Controls.Add(this.txtLogs);
+            this.tabLogs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tabLogs.Location = new System.Drawing.Point(4, 22);
             this.tabLogs.Name = "tabLogs";
-            this.tabLogs.Size = new System.Drawing.Size(1198, 544);
+            this.tabLogs.Size = new System.Drawing.Size(928, 465);
             this.tabLogs.TabIndex = 2;
             this.tabLogs.Text = "System Logs";
-            this.tabLogs.UseVisualStyleBackColor = true;
-            // 
-            // txtLogs
-            // 
-            this.txtLogs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtLogs.BackColor = System.Drawing.Color.White;
-            this.txtLogs.Font = new System.Drawing.Font("Lucida Console", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLogs.Location = new System.Drawing.Point(3, 3);
-            this.txtLogs.Multiline = true;
-            this.txtLogs.Name = "txtLogs";
-            this.txtLogs.ReadOnly = true;
-            this.txtLogs.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtLogs.Size = new System.Drawing.Size(1192, 538);
-            this.txtLogs.TabIndex = 0;
             // 
             // tmrClock
             // 
@@ -3558,17 +2376,69 @@
             this.tmrClock.Interval = 1000;
             this.tmrClock.Tick += new System.EventHandler(this.tmrClock_Tick);
             // 
+            // Minimize
+            // 
+            this.Minimize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Minimize.BackColor = System.Drawing.Color.Gray;
+            this.Minimize.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Minimize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Minimize.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Minimize.Location = new System.Drawing.Point(917, 3);
+            this.Minimize.Name = "Minimize";
+            this.Minimize.Size = new System.Drawing.Size(20, 23);
+            this.Minimize.TabIndex = 18;
+            this.Minimize.Text = "-";
+            this.Minimize.UseVisualStyleBackColor = false;
+            this.Minimize.Click += new System.EventHandler(this.Minimize_Click);
+            // 
+            // Exit
+            // 
+            this.Exit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Exit.BackColor = System.Drawing.Color.Gray;
+            this.Exit.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Exit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Exit.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Exit.Location = new System.Drawing.Point(942, 3);
+            this.Exit.Name = "Exit";
+            this.Exit.Size = new System.Drawing.Size(20, 23);
+            this.Exit.TabIndex = 17;
+            this.Exit.Text = "x";
+            this.Exit.UseVisualStyleBackColor = false;
+            this.Exit.Click += new System.EventHandler(this.Exit_Click);
+            // 
+            // spRFID
+            // 
+            this.spRFID.ReadTimeout = 200;
+            this.spRFID.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.spRFID_DataReceived);
+            // 
+            // tmrRooms
+            // 
+            this.tmrRooms.Enabled = true;
+            this.tmrRooms.Interval = 3000;
+            this.tmrRooms.Tick += new System.EventHandler(this.tmrRooms_Tick);
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(6, 6);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(240, 150);
+            this.dataGridView1.TabIndex = 0;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(974, 671);
+            this.Controls.Add(this.Minimize);
+            this.Controls.Add(this.Exit);
             this.Controls.Add(this.tabMain);
             this.Controls.Add(this.pnlTime);
             this.Controls.Add(this.pnlTop);
             this.Controls.Add(this.toplabel);
             this.ForeColor = System.Drawing.Color.Black;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(990, 480);
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -3615,30 +2485,7 @@
             this.tabReports.ResumeLayout(false);
             this.reporttab.ResumeLayout(false);
             this.tabProf.ResumeLayout(false);
-            this.tabProf.PerformLayout();
-            this.tabElect.ResumeLayout(false);
-            this.panel6.ResumeLayout(false);
-            this.panel6.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
-            this.groupBox8.ResumeLayout(false);
-            this.groupBox8.PerformLayout();
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.tabLogs.ResumeLayout(false);
-            this.tabLogs.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3667,7 +2514,7 @@
         private System.Windows.Forms.Label label121;
         private System.Windows.Forms.TextBox txtTStart;
         private System.Windows.Forms.TextBox txtDay;
-        private System.Windows.Forms.TextBox txtSubDesc;
+        private System.Windows.Forms.TextBox txtSubjDesc;
         private System.Windows.Forms.Label label125;
         private System.Windows.Forms.TextBox txtCourse;
         private System.Windows.Forms.Label label126;
@@ -3688,18 +2535,18 @@
         private System.Windows.Forms.GroupBox groupBox11;
         private System.Windows.Forms.Label label98;
         private System.Windows.Forms.Label label99;
-        private System.Windows.Forms.TextBox textBox10;
+        private System.Windows.Forms.TextBox txtPF;
         private System.Windows.Forms.Label label100;
-        private System.Windows.Forms.TextBox textBox11;
+        private System.Windows.Forms.TextBox txtFreq;
         private System.Windows.Forms.Label label101;
         private System.Windows.Forms.Label label102;
-        private System.Windows.Forms.TextBox textBox12;
+        private System.Windows.Forms.TextBox txtEnergy;
         private System.Windows.Forms.Label label103;
-        private System.Windows.Forms.TextBox textBox13;
+        private System.Windows.Forms.TextBox txtPower;
         private System.Windows.Forms.Label label104;
-        private System.Windows.Forms.TextBox textBox14;
+        private System.Windows.Forms.TextBox txtCurr;
         private System.Windows.Forms.Label label105;
-        private System.Windows.Forms.TextBox textBox15;
+        private System.Windows.Forms.TextBox txtVolt;
         private System.Windows.Forms.Label label106;
         private System.Windows.Forms.Label label107;
         private System.Windows.Forms.Label label108;
@@ -3712,17 +2559,15 @@
         private System.Windows.Forms.Label label113;
         private System.Windows.Forms.Label label114;
         private System.Windows.Forms.Label label115;
-        private System.Windows.Forms.TextBox textBox16;
+        private System.Windows.Forms.TextBox txtExpense;
         private System.Windows.Forms.Label label116;
-        private System.Windows.Forms.TextBox textBox17;
+        private System.Windows.Forms.TextBox txtVat;
         private System.Windows.Forms.Label label117;
-        private System.Windows.Forms.TextBox textBox18;
-        private System.Windows.Forms.TextBox textBox19;
+        private System.Windows.Forms.TextBox txtMS;
+        private System.Windows.Forms.TextBox txtFT;
         private System.Windows.Forms.GroupBox groupBox14;
         private System.Windows.Forms.Button btnISmall;
-        private System.Windows.Forms.Button btnILarge;
-        private System.Windows.Forms.ListView lvDoor;
-        private System.Windows.Forms.TabPage tabDashboard;
+        private System.Windows.Forms.ListView lvRooms;
         private System.Windows.Forms.TabPage tabMFaculty;
         private System.Windows.Forms.TabControl tabFaculty;
         private System.Windows.Forms.TabPage Classroom;
@@ -3790,7 +2635,7 @@
         private System.Windows.Forms.TextBox txtSHid;
         private System.Windows.Forms.TabPage Subject;
         private System.Windows.Forms.Label label34;
-        private System.Windows.Forms.TextBox txtSubdes;
+        private System.Windows.Forms.TextBox txtSubDesc;
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.TextBox txtSubcode;
         private System.Windows.Forms.Label label32;
@@ -3808,7 +2653,7 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnClearSearch;
-        private System.Windows.Forms.Button button20;
+        private System.Windows.Forms.Button bRefresh;
         private System.Windows.Forms.DataGridView dataGrid;
         private System.Windows.Forms.ComboBox cbSearch;
         private System.Windows.Forms.Label label6;
@@ -3817,114 +2662,15 @@
         private System.Windows.Forms.TabPage tabReports;
         private System.Windows.Forms.TabControl reporttab;
         private System.Windows.Forms.TabPage tabProf;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TabPage tabElect;
-        private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.Label label92;
-        private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.Label label65;
-        private System.Windows.Forms.Label label66;
-        private System.Windows.Forms.Button connect2;
-        private System.Windows.Forms.TextBox ip3_2;
-        private System.Windows.Forms.TextBox portInput2;
-        private System.Windows.Forms.TextBox ip2_2;
-        private System.Windows.Forms.TextBox ip4_2;
-        private System.Windows.Forms.Label label67;
-        private System.Windows.Forms.Label label68;
-        private System.Windows.Forms.TextBox ip1_2;
-        private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.Label label69;
-        private System.Windows.Forms.Label label70;
-        private System.Windows.Forms.TextBox secondsText2;
-        private System.Windows.Forms.TextBox hoursText2;
-        private System.Windows.Forms.TextBox minutesText2;
-        private System.Windows.Forms.GroupBox groupBox7;
-        private System.Windows.Forms.Label label71;
-        private System.Windows.Forms.Label label72;
-        private System.Windows.Forms.TextBox pf2;
-        private System.Windows.Forms.Label label73;
-        private System.Windows.Forms.TextBox frequency2;
-        private System.Windows.Forms.Label label74;
-        private System.Windows.Forms.Label label75;
-        private System.Windows.Forms.TextBox energy2;
-        private System.Windows.Forms.Label label76;
-        private System.Windows.Forms.TextBox power2;
-        private System.Windows.Forms.Label label77;
-        private System.Windows.Forms.TextBox current2;
-        private System.Windows.Forms.Label label78;
-        private System.Windows.Forms.TextBox voltage2;
-        private System.Windows.Forms.Label label79;
-        private System.Windows.Forms.Label label80;
-        private System.Windows.Forms.Label label81;
-        private System.Windows.Forms.Label label82;
-        private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.Button cmdResetEnergy2;
-        private System.Windows.Forms.Label label83;
-        private System.Windows.Forms.Label label84;
-        private System.Windows.Forms.Label label85;
-        private System.Windows.Forms.Label label86;
-        private System.Windows.Forms.Label label87;
-        private System.Windows.Forms.Label label88;
-        private System.Windows.Forms.TextBox totalexp2;
-        private System.Windows.Forms.Label label89;
-        private System.Windows.Forms.TextBox vat2;
-        private System.Windows.Forms.Label label90;
-        private System.Windows.Forms.TextBox monthsv2;
-        private System.Windows.Forms.TextBox unitpeso2;
-        private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Label label91;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label40;
-        private System.Windows.Forms.Button connect1;
-        private System.Windows.Forms.TextBox ip3_1;
-        private System.Windows.Forms.TextBox portInput1;
-        private System.Windows.Forms.TextBox ip2_1;
-        private System.Windows.Forms.TextBox ip4_1;
-        private System.Windows.Forms.Label label41;
-        private System.Windows.Forms.Label label42;
-        private System.Windows.Forms.TextBox ip1_1;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Label label43;
-        private System.Windows.Forms.Label label44;
-        private System.Windows.Forms.TextBox secondsText1;
-        private System.Windows.Forms.TextBox hoursText1;
-        private System.Windows.Forms.TextBox minutesText1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label label45;
-        private System.Windows.Forms.Label label46;
-        private System.Windows.Forms.TextBox pf1;
-        private System.Windows.Forms.Label label47;
-        private System.Windows.Forms.TextBox frequency1;
-        private System.Windows.Forms.Label label48;
-        private System.Windows.Forms.Label label49;
-        private System.Windows.Forms.TextBox energy1;
-        private System.Windows.Forms.Label label50;
-        private System.Windows.Forms.TextBox power1;
-        private System.Windows.Forms.Label label51;
-        private System.Windows.Forms.TextBox current1;
-        private System.Windows.Forms.Label label52;
-        private System.Windows.Forms.TextBox voltage1;
-        private System.Windows.Forms.Label label53;
-        private System.Windows.Forms.Label label54;
-        private System.Windows.Forms.Label label55;
-        private System.Windows.Forms.Label label56;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button cmdResetEnergy1;
-        private System.Windows.Forms.Label label57;
-        private System.Windows.Forms.Label label58;
-        private System.Windows.Forms.Label label59;
-        private System.Windows.Forms.Label label60;
-        private System.Windows.Forms.Label label61;
-        private System.Windows.Forms.Label label62;
-        private System.Windows.Forms.TextBox totalexp1;
-        private System.Windows.Forms.Label label63;
-        private System.Windows.Forms.TextBox vat1;
-        private System.Windows.Forms.Label label64;
-        private System.Windows.Forms.TextBox monthsv1;
-        private System.Windows.Forms.TextBox unitpeso1;
         private System.Windows.Forms.TabPage tabLogs;
-        private System.Windows.Forms.TextBox txtLogs;
         private System.Windows.Forms.Timer tmrClock;
+        private System.Windows.Forms.ImageList imgLarge;
+        private System.Windows.Forms.ImageList imgSmall;
+        private System.Windows.Forms.ImageList ilBtnsmall;
+        private System.Windows.Forms.Button Minimize;
+        private System.Windows.Forms.Button Exit;
+        private System.IO.Ports.SerialPort spRFID;
+        private System.Windows.Forms.Timer tmrRooms;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
