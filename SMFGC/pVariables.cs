@@ -40,5 +40,9 @@ namespace SMFGC {
         public static readonly String qPZEMLog = @"INSERT INTO `pzem_tb` (`dev_id`, `volt`, `current`, `power`, `energy`, `frequency`, `pf`) VALUES (@p1, @p2, @p3, @p4, @p5, @p6, @p7);";
 
         public static readonly String qTCPBrokenCheck = @"SELECT `room_id` FROM `classroom_tb` WHERE `dev_id` =@p1 AND `status` > 0 LIMIT 1;";
+
+        public static readonly String qRoomUpdateUID = "UPDATE `classroom_tb` SET `last_uidtag`=@p1 WHERE `room_id`=@p2;";
+
+        public static readonly String qGetRoomUID = "SELECT `room_id` FROM `classroom_tb` WHERE `last_uidtag`=@p1;";
     }
 }

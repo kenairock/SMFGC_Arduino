@@ -56,11 +56,11 @@ namespace SMFGC {
                         dev_id = Convert.ToInt32(data.Split(',')[0].Replace("DEV:", ""));
                         dev_ip = ((IPEndPoint)clientSocket.Client.RemoteEndPoint).Address.ToString();
 
-                        conn.Open();
                         cmd = conn.CreateCommand();
                         cmd.CommandText = pVariables.qDeviceCheck;
                         cmd.Parameters.Add("@p1", MySqlDbType.Int32).Value = dev_id;
                         cmd.Parameters.Add("@p2", MySqlDbType.VarChar).Value = dev_ip;
+                        conn.Open();
                         reader = cmd.ExecuteReader();
 
                         if (reader.Read()) {
@@ -91,13 +91,15 @@ namespace SMFGC {
                         string uidtag = data.Split(',')[1].Split(' ')[1];
                         string tag_type = data.Split(',')[2];
 
-                        if (tag_type == "IN" && checkUidTagToDB(uidtag)) {
+                        bool valid_uidtag = checkUidTagToDB(uidtag);
+
+                        if (tag_type == "IN" && valid_uidtag) {
 
                             // Tag is ok but check schedule
-                            conn.Open();
                             cmd = conn.CreateCommand();
                             cmd.CommandText = pVariables.qCheckSched;
                             cmd.Parameters.Add("@p1", MySqlDbType.Int32).Value = room_id;
+                            conn.Open();
                             reader = cmd.ExecuteReader();
 
                             if (reader.Read()) {
@@ -122,6 +124,10 @@ namespace SMFGC {
                                 Console.WriteLine("Schedule started on Room: {0}:{1} with Schedule ID: {2}", room_id, room_name, sched_id);
 
                                 sysLog(dev_id, uidtag, "userauth", "Room: " + room_name + ", Faulty: " + faculty + ", Logged in.");
+
+                                conn.Close();
+                                RoomUpdateLastUID(room_id, uidtag);
+
                             }
                             else {
                                 // Send command to blink LEDs
@@ -134,14 +140,27 @@ namespace SMFGC {
 
                             conn.Close();
                         }
-                        else if (tag_type == "OUT" && checkUidTagToDB(uidtag)) {
+                        else if (tag_type == "OUT" && valid_uidtag) {
 
-                            //BLINKING BLUE CODE HERE!! for LOGIN != LOGOUT
-                            
-                            Console.WriteLine("Schedule ended on Room: {0}:{1} with Schedule ID: {2}", room_id, room_name, sched_id);
-                            sysLog(dev_id, uidtag, "userauth", "Room: " + room_name + ", Faulty: " + faculty + ", Logged out.");
-                            // Logs  here!
+                            // Check if LOGIN UID != LOGOUT UID
+                            // getlast UID from Database
+                            cmd = conn.CreateCommand();
+                            cmd.CommandText = pVariables.qGetRoomUID;
+                            cmd.Parameters.Add("@p1", MySqlDbType.VarChar).Value = uidtag;
+                            conn.Open();
+                            reader = cmd.ExecuteReader();
 
+                            if (reader.Read()) {
+                                // Send command to blink LEDs
+                                msg = System.Text.Encoding.ASCII.GetBytes("g");
+                                stream.Write(msg, 0, msg.Length);
+                            }
+                            else {
+                                RoomUpdateLastUID(room_id, uidtag);
+                                Console.WriteLine("Schedule ended on Room: {0}:{1} with Schedule ID: {2}", room_id, room_name, sched_id);
+                                sysLog(dev_id, uidtag, "userauth", "Room: " + room_name + ", Faulty: " + faculty + ", Logged out.");
+                            }
+                            conn.Close();
                         }
                         else {
                             // Send command to blink LEDs
@@ -160,7 +179,7 @@ namespace SMFGC {
                             Console.WriteLine("Error Reading PZEM Data.");
 
                         }
-                        else { 
+                        else {
                             data = data.Split(',')[1].Replace("PZM:", "").Trim();
 
                             String[] pzem = data.Split('-');
@@ -188,10 +207,11 @@ namespace SMFGC {
 
                     // get ping status checked by pingClient class
                     if (dev_verified) {
-                        conn.Open();
+
                         cmd = conn.CreateCommand();
                         cmd.CommandText = pVariables.qTCPBrokenCheck;
                         cmd.Parameters.Add("@p1", MySqlDbType.Int32).Value = dev_id;
+                        conn.Open();
                         reader = cmd.ExecuteReader();
 
                         if (reader.Read()) {
@@ -244,10 +264,25 @@ namespace SMFGC {
         }
 
         private void RoomUpdateSingle(int room_id, int status) {
+            if (conn.State == ConnectionState.Open) conn.Close();
+
             // Update the status and uptime
             cmd = conn.CreateCommand();
             cmd.CommandText = pVariables.qRoomUpdateSingle;
             cmd.Parameters.Add("@p1", MySqlDbType.Int32).Value = status;
+            cmd.Parameters.Add("@p2", MySqlDbType.Int32).Value = room_id;
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.Close();
+        }
+
+        private void RoomUpdateLastUID(int room_id, string uidtag) {
+            if (conn.State == ConnectionState.Open) conn.Close();
+
+            // Update room last_uidtag
+            cmd = conn.CreateCommand();
+            cmd.CommandText = pVariables.qRoomUpdateUID;
+            cmd.Parameters.Add("@p1", MySqlDbType.VarChar).Value = uidtag;
             cmd.Parameters.Add("@p2", MySqlDbType.Int32).Value = room_id;
             conn.Open();
             cmd.ExecuteNonQuery();
