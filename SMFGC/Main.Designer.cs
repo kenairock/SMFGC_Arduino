@@ -110,25 +110,6 @@
             this.imgSmall = new System.Windows.Forms.ImageList(this.components);
             this.tabMFaculty = new System.Windows.Forms.TabPage();
             this.tabFaculty = new System.Windows.Forms.TabControl();
-            this.Classroom = new System.Windows.Forms.TabPage();
-            this.ckRelay2 = new System.Windows.Forms.CheckBox();
-            this.ckRelay1 = new System.Windows.Forms.CheckBox();
-            this.label96 = new System.Windows.Forms.Label();
-            this.txtRMport = new System.Windows.Forms.TextBox();
-            this.cbRMDept = new System.Windows.Forms.ComboBox();
-            this.label22 = new System.Windows.Forms.Label();
-            this.txtRMclass = new System.Windows.Forms.TextBox();
-            this.label23 = new System.Windows.Forms.Label();
-            this.txtRMmac = new System.Windows.Forms.TextBox();
-            this.label25 = new System.Windows.Forms.Label();
-            this.txtRMip = new System.Windows.Forms.TextBox();
-            this.label26 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
-            this.label29 = new System.Windows.Forms.Label();
-            this.txtRMdev = new System.Windows.Forms.TextBox();
-            this.txtRMno = new System.Windows.Forms.TextBox();
-            this.txtRMid = new System.Windows.Forms.TextBox();
             this.Information = new System.Windows.Forms.TabPage();
             this.groupBox16 = new System.Windows.Forms.GroupBox();
             this.lblRFIDStatus = new System.Windows.Forms.Label();
@@ -150,6 +131,25 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
+            this.Classroom = new System.Windows.Forms.TabPage();
+            this.ckRelay2 = new System.Windows.Forms.CheckBox();
+            this.ckRelay1 = new System.Windows.Forms.CheckBox();
+            this.label96 = new System.Windows.Forms.Label();
+            this.txtRMport = new System.Windows.Forms.TextBox();
+            this.cbRMDept = new System.Windows.Forms.ComboBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.txtRMclass = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.txtRMmac = new System.Windows.Forms.TextBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.txtRMip = new System.Windows.Forms.TextBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.txtRMdev = new System.Windows.Forms.TextBox();
+            this.txtRMno = new System.Windows.Forms.TextBox();
+            this.txtRMid = new System.Windows.Forms.TextBox();
             this.Schedule = new System.Windows.Forms.TabPage();
             this.cbSHSubj = new System.Windows.Forms.ComboBox();
             this.dtTimeEnd = new System.Windows.Forms.DateTimePicker();
@@ -200,15 +200,19 @@
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.tabReports = new System.Windows.Forms.TabPage();
-            this.reporttab = new System.Windows.Forms.TabControl();
-            this.tabProf = new System.Windows.Forms.TabPage();
-            this.tabLogs = new System.Windows.Forms.TabPage();
+            this.dgSysLogs = new System.Windows.Forms.DataGridView();
+            this.tabReport = new System.Windows.Forms.TabControl();
+            this.tabLogAtt = new System.Windows.Forms.TabPage();
+            this.tabLogDev = new System.Windows.Forms.TabPage();
+            this.tabLogInfo = new System.Windows.Forms.TabPage();
+            this.tabLogSystem = new System.Windows.Forms.TabPage();
             this.tmrClock = new System.Windows.Forms.Timer(this.components);
             this.Minimize = new System.Windows.Forms.Button();
             this.Exit = new System.Windows.Forms.Button();
             this.spRFID = new System.IO.Ports.SerialPort(this.components);
             this.tmrRooms = new System.Windows.Forms.Timer(this.components);
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.lblLogCount = new System.Windows.Forms.Label();
+            this.bExport = new System.Windows.Forms.Button();
             this.pnlTop.SuspendLayout();
             this.pnlTime.SuspendLayout();
             this.tabMain.SuspendLayout();
@@ -222,11 +226,11 @@
             this.groupBox14.SuspendLayout();
             this.tabMFaculty.SuspendLayout();
             this.tabFaculty.SuspendLayout();
-            this.Classroom.SuspendLayout();
             this.Information.SuspendLayout();
             this.groupBox16.SuspendLayout();
             this.groupBox17.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.profpic)).BeginInit();
+            this.Classroom.SuspendLayout();
             this.Schedule.SuspendLayout();
             this.gbDay.SuspendLayout();
             this.Subject.SuspendLayout();
@@ -234,9 +238,8 @@
             this.groupBox15.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.tabReports.SuspendLayout();
-            this.reporttab.SuspendLayout();
-            this.tabProf.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgSysLogs)).BeginInit();
+            this.tabReport.SuspendLayout();
             this.SuspendLayout();
             // 
             // toplabel
@@ -283,6 +286,7 @@
             this.btnAbout.Text = "About Us";
             this.btnAbout.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnAbout.UseVisualStyleBackColor = true;
+            this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
             // 
             // ilBtns
             // 
@@ -313,6 +317,7 @@
             this.btnLogout.Text = "Logout";
             this.btnLogout.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnLogout.UseVisualStyleBackColor = true;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
             // 
             // btnReports
             // 
@@ -956,6 +961,7 @@
             this.button18.TabIndex = 3;
             this.button18.Text = "Clear";
             this.button18.UseVisualStyleBackColor = true;
+            this.button18.Visible = false;
             // 
             // label110
             // 
@@ -1075,7 +1081,7 @@
             this.txtFT.ReadOnly = true;
             this.txtFT.Size = new System.Drawing.Size(60, 20);
             this.txtFT.TabIndex = 2;
-            this.txtFT.Text = "0.0";
+            this.txtFT.Text = "11.50";
             this.txtFT.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // groupBox14
@@ -1181,11 +1187,291 @@
             this.tabFaculty.Controls.Add(this.Schedule);
             this.tabFaculty.Controls.Add(this.Subject);
             this.tabFaculty.Controls.Add(this.Department);
+            this.tabFaculty.ItemSize = new System.Drawing.Size(111, 18);
             this.tabFaculty.Location = new System.Drawing.Point(340, 15);
             this.tabFaculty.Name = "tabFaculty";
             this.tabFaculty.SelectedIndex = 0;
             this.tabFaculty.Size = new System.Drawing.Size(560, 300);
+            this.tabFaculty.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabFaculty.TabIndex = 0;
+            this.tabFaculty.SelectedIndexChanged += new System.EventHandler(this.tabFaculty_SelectedIndexChanged);
+            // 
+            // Information
+            // 
+            this.Information.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.Information.Controls.Add(this.groupBox16);
+            this.Information.Controls.Add(this.label5);
+            this.Information.Controls.Add(this.txtUid);
+            this.Information.Controls.Add(this.cbtitle);
+            this.Information.Controls.Add(this.txtUTag);
+            this.Information.Controls.Add(this.groupBox17);
+            this.Information.Controls.Add(this.label31);
+            this.Information.Controls.Add(this.txtUMI);
+            this.Information.Controls.Add(this.txtULN);
+            this.Information.Controls.Add(this.label11);
+            this.Information.Controls.Add(this.txtUFN);
+            this.Information.Controls.Add(this.label13);
+            this.Information.Controls.Add(this.label9);
+            this.Information.Controls.Add(this.label10);
+            this.Information.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.Information.Location = new System.Drawing.Point(4, 22);
+            this.Information.Name = "Information";
+            this.Information.Padding = new System.Windows.Forms.Padding(3);
+            this.Information.Size = new System.Drawing.Size(552, 274);
+            this.Information.TabIndex = 0;
+            this.Information.Text = "Information";
+            // 
+            // groupBox16
+            // 
+            this.groupBox16.Controls.Add(this.lblRFIDStatus);
+            this.groupBox16.Controls.Add(this.btnReloadPort);
+            this.groupBox16.Controls.Add(this.cboPort);
+            this.groupBox16.ForeColor = System.Drawing.Color.White;
+            this.groupBox16.Location = new System.Drawing.Point(6, 183);
+            this.groupBox16.Name = "groupBox16";
+            this.groupBox16.Size = new System.Drawing.Size(100, 85);
+            this.groupBox16.TabIndex = 26;
+            this.groupBox16.TabStop = false;
+            this.groupBox16.Text = "RFID";
+            // 
+            // lblRFIDStatus
+            // 
+            this.lblRFIDStatus.ForeColor = System.Drawing.Color.Lime;
+            this.lblRFIDStatus.Location = new System.Drawing.Point(7, 15);
+            this.lblRFIDStatus.Name = "lblRFIDStatus";
+            this.lblRFIDStatus.Size = new System.Drawing.Size(83, 14);
+            this.lblRFIDStatus.TabIndex = 23;
+            this.lblRFIDStatus.Text = "???";
+            this.lblRFIDStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btnReloadPort
+            // 
+            this.btnReloadPort.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnReloadPort.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnReloadPort.Location = new System.Drawing.Point(9, 57);
+            this.btnReloadPort.Name = "btnReloadPort";
+            this.btnReloadPort.Size = new System.Drawing.Size(80, 22);
+            this.btnReloadPort.TabIndex = 24;
+            this.btnReloadPort.Text = "REFRESH";
+            this.btnReloadPort.UseVisualStyleBackColor = false;
+            this.btnReloadPort.Click += new System.EventHandler(this.btnReloadPort_Click);
+            // 
+            // cboPort
+            // 
+            this.cboPort.BackColor = System.Drawing.Color.Black;
+            this.cboPort.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.cboPort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboPort.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cboPort.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.cboPort.FormattingEnabled = true;
+            this.cboPort.Items.AddRange(new object[] {
+            "ID",
+            "Prof ID",
+            "Title",
+            "Lastname",
+            "Firstname",
+            "MI"});
+            this.cboPort.Location = new System.Drawing.Point(9, 31);
+            this.cboPort.Name = "cboPort";
+            this.cboPort.Size = new System.Drawing.Size(80, 21);
+            this.cboPort.TabIndex = 17;
+            this.cboPort.Click += new System.EventHandler(this.cboPort_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.label5.Location = new System.Drawing.Point(59, 26);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(66, 15);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "Faculty ID :";
+            // 
+            // txtUid
+            // 
+            this.txtUid.BackColor = System.Drawing.Color.Black;
+            this.txtUid.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtUid.ForeColor = System.Drawing.Color.White;
+            this.txtUid.Location = new System.Drawing.Point(131, 26);
+            this.txtUid.Name = "txtUid";
+            this.txtUid.ReadOnly = true;
+            this.txtUid.Size = new System.Drawing.Size(40, 20);
+            this.txtUid.TabIndex = 1;
+            // 
+            // cbtitle
+            // 
+            this.cbtitle.BackColor = System.Drawing.Color.Black;
+            this.cbtitle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbtitle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbtitle.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.cbtitle.FormattingEnabled = true;
+            this.cbtitle.Items.AddRange(new object[] {
+            "Sir.",
+            "Mr.",
+            "Mrs.",
+            "Ms.",
+            "Doc."});
+            this.cbtitle.Location = new System.Drawing.Point(131, 78);
+            this.cbtitle.Name = "cbtitle";
+            this.cbtitle.Size = new System.Drawing.Size(89, 21);
+            this.cbtitle.TabIndex = 10;
+            // 
+            // txtUTag
+            // 
+            this.txtUTag.BackColor = System.Drawing.Color.Black;
+            this.txtUTag.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtUTag.ForeColor = System.Drawing.Color.White;
+            this.txtUTag.Location = new System.Drawing.Point(131, 52);
+            this.txtUTag.Name = "txtUTag";
+            this.txtUTag.ReadOnly = true;
+            this.txtUTag.Size = new System.Drawing.Size(89, 20);
+            this.txtUTag.TabIndex = 2;
+            // 
+            // groupBox17
+            // 
+            this.groupBox17.Controls.Add(this.btnImgBrowse);
+            this.groupBox17.Controls.Add(this.btnImgRemove);
+            this.groupBox17.Controls.Add(this.profpic);
+            this.groupBox17.ForeColor = System.Drawing.Color.White;
+            this.groupBox17.Location = new System.Drawing.Point(360, 6);
+            this.groupBox17.Name = "groupBox17";
+            this.groupBox17.Size = new System.Drawing.Size(170, 206);
+            this.groupBox17.TabIndex = 18;
+            this.groupBox17.TabStop = false;
+            this.groupBox17.Text = "Picture";
+            // 
+            // btnImgBrowse
+            // 
+            this.btnImgBrowse.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnImgBrowse.Enabled = false;
+            this.btnImgBrowse.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnImgBrowse.Location = new System.Drawing.Point(11, 167);
+            this.btnImgBrowse.Name = "btnImgBrowse";
+            this.btnImgBrowse.Size = new System.Drawing.Size(150, 28);
+            this.btnImgBrowse.TabIndex = 17;
+            this.btnImgBrowse.Text = "BROWSE";
+            this.btnImgBrowse.UseVisualStyleBackColor = false;
+            this.btnImgBrowse.Click += new System.EventHandler(this.btnImgBrowse_Click);
+            // 
+            // btnImgRemove
+            // 
+            this.btnImgRemove.BackColor = System.Drawing.Color.Transparent;
+            this.btnImgRemove.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnImgRemove.FlatAppearance.BorderSize = 0;
+            this.btnImgRemove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnImgRemove.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Pixel, ((byte)(0)));
+            this.btnImgRemove.ForeColor = System.Drawing.Color.Red;
+            this.btnImgRemove.Location = new System.Drawing.Point(139, 22);
+            this.btnImgRemove.Name = "btnImgRemove";
+            this.btnImgRemove.Size = new System.Drawing.Size(20, 20);
+            this.btnImgRemove.TabIndex = 16;
+            this.btnImgRemove.Text = "X";
+            this.btnImgRemove.UseVisualStyleBackColor = false;
+            this.btnImgRemove.Visible = false;
+            this.btnImgRemove.Click += new System.EventHandler(this.btnImgRemove_Click);
+            // 
+            // profpic
+            // 
+            this.profpic.BackColor = System.Drawing.Color.Transparent;
+            this.profpic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.profpic.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.profpic.Image = global::SMFGC.Properties.Resources.user;
+            this.profpic.InitialImage = null;
+            this.profpic.Location = new System.Drawing.Point(11, 20);
+            this.profpic.Name = "profpic";
+            this.profpic.Size = new System.Drawing.Size(150, 140);
+            this.profpic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.profpic.TabIndex = 10;
+            this.profpic.TabStop = false;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label31.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.label31.Location = new System.Drawing.Point(89, 79);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(36, 15);
+            this.label31.TabIndex = 16;
+            this.label31.Text = "Title :";
+            // 
+            // txtUMI
+            // 
+            this.txtUMI.BackColor = System.Drawing.Color.Black;
+            this.txtUMI.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtUMI.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.txtUMI.Location = new System.Drawing.Point(131, 157);
+            this.txtUMI.MaxLength = 2;
+            this.txtUMI.Name = "txtUMI";
+            this.txtUMI.Size = new System.Drawing.Size(40, 20);
+            this.txtUMI.TabIndex = 11;
+            // 
+            // txtULN
+            // 
+            this.txtULN.BackColor = System.Drawing.Color.Black;
+            this.txtULN.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtULN.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.txtULN.Location = new System.Drawing.Point(131, 105);
+            this.txtULN.MaxLength = 25;
+            this.txtULN.Name = "txtULN";
+            this.txtULN.Size = new System.Drawing.Size(206, 20);
+            this.txtULN.TabIndex = 3;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.label11.Location = new System.Drawing.Point(52, 105);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(73, 15);
+            this.label11.TabIndex = 9;
+            this.label11.Text = "Last Name :";
+            // 
+            // txtUFN
+            // 
+            this.txtUFN.BackColor = System.Drawing.Color.Black;
+            this.txtUFN.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtUFN.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.txtUFN.Location = new System.Drawing.Point(131, 131);
+            this.txtUFN.MaxLength = 25;
+            this.txtUFN.Name = "txtUFN";
+            this.txtUFN.Size = new System.Drawing.Size(206, 20);
+            this.txtUFN.TabIndex = 4;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.label13.Location = new System.Drawing.Point(91, 52);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(34, 15);
+            this.label13.TabIndex = 12;
+            this.label13.Text = "Tag :";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.label9.Location = new System.Drawing.Point(92, 158);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(33, 15);
+            this.label9.TabIndex = 7;
+            this.label9.Text = "M.I. :";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.label10.Location = new System.Drawing.Point(52, 131);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(73, 15);
+            this.label10.TabIndex = 8;
+            this.label10.Text = "First Name :";
             // 
             // Classroom
             // 
@@ -1416,275 +1702,6 @@
             this.txtRMid.ReadOnly = true;
             this.txtRMid.Size = new System.Drawing.Size(40, 20);
             this.txtRMid.TabIndex = 29;
-            // 
-            // Information
-            // 
-            this.Information.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.Information.Controls.Add(this.groupBox16);
-            this.Information.Controls.Add(this.label5);
-            this.Information.Controls.Add(this.txtUid);
-            this.Information.Controls.Add(this.cbtitle);
-            this.Information.Controls.Add(this.txtUTag);
-            this.Information.Controls.Add(this.groupBox17);
-            this.Information.Controls.Add(this.label31);
-            this.Information.Controls.Add(this.txtUMI);
-            this.Information.Controls.Add(this.txtULN);
-            this.Information.Controls.Add(this.label11);
-            this.Information.Controls.Add(this.txtUFN);
-            this.Information.Controls.Add(this.label13);
-            this.Information.Controls.Add(this.label9);
-            this.Information.Controls.Add(this.label10);
-            this.Information.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.Information.Location = new System.Drawing.Point(4, 22);
-            this.Information.Name = "Information";
-            this.Information.Padding = new System.Windows.Forms.Padding(3);
-            this.Information.Size = new System.Drawing.Size(552, 274);
-            this.Information.TabIndex = 0;
-            this.Information.Text = "Information";
-            // 
-            // groupBox16
-            // 
-            this.groupBox16.Controls.Add(this.lblRFIDStatus);
-            this.groupBox16.Controls.Add(this.btnReloadPort);
-            this.groupBox16.Controls.Add(this.cboPort);
-            this.groupBox16.ForeColor = System.Drawing.Color.White;
-            this.groupBox16.Location = new System.Drawing.Point(6, 183);
-            this.groupBox16.Name = "groupBox16";
-            this.groupBox16.Size = new System.Drawing.Size(100, 85);
-            this.groupBox16.TabIndex = 26;
-            this.groupBox16.TabStop = false;
-            this.groupBox16.Text = "RFID";
-            // 
-            // lblRFIDStatus
-            // 
-            this.lblRFIDStatus.ForeColor = System.Drawing.Color.Lime;
-            this.lblRFIDStatus.Location = new System.Drawing.Point(7, 15);
-            this.lblRFIDStatus.Name = "lblRFIDStatus";
-            this.lblRFIDStatus.Size = new System.Drawing.Size(83, 14);
-            this.lblRFIDStatus.TabIndex = 23;
-            this.lblRFIDStatus.Text = "???";
-            this.lblRFIDStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // btnReloadPort
-            // 
-            this.btnReloadPort.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnReloadPort.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnReloadPort.Location = new System.Drawing.Point(9, 57);
-            this.btnReloadPort.Name = "btnReloadPort";
-            this.btnReloadPort.Size = new System.Drawing.Size(80, 22);
-            this.btnReloadPort.TabIndex = 24;
-            this.btnReloadPort.Text = "REFRESH";
-            this.btnReloadPort.UseVisualStyleBackColor = false;
-            this.btnReloadPort.Click += new System.EventHandler(this.btnReloadPort_Click);
-            // 
-            // cboPort
-            // 
-            this.cboPort.BackColor = System.Drawing.Color.Black;
-            this.cboPort.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.cboPort.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboPort.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cboPort.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.cboPort.FormattingEnabled = true;
-            this.cboPort.Items.AddRange(new object[] {
-            "ID",
-            "Prof ID",
-            "Title",
-            "Lastname",
-            "Firstname",
-            "MI"});
-            this.cboPort.Location = new System.Drawing.Point(9, 31);
-            this.cboPort.Name = "cboPort";
-            this.cboPort.Size = new System.Drawing.Size(80, 21);
-            this.cboPort.TabIndex = 17;
-            this.cboPort.Click += new System.EventHandler(this.cboPort_Click);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.label5.Location = new System.Drawing.Point(59, 26);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(66, 15);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "Faculty ID :";
-            // 
-            // txtUid
-            // 
-            this.txtUid.BackColor = System.Drawing.Color.Black;
-            this.txtUid.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtUid.ForeColor = System.Drawing.Color.White;
-            this.txtUid.Location = new System.Drawing.Point(131, 26);
-            this.txtUid.Name = "txtUid";
-            this.txtUid.ReadOnly = true;
-            this.txtUid.Size = new System.Drawing.Size(40, 20);
-            this.txtUid.TabIndex = 1;
-            // 
-            // cbtitle
-            // 
-            this.cbtitle.BackColor = System.Drawing.Color.Black;
-            this.cbtitle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbtitle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbtitle.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.cbtitle.FormattingEnabled = true;
-            this.cbtitle.Items.AddRange(new object[] {
-            "Mr.",
-            "Mrs.",
-            "Ms.",
-            "Doc."});
-            this.cbtitle.Location = new System.Drawing.Point(131, 78);
-            this.cbtitle.Name = "cbtitle";
-            this.cbtitle.Size = new System.Drawing.Size(89, 21);
-            this.cbtitle.TabIndex = 10;
-            // 
-            // txtUTag
-            // 
-            this.txtUTag.BackColor = System.Drawing.Color.Black;
-            this.txtUTag.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtUTag.ForeColor = System.Drawing.Color.White;
-            this.txtUTag.Location = new System.Drawing.Point(131, 52);
-            this.txtUTag.Name = "txtUTag";
-            this.txtUTag.ReadOnly = true;
-            this.txtUTag.Size = new System.Drawing.Size(89, 20);
-            this.txtUTag.TabIndex = 2;
-            // 
-            // groupBox17
-            // 
-            this.groupBox17.Controls.Add(this.btnImgBrowse);
-            this.groupBox17.Controls.Add(this.btnImgRemove);
-            this.groupBox17.Controls.Add(this.profpic);
-            this.groupBox17.ForeColor = System.Drawing.Color.White;
-            this.groupBox17.Location = new System.Drawing.Point(360, 6);
-            this.groupBox17.Name = "groupBox17";
-            this.groupBox17.Size = new System.Drawing.Size(170, 190);
-            this.groupBox17.TabIndex = 18;
-            this.groupBox17.TabStop = false;
-            this.groupBox17.Text = "Picture";
-            // 
-            // btnImgBrowse
-            // 
-            this.btnImgBrowse.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnImgBrowse.Enabled = false;
-            this.btnImgBrowse.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnImgBrowse.Location = new System.Drawing.Point(11, 153);
-            this.btnImgBrowse.Name = "btnImgBrowse";
-            this.btnImgBrowse.Size = new System.Drawing.Size(65, 28);
-            this.btnImgBrowse.TabIndex = 17;
-            this.btnImgBrowse.Text = "BROWSE";
-            this.btnImgBrowse.UseVisualStyleBackColor = false;
-            // 
-            // btnImgRemove
-            // 
-            this.btnImgRemove.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnImgRemove.Enabled = false;
-            this.btnImgRemove.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnImgRemove.Location = new System.Drawing.Point(96, 153);
-            this.btnImgRemove.Name = "btnImgRemove";
-            this.btnImgRemove.Size = new System.Drawing.Size(65, 28);
-            this.btnImgRemove.TabIndex = 16;
-            this.btnImgRemove.Text = "REMOVE";
-            this.btnImgRemove.UseVisualStyleBackColor = false;
-            // 
-            // profpic
-            // 
-            this.profpic.BackColor = System.Drawing.Color.Transparent;
-            this.profpic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.profpic.Image = global::SMFGC.Properties.Resources.user;
-            this.profpic.InitialImage = null;
-            this.profpic.Location = new System.Drawing.Point(11, 16);
-            this.profpic.Name = "profpic";
-            this.profpic.Size = new System.Drawing.Size(150, 130);
-            this.profpic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.profpic.TabIndex = 10;
-            this.profpic.TabStop = false;
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label31.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.label31.Location = new System.Drawing.Point(89, 79);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(36, 15);
-            this.label31.TabIndex = 16;
-            this.label31.Text = "Title :";
-            // 
-            // txtUMI
-            // 
-            this.txtUMI.BackColor = System.Drawing.Color.Black;
-            this.txtUMI.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtUMI.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.txtUMI.Location = new System.Drawing.Point(131, 157);
-            this.txtUMI.MaxLength = 2;
-            this.txtUMI.Name = "txtUMI";
-            this.txtUMI.Size = new System.Drawing.Size(40, 20);
-            this.txtUMI.TabIndex = 11;
-            // 
-            // txtULN
-            // 
-            this.txtULN.BackColor = System.Drawing.Color.Black;
-            this.txtULN.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtULN.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.txtULN.Location = new System.Drawing.Point(131, 105);
-            this.txtULN.MaxLength = 25;
-            this.txtULN.Name = "txtULN";
-            this.txtULN.Size = new System.Drawing.Size(206, 20);
-            this.txtULN.TabIndex = 3;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.label11.Location = new System.Drawing.Point(52, 105);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(73, 15);
-            this.label11.TabIndex = 9;
-            this.label11.Text = "Last Name :";
-            // 
-            // txtUFN
-            // 
-            this.txtUFN.BackColor = System.Drawing.Color.Black;
-            this.txtUFN.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtUFN.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.txtUFN.Location = new System.Drawing.Point(131, 131);
-            this.txtUFN.MaxLength = 25;
-            this.txtUFN.Name = "txtUFN";
-            this.txtUFN.Size = new System.Drawing.Size(206, 20);
-            this.txtUFN.TabIndex = 4;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.label13.Location = new System.Drawing.Point(91, 52);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(34, 15);
-            this.label13.TabIndex = 12;
-            this.label13.Text = "Tag :";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.label9.Location = new System.Drawing.Point(92, 158);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(33, 15);
-            this.label9.TabIndex = 7;
-            this.label9.Text = "M.I. :";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.label10.Location = new System.Drawing.Point(52, 131);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(73, 15);
-            this.label10.TabIndex = 8;
-            this.label10.Text = "First Name :";
             // 
             // Schedule
             // 
@@ -2232,6 +2249,7 @@
             // 
             // bRefresh
             // 
+            this.bRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.bRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.bRefresh.ForeColor = System.Drawing.Color.White;
             this.bRefresh.Location = new System.Drawing.Point(22, 461);
@@ -2289,6 +2307,7 @@
             this.cbSearch.Name = "cbSearch";
             this.cbSearch.Size = new System.Drawing.Size(121, 21);
             this.cbSearch.TabIndex = 6;
+            this.cbSearch.SelectedIndexChanged += new System.EventHandler(this.cbSearch_SelectedIndexChanged);
             // 
             // label6
             // 
@@ -2311,6 +2330,7 @@
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(185, 20);
             this.txtSearch.TabIndex = 0;
+            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
             // label12
             // 
@@ -2327,48 +2347,93 @@
             // tabReports
             // 
             this.tabReports.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.tabReports.Controls.Add(this.reporttab);
+            this.tabReports.Controls.Add(this.bExport);
+            this.tabReports.Controls.Add(this.lblLogCount);
+            this.tabReports.Controls.Add(this.dgSysLogs);
+            this.tabReports.Controls.Add(this.tabReport);
             this.tabReports.Location = new System.Drawing.Point(4, 24);
             this.tabReports.Name = "tabReports";
             this.tabReports.Size = new System.Drawing.Size(942, 497);
             this.tabReports.TabIndex = 3;
             this.tabReports.Text = "REPORTS";
             // 
-            // reporttab
+            // dgSysLogs
             // 
-            this.reporttab.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dgSysLogs.AllowUserToAddRows = false;
+            this.dgSysLogs.AllowUserToDeleteRows = false;
+            this.dgSysLogs.AllowUserToResizeColumns = false;
+            this.dgSysLogs.AllowUserToResizeRows = false;
+            this.dgSysLogs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.reporttab.Controls.Add(this.tabProf);
-            this.reporttab.Controls.Add(this.tabLogs);
-            this.reporttab.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.reporttab.Location = new System.Drawing.Point(3, 3);
-            this.reporttab.Name = "reporttab";
-            this.reporttab.SelectedIndex = 0;
-            this.reporttab.Size = new System.Drawing.Size(936, 491);
-            this.reporttab.TabIndex = 0;
+            this.dgSysLogs.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgSysLogs.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgSysLogs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dgSysLogs.Location = new System.Drawing.Point(3, 28);
+            this.dgSysLogs.Name = "dgSysLogs";
+            this.dgSysLogs.ReadOnly = true;
+            this.dgSysLogs.RowHeadersVisible = false;
+            this.dgSysLogs.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dgSysLogs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgSysLogs.Size = new System.Drawing.Size(936, 466);
+            this.dgSysLogs.TabIndex = 0;
             // 
-            // tabProf
+            // tabReport
             // 
-            this.tabProf.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.tabProf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tabProf.Controls.Add(this.dataGridView1);
-            this.tabProf.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.tabProf.Location = new System.Drawing.Point(4, 22);
-            this.tabProf.Name = "tabProf";
-            this.tabProf.Padding = new System.Windows.Forms.Padding(3);
-            this.tabProf.Size = new System.Drawing.Size(928, 465);
-            this.tabProf.TabIndex = 0;
-            this.tabProf.Text = "Attendance";
+            this.tabReport.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabReport.Controls.Add(this.tabLogAtt);
+            this.tabReport.Controls.Add(this.tabLogDev);
+            this.tabReport.Controls.Add(this.tabLogInfo);
+            this.tabReport.Controls.Add(this.tabLogSystem);
+            this.tabReport.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.tabReport.ItemSize = new System.Drawing.Size(150, 18);
+            this.tabReport.Location = new System.Drawing.Point(3, 3);
+            this.tabReport.Name = "tabReport";
+            this.tabReport.SelectedIndex = 0;
+            this.tabReport.Size = new System.Drawing.Size(936, 25);
+            this.tabReport.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
+            this.tabReport.TabIndex = 0;
+            this.tabReport.SelectedIndexChanged += new System.EventHandler(this.tabReport_SelectedIndexChanged);
             // 
-            // tabLogs
+            // tabLogAtt
             // 
-            this.tabLogs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.tabLogs.Location = new System.Drawing.Point(4, 22);
-            this.tabLogs.Name = "tabLogs";
-            this.tabLogs.Size = new System.Drawing.Size(928, 465);
-            this.tabLogs.TabIndex = 2;
-            this.tabLogs.Text = "System Logs";
+            this.tabLogAtt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.tabLogAtt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tabLogAtt.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.tabLogAtt.Location = new System.Drawing.Point(4, 22);
+            this.tabLogAtt.Name = "tabLogAtt";
+            this.tabLogAtt.Padding = new System.Windows.Forms.Padding(3);
+            this.tabLogAtt.Size = new System.Drawing.Size(928, 0);
+            this.tabLogAtt.TabIndex = 0;
+            this.tabLogAtt.Text = "Attendance / User-Auth";
+            // 
+            // tabLogDev
+            // 
+            this.tabLogDev.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.tabLogDev.Location = new System.Drawing.Point(4, 22);
+            this.tabLogDev.Name = "tabLogDev";
+            this.tabLogDev.Size = new System.Drawing.Size(928, 0);
+            this.tabLogDev.TabIndex = 2;
+            this.tabLogDev.Text = "Device";
+            // 
+            // tabLogInfo
+            // 
+            this.tabLogInfo.Location = new System.Drawing.Point(4, 22);
+            this.tabLogInfo.Name = "tabLogInfo";
+            this.tabLogInfo.Size = new System.Drawing.Size(928, 0);
+            this.tabLogInfo.TabIndex = 4;
+            this.tabLogInfo.Text = "Information";
+            this.tabLogInfo.UseVisualStyleBackColor = true;
+            // 
+            // tabLogSystem
+            // 
+            this.tabLogSystem.Location = new System.Drawing.Point(4, 22);
+            this.tabLogSystem.Name = "tabLogSystem";
+            this.tabLogSystem.Size = new System.Drawing.Size(928, 0);
+            this.tabLogSystem.TabIndex = 3;
+            this.tabLogSystem.Text = "System";
+            this.tabLogSystem.UseVisualStyleBackColor = true;
             // 
             // tmrClock
             // 
@@ -2414,16 +2479,36 @@
             // tmrRooms
             // 
             this.tmrRooms.Enabled = true;
-            this.tmrRooms.Interval = 3000;
+            this.tmrRooms.Interval = 5000;
             this.tmrRooms.Tick += new System.EventHandler(this.tmrRooms_Tick);
             // 
-            // dataGridView1
+            // lblLogCount
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(6, 6);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(240, 150);
-            this.dataGridView1.TabIndex = 0;
+            this.lblLogCount.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblLogCount.ForeColor = System.Drawing.Color.White;
+            this.lblLogCount.Location = new System.Drawing.Point(612, 4);
+            this.lblLogCount.Name = "lblLogCount";
+            this.lblLogCount.Size = new System.Drawing.Size(250, 15);
+            this.lblLogCount.TabIndex = 0;
+            this.lblLogCount.Text = "ROW COUNT";
+            this.lblLogCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // bExport
+            // 
+            this.bExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bExport.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.bExport.FlatAppearance.BorderSize = 0;
+            this.bExport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bExport.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bExport.ForeColor = System.Drawing.Color.White;
+            this.bExport.Location = new System.Drawing.Point(862, 1);
+            this.bExport.Name = "bExport";
+            this.bExport.Size = new System.Drawing.Size(75, 20);
+            this.bExport.TabIndex = 1;
+            this.bExport.Text = "EXPORT";
+            this.bExport.UseVisualStyleBackColor = true;
+            this.bExport.Click += new System.EventHandler(this.bExport_Click);
             // 
             // Main
             // 
@@ -2465,13 +2550,13 @@
             this.tabMFaculty.ResumeLayout(false);
             this.tabMFaculty.PerformLayout();
             this.tabFaculty.ResumeLayout(false);
-            this.Classroom.ResumeLayout(false);
-            this.Classroom.PerformLayout();
             this.Information.ResumeLayout(false);
             this.Information.PerformLayout();
             this.groupBox16.ResumeLayout(false);
             this.groupBox17.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.profpic)).EndInit();
+            this.Classroom.ResumeLayout(false);
+            this.Classroom.PerformLayout();
             this.Schedule.ResumeLayout(false);
             this.Schedule.PerformLayout();
             this.gbDay.ResumeLayout(false);
@@ -2483,9 +2568,8 @@
             this.groupBox15.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
             this.tabReports.ResumeLayout(false);
-            this.reporttab.ResumeLayout(false);
-            this.tabProf.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgSysLogs)).EndInit();
+            this.tabReport.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2660,9 +2744,9 @@
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TabPage tabReports;
-        private System.Windows.Forms.TabControl reporttab;
-        private System.Windows.Forms.TabPage tabProf;
-        private System.Windows.Forms.TabPage tabLogs;
+        private System.Windows.Forms.TabControl tabReport;
+        private System.Windows.Forms.TabPage tabLogAtt;
+        private System.Windows.Forms.TabPage tabLogDev;
         private System.Windows.Forms.Timer tmrClock;
         private System.Windows.Forms.ImageList imgLarge;
         private System.Windows.Forms.ImageList imgSmall;
@@ -2671,6 +2755,10 @@
         private System.Windows.Forms.Button Exit;
         private System.IO.Ports.SerialPort spRFID;
         private System.Windows.Forms.Timer tmrRooms;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgSysLogs;
+        private System.Windows.Forms.TabPage tabLogInfo;
+        private System.Windows.Forms.TabPage tabLogSystem;
+        private System.Windows.Forms.Label lblLogCount;
+        private System.Windows.Forms.Button bExport;
     }
 }

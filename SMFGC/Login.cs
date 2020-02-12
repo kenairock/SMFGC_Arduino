@@ -9,6 +9,7 @@ namespace SMFGC {
         MySqlCommand cmd;
         MySqlDataReader reader;
 
+        Main frm_main = new Main();
         public Login() {
             InitializeComponent();
             this.Text += " - " + pVariables.Project_Name;
@@ -45,8 +46,12 @@ namespace SMFGC {
                     }
 
                     if (pVariables.AdminMode || pVariables.DeptMode) {
+                        txt_username.Text = "Username";
+                        txt_password.Text = "Password";
+                        txt_password.PasswordChar  = '\0';
                         this.Hide();
-                        new Main().Show();
+                        frm_main.setMode();
+                        frm_main.Show();
                     }
 
                 }
@@ -68,6 +73,7 @@ namespace SMFGC {
                 conn.Open();
                 if (conn.State == ConnectionState.Open) {
                     checkConnection.Text = "Connected!";
+                    frm_main.Activate();
                     conn.Close();
                 }
             }
@@ -89,8 +95,8 @@ namespace SMFGC {
         private void txt_password_Click(object sender, EventArgs e) {
             if (txt_password.Text == "Password") {
                 txt_password.Clear();
-                txt_password.PasswordChar = '●';
             }
+            txt_password.PasswordChar = '●';
         }
     }
 }

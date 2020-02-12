@@ -45,5 +45,20 @@ namespace SMFGC {
         public static readonly String qRoomUpdateUID = "UPDATE `classroom_tb` SET `last_uidtag`=@p1, `status`=@p2 WHERE `room_id`=@p3;";
 
         public static readonly String qGetRoomUID = "SELECT `room_id` FROM `classroom_tb` WHERE `last_uidtag`=@p1;";
+
+        public static readonly String qLogReport = @"SELECT DATE_FORMAT(`tstamp`, '%b %d, %Y - %r') AS `Date/Time Logged`,
+                                                      IF(`dev_id` = 0, '-', `dev_id`) AS `Device ID`,
+                                                      IF(`uid` = 0, '-', `uid`) AS `UID Tag`,
+                                                      IF(`alert` = 64,'Information',
+                                                        IF(`alert` = 48,'Warning',
+                                                          IF(`alert` = 32,'Question',
+                                                            IF(`alert` = 16, 'Error', '-')
+                                                            )
+                                                          )
+                                                        ) AS `Alert`,
+                                                      `message` AS `Message` 
+                                                    FROM
+                                                      logs_tb
+                                                    WHERE `process` = @p1 ORDER BY `tstamp` DESC LIMIT 100;";
     }
 }

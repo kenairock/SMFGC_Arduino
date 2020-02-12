@@ -205,7 +205,7 @@ namespace SMFGC {
 
                         if (data.Contains("NaN")) {
 
-                            sysLog(dev_id, "", "pzem", "Part Zone Expansion Module (PZEM) is not reading data.", 16);
+                            sysLog(dev_id, "", "system", "Part Zone Expansion Module (PZEM) is not reading data.", 16);
                             Console.WriteLine("Error Reading PZEM Data.");
 
                         }

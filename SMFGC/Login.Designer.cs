@@ -68,6 +68,7 @@
             this.txt_password.TabIndex = 14;
             this.txt_password.Text = "Password";
             this.txt_password.Click += new System.EventHandler(this.txt_password_Click);
+            this.txt_password.Enter += new System.EventHandler(this.txt_password_Click);
             // 
             // pictureBox2
             // 
