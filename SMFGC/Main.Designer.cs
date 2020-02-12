@@ -25,11 +25,11 @@
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("514", 0);
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("515", 1);
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("516", 2);
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("517", 3);
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("514", 0);
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("515", 1);
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("516", 2);
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("517", 3);
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toplabel = new System.Windows.Forms.Label();
             this.pnlTop = new System.Windows.Forms.Panel();
             this.btnAbout = new System.Windows.Forms.Button();
@@ -200,6 +200,8 @@
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.tabReports = new System.Windows.Forms.TabPage();
+            this.bExport = new System.Windows.Forms.Button();
+            this.lblLogCount = new System.Windows.Forms.Label();
             this.dgSysLogs = new System.Windows.Forms.DataGridView();
             this.tabReport = new System.Windows.Forms.TabControl();
             this.tabLogAtt = new System.Windows.Forms.TabPage();
@@ -211,8 +213,6 @@
             this.Exit = new System.Windows.Forms.Button();
             this.spRFID = new System.IO.Ports.SerialPort(this.components);
             this.tmrRooms = new System.Windows.Forms.Timer(this.components);
-            this.lblLogCount = new System.Windows.Forms.Label();
-            this.bExport = new System.Windows.Forms.Button();
             this.pnlTop.SuspendLayout();
             this.pnlTime.SuspendLayout();
             this.tabMain.SuspendLayout();
@@ -710,7 +710,7 @@
             this.groupBox10.Size = new System.Drawing.Size(349, 58);
             this.groupBox10.TabIndex = 27;
             this.groupBox10.TabStop = false;
-            this.groupBox10.Text = "Up Time";
+            this.groupBox10.Text = "Time Left";
             // 
             // lblUpTime
             // 
@@ -1067,22 +1067,22 @@
             this.txtMS.BackColor = System.Drawing.Color.White;
             this.txtMS.Location = new System.Drawing.Point(98, 45);
             this.txtMS.Name = "txtMS";
-            this.txtMS.ReadOnly = true;
             this.txtMS.Size = new System.Drawing.Size(60, 20);
             this.txtMS.TabIndex = 2;
-            this.txtMS.Text = "0.0";
+            this.txtMS.Text = "9.0";
             this.txtMS.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtMS.TextChanged += new System.EventHandler(this.txtMS_TextChanged);
             // 
             // txtFT
             // 
             this.txtFT.BackColor = System.Drawing.Color.White;
             this.txtFT.Location = new System.Drawing.Point(98, 19);
             this.txtFT.Name = "txtFT";
-            this.txtFT.ReadOnly = true;
             this.txtFT.Size = new System.Drawing.Size(60, 20);
             this.txtFT.TabIndex = 2;
-            this.txtFT.Text = "11.50";
+            this.txtFT.Text = "10.39";
             this.txtFT.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtFT.TextChanged += new System.EventHandler(this.txtFT_TextChanged);
             // 
             // groupBox14
             // 
@@ -1129,10 +1129,10 @@
             this.lvRooms.ForeColor = System.Drawing.Color.White;
             this.lvRooms.HideSelection = false;
             this.lvRooms.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem5,
-            listViewItem6,
-            listViewItem7,
-            listViewItem8});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4});
             this.lvRooms.LabelWrap = false;
             this.lvRooms.LargeImageList = this.imgLarge;
             this.lvRooms.Location = new System.Drawing.Point(379, 66);
@@ -2270,14 +2270,14 @@
             this.dataGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
             this.dataGrid.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGrid.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGrid.DefaultCellStyle = dataGridViewCellStyle3;
             this.dataGrid.Location = new System.Drawing.Point(22, 59);
             this.dataGrid.MultiSelect = false;
             this.dataGrid.Name = "dataGrid";
@@ -2356,6 +2356,34 @@
             this.tabReports.Size = new System.Drawing.Size(942, 497);
             this.tabReports.TabIndex = 3;
             this.tabReports.Text = "REPORTS";
+            // 
+            // bExport
+            // 
+            this.bExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bExport.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.bExport.FlatAppearance.BorderSize = 0;
+            this.bExport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bExport.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bExport.ForeColor = System.Drawing.Color.White;
+            this.bExport.Location = new System.Drawing.Point(862, 1);
+            this.bExport.Name = "bExport";
+            this.bExport.Size = new System.Drawing.Size(75, 20);
+            this.bExport.TabIndex = 1;
+            this.bExport.Text = "EXPORT";
+            this.bExport.UseVisualStyleBackColor = true;
+            this.bExport.Click += new System.EventHandler(this.bExport_Click);
+            // 
+            // lblLogCount
+            // 
+            this.lblLogCount.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblLogCount.ForeColor = System.Drawing.Color.White;
+            this.lblLogCount.Location = new System.Drawing.Point(612, 4);
+            this.lblLogCount.Name = "lblLogCount";
+            this.lblLogCount.Size = new System.Drawing.Size(250, 15);
+            this.lblLogCount.TabIndex = 0;
+            this.lblLogCount.Text = "ROW COUNT";
+            this.lblLogCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // dgSysLogs
             // 
@@ -2481,34 +2509,6 @@
             this.tmrRooms.Enabled = true;
             this.tmrRooms.Interval = 5000;
             this.tmrRooms.Tick += new System.EventHandler(this.tmrRooms_Tick);
-            // 
-            // lblLogCount
-            // 
-            this.lblLogCount.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblLogCount.ForeColor = System.Drawing.Color.White;
-            this.lblLogCount.Location = new System.Drawing.Point(612, 4);
-            this.lblLogCount.Name = "lblLogCount";
-            this.lblLogCount.Size = new System.Drawing.Size(250, 15);
-            this.lblLogCount.TabIndex = 0;
-            this.lblLogCount.Text = "ROW COUNT";
-            this.lblLogCount.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // bExport
-            // 
-            this.bExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.bExport.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.bExport.FlatAppearance.BorderSize = 0;
-            this.bExport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bExport.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bExport.ForeColor = System.Drawing.Color.White;
-            this.bExport.Location = new System.Drawing.Point(862, 1);
-            this.bExport.Name = "bExport";
-            this.bExport.Size = new System.Drawing.Size(75, 20);
-            this.bExport.TabIndex = 1;
-            this.bExport.Text = "EXPORT";
-            this.bExport.UseVisualStyleBackColor = true;
-            this.bExport.Click += new System.EventHandler(this.bExport_Click);
             // 
             // Main
             // 

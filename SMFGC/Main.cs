@@ -129,7 +129,8 @@ namespace SMFGC {
                 var listOfItems = new List<ListViewItem>();
 
                 cmd = conn.CreateCommand();
-                cmd.CommandText = @"SELECT `room_id`, `classroom`, `dev_id`, `ip_add`, `mac_add` , `port`, `uptime`,`status` FROM `classroom_tb`";
+                cmd.CommandText = @"SELECT `room_id`, `classroom`, `dev_id`, 
+                    `ip_add`, `mac_add` , `port`, `uptime`,`status` FROM `classroom_tb`";
 
                 conn.Open();
                 reader = cmd.ExecuteReader();
@@ -187,8 +188,6 @@ namespace SMFGC {
             txtEnergy.Text = "0.0";
             txtFreq.Text = "0.0";
             txtPF.Text = "0.0";
-            txtFT.Text = "0.0";
-            txtMS.Text = "0.0";
             txtVat.Text = "0.0";
             txtExpense.Text = "0.0";
             lblStatus.Text = "...";
@@ -727,7 +726,8 @@ namespace SMFGC {
             try {
                 if (lvRooms.SelectedItems.Count > 0) {
                     bool has_sched = false;
-                    
+                    string orig_start = "", orig_end = "";
+
                     room_index = lvRooms.SelectedIndices[0];
 
                     lblRmName.Text = "ROOM " + lvRooms.Items[room_index].Text;
@@ -758,6 +758,8 @@ namespace SMFGC {
                     cmd.CommandText = @"SELECT `day`,
                             TIME_FORMAT(`start_time`, '%h:%i %p') AS `start`,
                             TIME_FORMAT(`end_time`, '%h:%i %p') AS `end`,
+                            `start_time` AS `o_start`,
+                            `end_time` AS `o_end`,
                             st.`code`, st.`descpt`, crt.`course_name`, 
                             CONCAT(ut.`title`, ' ', ut.`last_name`, ' ', ut.`first_name`) AS faculty
                         FROM
@@ -783,8 +785,11 @@ namespace SMFGC {
                         txtDay.Text = reader["day"].ToString();
                         txtTStart.Text = reader["start"].ToString();
                         txtTEnd.Text = reader["end"].ToString();
-                        TimeSpan tdiff = DateTime.Now.Subtract(DateTime.Parse(lvRooms.Items[room_index].SubItems[5].Text));
+                        TimeSpan tdiff = DateTime.Parse(reader["end"].ToString()) - DateTime.Now;
                         lblUpTime.Text = tdiff.Hours.ToString() + "H : " + tdiff.Minutes.ToString() + "M : " + tdiff.Seconds.ToString() + "S";
+                        has_sched = true;
+                        orig_start = reader["o_start"].ToString();
+                        orig_end = reader["o_end"].ToString();
                     }
                     conn.Close();
 
@@ -803,13 +808,20 @@ namespace SMFGC {
                                                 AND CAST(@p3 AS DATETIME));";
 
                         cmd.Parameters.AddWithValue("@p1", lvRooms.Items[room_index].SubItems[6].Text);
-                        cmd.Parameters.AddWithValue("@p2", DateTime.Now.ToString());
-                        cmd.Parameters.AddWithValue("@p2", DateTime.Now.DayOfWeek.ToString());
+                        cmd.Parameters.AddWithValue("@p2", DateTime.Now.ToString("yyyy-MM-dd " + orig_start));
+                        cmd.Parameters.AddWithValue("@p3", DateTime.Now.ToString("yyyy-MM-dd " + orig_end));
 
                         conn.Open();
                         reader = cmd.ExecuteReader();
                         if (reader.Read()) {
-                            
+                            txtVolt.Text = reader["volt"].ToString();
+                            txtCurr.Text = reader["current"].ToString();
+                            txtPower.Text = reader["power"].ToString();
+                            txtEnergy.Text = reader["energy"].ToString();
+                            txtFreq.Text = reader["frequency"].ToString();
+                            txtPF.Text = reader["pf"].ToString();
+                            Console.WriteLine(lvRooms.Items[room_index].SubItems[6].Text);
+                            calcEnergy();
                         }
                         conn.Close();
                     }
@@ -824,6 +836,18 @@ namespace SMFGC {
             }
             finally {
                 if (conn.State == ConnectionState.Open) conn.Close();
+            }
+        }
+
+        private void calcEnergy() {
+            if (!txtFT.Text.Equals("") && !txtMS.Text.Equals("")) {
+                float ft = 0, ms = 0;
+
+                if (float.TryParse(txtFT.Text, out ft) && float.TryParse(txtMS.Text, out ms)) {
+                    float fVat = (float.Parse(txtEnergy.Text) * ft + ms) * 12 / 100;
+                    txtVat.Text = fVat.ToString("#0.##");
+                    txtExpense.Text = ((float.Parse(txtEnergy.Text) * ft + ms) + fVat).ToString("#,##0.00");
+                }
             }
         }
 
@@ -911,7 +935,7 @@ namespace SMFGC {
         }
 
         private void btnAbout_Click(object sender, EventArgs e) {
-            Console.WriteLine(DateTime.Now.ToString());
+            Console.WriteLine(DateTime.Now.ToString("yyyy-MM-dd 04:00:00"));
         }
 
         private void bExport_Click(object sender, EventArgs e) {
@@ -949,6 +973,14 @@ namespace SMFGC {
                 MessageBox.Show(ex.Message, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+        }
+
+        private void txtFT_TextChanged(object sender, EventArgs e) {
+            calcEnergy();
+        }
+
+        private void txtMS_TextChanged(object sender, EventArgs e) {
+            calcEnergy();
         }
     }
 }
