@@ -34,7 +34,7 @@ namespace SMFGC {
             // Buffer for reading data
             Byte[] buffer = new Byte[1024];
             String dev_ip = "", room_name = "", data = null, faculty = "";
-            int dev_id = 0, room_id = 0, sched_id = 0, room_status = 0, timeleft_led = 3; // <-- TL_LED Delay before send another command
+            int dev_id = 0, room_id = 0, sched_id = 0, room_status = 0, next_tcp_check = 10, timeleft_led = 3; // <-- TL_LED Delay before send another command
             bool dev_verified = false, relay1 = false, relay2 = false;
             byte[] msg;
 
@@ -144,9 +144,7 @@ namespace SMFGC {
                                 // Send back a response.
                                 stream.Write(msg, 0, msg.Length);
                                 Console.WriteLine("Schedule started on Room: {0}:{1} with Schedule ID: {2}", room_id, room_name, sched_id);
-
                                 sysLog(dev_id, uidtag, "userauth", "Room: " + room_name + ", Faulty: " + faculty + ", Logged in.", 64);
-
                                 conn.Close();
 
                                 room_status = 3;
@@ -169,26 +167,27 @@ namespace SMFGC {
                             // getlast UID from Database
                             cmd = conn.CreateCommand();
                             cmd.CommandText = pVariables.qGetRoomUID;
-                            cmd.Parameters.Add("@p1", MySqlDbType.VarChar).Value = uidtag;
+                            cmd.Parameters.Add("@p1", MySqlDbType.VarChar).Value = dev_id;
+                            cmd.Parameters.Add("@p2", MySqlDbType.VarChar).Value = uidtag;
                             conn.Open();
                             reader = cmd.ExecuteReader();
 
                             if (reader.Read()) {
-                                // Send command to blink LEDs
-                                msg = System.Text.Encoding.ASCII.GetBytes("g");
-                                stream.Write(msg, 0, msg.Length);
-
-                                sysLog(dev_id, uidtag, "userauth", "Room: " + room_name + ", Faulty: " + faculty + ", Login and Logout Tag are not same.", 48);
-                            }
-                            else {
                                 // Turn off all relays
                                 msg = System.Text.Encoding.ASCII.GetBytes("d");
                                 stream.Write(msg, 0, msg.Length);
 
                                 room_status = 2;
-                                RoomUpdateLastUID(room_id, uidtag, 2);
+                                RoomUpdateSingle(room_id, room_status);
                                 Console.WriteLine("Schedule ended on Room: {0}:{1} with Schedule ID: {2}", room_id, room_name, sched_id);
                                 sysLog(dev_id, uidtag, "userauth", "Room: " + room_name + ", Faulty: " + faculty + ", Logged out.", 64);
+                            }
+                            else {
+                                // Send command to blink LEDs
+                                msg = System.Text.Encoding.ASCII.GetBytes("g");
+                                stream.Write(msg, 0, msg.Length);
+
+                                sysLog(dev_id, uidtag, "userauth", "Room: " + room_name + ", Faulty: " + faculty + ", Login and Logout Tag are not same.", 48);
                             }
                             conn.Close();
                         }
@@ -204,10 +203,8 @@ namespace SMFGC {
                     else if (dev_verified && data.Contains("PZM:")) {
 
                         if (data.Contains("NaN")) {
-
                             sysLog(dev_id, "", "system", "Part Zone Expansion Module (PZEM) is not reading data.", 16);
                             Console.WriteLine("Error Reading PZEM Data.");
-
                         }
                         else {
                             data = data.Split(',')[1].Replace("PZM:", "").Trim();
@@ -232,11 +229,11 @@ namespace SMFGC {
                     }
                     else if (dev_verified && data.Contains("RLY:")) {
                         Console.WriteLine("Device acknowledge the command.");
-                        sysLog(dev_id, "", "devinfo", "Client accept the command given by the server.", 64);
+                        sysLog(dev_id, "", "devinfo", "Client aknowledge the command given by the server.", 64);
                     }
 
                     // get ping status checked by pingClient class
-                    if (dev_verified) {
+                    if (dev_verified && next_tcp_check <= 0) {
 
                         cmd = conn.CreateCommand();
                         cmd.CommandText = pVariables.qTCPBrokenCheck;
@@ -254,6 +251,10 @@ namespace SMFGC {
                             break;
                         }
                         conn.Close();
+                        next_tcp_check = 10;
+                    }
+                    else if (dev_verified && next_tcp_check > 0) {
+                        next_tcp_check -= 1;
                     }
 
                     Thread.Sleep(1000);
