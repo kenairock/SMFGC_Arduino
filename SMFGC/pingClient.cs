@@ -17,6 +17,7 @@ namespace SMFGC {
         MySqlDataReader reader;
 
         Thread t;
+
         Ping pingSender = new Ping();
         PingOptions options = new PingOptions();
 
