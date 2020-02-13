@@ -110,7 +110,7 @@ namespace SMFGC
                         if (tdiff.Minutes < 10)
                         {
                             // Send command to blink LEDs
-                            if (tdiff.Minutes <= 0)
+                            if (tdiff.Minutes <= 0 && tdiff.Seconds <= 0)
                             {
                                 // Turn off all relays
                                 msg = System.Text.Encoding.ASCII.GetBytes("d");
@@ -143,7 +143,6 @@ namespace SMFGC
                     // Process the data sent by the client.
                     if (dev_verified && data.Contains("UID:"))
                     {
-
                         string uidtag = data.Split(',')[1].Split(' ')[1];
                         string tag_type = data.Split(',')[2];
 

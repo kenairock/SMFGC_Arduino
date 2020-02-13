@@ -22,6 +22,7 @@ namespace SMFGC {
         readonly MySqlConnection conn = new MySqlConnection(pVariables.sConn);
         MySqlCommand cmd;
         MySqlDataReader reader;
+        SerialPort RFID;
 
         mServer server = new mServer();
         pingClient clientPinger = new pingClient();
@@ -92,6 +93,7 @@ namespace SMFGC {
             InitRFID();
             RefreshFacultyDatagrid();
             FillSearchCombo();
+            btnReloadPort_Click(sender, e);
         }
 
         private void btnReports_Click(object sender, EventArgs e) {
@@ -412,22 +414,45 @@ namespace SMFGC {
         }
 
         private void InitRFID() {
-            try {
-                lblRFIDStatus.Text = "Not Ready!";
-                spRFID.PortName = cboPort.Items[cboPort.SelectedIndex].ToString();
-                spRFID.Open();
-                if (spRFID.IsOpen) {
+            try
+            {
+                RFID = new SerialPort();
+                RFID.PortName = cboPort.Items[cboPort.SelectedIndex].ToString();
+                RFID.BaudRate = 9600;
+                RFID.DataBits = 8;
+                RFID.Parity = Parity.None;
+                RFID.StopBits = StopBits.One;
+                RFID.Open();
+                RFID.ReadTimeout = 200;
+                if (RFID.IsOpen)
+                {
                     lblRFIDStatus.Text = "Ready!";
                 }
-                else {
-                    spRFID.Close();
+                else
+                {
+                    RFID.Close();
                 }
-                spRFID.DataReceived += new SerialDataReceivedEventHandler(spRFID_DataReceived);
+                RFID.DataReceived += new SerialDataReceivedEventHandler(RFID_DataReceived);
             }
-            catch (Exception ex) {
-                spRFID.Close();
+            catch (Exception ex)
+            {
+                lblRFIDStatus.Text = "Not Ready!";
                 Console.WriteLine("Error Opening port: {0}", ex.Message);
             }
+        }
+
+        private void RFID_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            if (txtUTag.Text.Length >= 12)
+            {
+                RFID.Close();
+            }
+            else
+            {
+                RFIDTag = RFID.ReadExisting();
+                this.Invoke(new EventHandler(DisplayText));
+            }
+
         }
 
         private void btnReloadPort_Click(object sender, EventArgs e) {
@@ -878,12 +903,12 @@ namespace SMFGC {
 
         private void calcEnergy() {
             if (!txtFT.Text.Equals("") && !txtMS.Text.Equals("")) {
-                float ft = 0, ms = 0;
+                float ft = 0, ms = 0, energy = 0;
 
-                if (float.TryParse(txtFT.Text, out ft) && float.TryParse(txtMS.Text, out ms)) {
-                    float fVat = (float.Parse(txtEnergy.Text) * ft + ms) * 12 / 100;
+                if (float.TryParse(txtFT.Text, out ft) && float.TryParse(txtMS.Text, out ms) && float.TryParse(txtEnergy.Text, out energy)) {
+                    float fVat = (energy * ft + ms) * 12 / 100;
                     txtVat.Text = fVat.ToString("#0.##");
-                    txtExpense.Text = ((float.Parse(txtEnergy.Text) * ft + ms) + fVat).ToString("#,##0.00");
+                    txtExpense.Text = ((energy * ft + ms) + fVat).ToString("#,##0.00");
                 }
             }
         }
@@ -1018,6 +1043,11 @@ namespace SMFGC {
 
         private void txtMS_TextChanged(object sender, EventArgs e) {
             calcEnergy();
+        }
+
+        private void cboPort_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            InitRFID();
         }
     }
 }

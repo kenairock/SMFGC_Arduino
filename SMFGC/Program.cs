@@ -42,7 +42,7 @@ namespace SMFGC {
             //The message box contains a symbol consisting of an exclamation point in a triangle with a yellow background.
 
 
-            if (conn.State == ConnectionState.Open) conn.Close();
+            if (conn != null && conn.State == ConnectionState.Open) conn.Close();
 
             MySqlCommand cmd = conn.CreateCommand();
 

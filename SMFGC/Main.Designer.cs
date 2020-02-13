@@ -29,8 +29,8 @@
             System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("515", 1);
             System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("516", 2);
             System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("517", 3);
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toplabel = new System.Windows.Forms.Label();
             this.pnlTop = new System.Windows.Forms.Panel();
             this.btnAbout = new System.Windows.Forms.Button();
@@ -110,6 +110,7 @@
             this.imgLarge = new System.Windows.Forms.ImageList(this.components);
             this.imgSmall = new System.Windows.Forms.ImageList(this.components);
             this.tabMFaculty = new System.Windows.Forms.TabPage();
+            this.dgProfSched = new System.Windows.Forms.DataGridView();
             this.tabFaculty = new System.Windows.Forms.TabControl();
             this.Information = new System.Windows.Forms.TabPage();
             this.groupBox16 = new System.Windows.Forms.GroupBox();
@@ -214,7 +215,6 @@
             this.Exit = new System.Windows.Forms.Button();
             this.spRFID = new System.IO.Ports.SerialPort(this.components);
             this.tmrRooms = new System.Windows.Forms.Timer(this.components);
-            this.dgProfSched = new System.Windows.Forms.DataGridView();
             this.pnlTop.SuspendLayout();
             this.pnlTime.SuspendLayout();
             this.tabMain.SuspendLayout();
@@ -227,6 +227,7 @@
             this.groupBox12.SuspendLayout();
             this.groupBox14.SuspendLayout();
             this.tabMFaculty.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgProfSched)).BeginInit();
             this.tabFaculty.SuspendLayout();
             this.Information.SuspendLayout();
             this.groupBox16.SuspendLayout();
@@ -242,7 +243,6 @@
             this.tabReports.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgSysLogs)).BeginInit();
             this.tabReport.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgProfSched)).BeginInit();
             this.SuspendLayout();
             // 
             // toplabel
@@ -436,7 +436,7 @@
             this.tabHome.Location = new System.Drawing.Point(4, 24);
             this.tabHome.Name = "tabHome";
             this.tabHome.Padding = new System.Windows.Forms.Padding(3);
-            this.tabHome.Size = new System.Drawing.Size(942, 497);
+            this.tabHome.Size = new System.Drawing.Size(976, 497);
             this.tabHome.TabIndex = 0;
             this.tabHome.Text = "HOME";
             // 
@@ -1184,6 +1184,34 @@
             this.tabMFaculty.TabIndex = 2;
             this.tabMFaculty.Text = "FACULTY";
             // 
+            // dgProfSched
+            // 
+            this.dgProfSched.AllowUserToAddRows = false;
+            this.dgProfSched.AllowUserToDeleteRows = false;
+            this.dgProfSched.AllowUserToResizeRows = false;
+            this.dgProfSched.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgProfSched.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
+            this.dgProfSched.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.dgProfSched.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgProfSched.DefaultCellStyle = dataGridViewCellStyle1;
+            this.dgProfSched.Location = new System.Drawing.Point(906, 37);
+            this.dgProfSched.MultiSelect = false;
+            this.dgProfSched.Name = "dgProfSched";
+            this.dgProfSched.ReadOnly = true;
+            this.dgProfSched.RowHeadersVisible = false;
+            this.dgProfSched.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgProfSched.Size = new System.Drawing.Size(60, 278);
+            this.dgProfSched.TabIndex = 21;
+            this.dgProfSched.Visible = false;
+            // 
             // tabFaculty
             // 
             this.tabFaculty.Controls.Add(this.Information);
@@ -1279,6 +1307,7 @@
             this.cboPort.Name = "cboPort";
             this.cboPort.Size = new System.Drawing.Size(80, 21);
             this.cboPort.TabIndex = 17;
+            this.cboPort.SelectedIndexChanged += new System.EventHandler(this.cboPort_SelectedIndexChanged);
             this.cboPort.Click += new System.EventHandler(this.cboPort_Click);
             // 
             // label5
@@ -2357,7 +2386,7 @@
             this.tabReports.Controls.Add(this.tabReport);
             this.tabReports.Location = new System.Drawing.Point(4, 24);
             this.tabReports.Name = "tabReports";
-            this.tabReports.Size = new System.Drawing.Size(942, 497);
+            this.tabReports.Size = new System.Drawing.Size(976, 497);
             this.tabReports.TabIndex = 3;
             this.tabReports.Text = "REPORTS";
             // 
@@ -2514,34 +2543,6 @@
             this.tmrRooms.Interval = 5000;
             this.tmrRooms.Tick += new System.EventHandler(this.tmrRooms_Tick);
             // 
-            // dgProfSched
-            // 
-            this.dgProfSched.AllowUserToAddRows = false;
-            this.dgProfSched.AllowUserToDeleteRows = false;
-            this.dgProfSched.AllowUserToResizeRows = false;
-            this.dgProfSched.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgProfSched.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
-            this.dgProfSched.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            this.dgProfSched.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgProfSched.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dgProfSched.Location = new System.Drawing.Point(906, 37);
-            this.dgProfSched.MultiSelect = false;
-            this.dgProfSched.Name = "dgProfSched";
-            this.dgProfSched.ReadOnly = true;
-            this.dgProfSched.RowHeadersVisible = false;
-            this.dgProfSched.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgProfSched.Size = new System.Drawing.Size(60, 278);
-            this.dgProfSched.TabIndex = 21;
-            this.dgProfSched.Visible = false;
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2581,6 +2582,7 @@
             this.groupBox14.ResumeLayout(false);
             this.tabMFaculty.ResumeLayout(false);
             this.tabMFaculty.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgProfSched)).EndInit();
             this.tabFaculty.ResumeLayout(false);
             this.Information.ResumeLayout(false);
             this.Information.PerformLayout();
@@ -2602,7 +2604,6 @@
             this.tabReports.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgSysLogs)).EndInit();
             this.tabReport.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgProfSched)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
