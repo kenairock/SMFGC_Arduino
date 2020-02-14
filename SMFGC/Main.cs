@@ -232,7 +232,8 @@ namespace SMFGC {
                 else if (tabFaculty.SelectedTab.Text == "Classroom") {
                     FillComboBox(cbRMDept, "department_tb", "dept_id", "dept_name");
 
-                } else if (tabFaculty.SelectedTab.Text == "Information") {
+                }
+                else if (tabFaculty.SelectedTab.Text == "Information") {
                     dgProfSched.DataSource = null;
                     dgProfSched.Show();
                 }
@@ -414,8 +415,7 @@ namespace SMFGC {
         }
 
         private void InitRFID() {
-            try
-            {
+            try {
                 RFID = new SerialPort();
                 RFID.PortName = cboPort.Items[cboPort.SelectedIndex].ToString();
                 RFID.BaudRate = 9600;
@@ -424,31 +424,25 @@ namespace SMFGC {
                 RFID.StopBits = StopBits.One;
                 RFID.Open();
                 RFID.ReadTimeout = 200;
-                if (RFID.IsOpen)
-                {
+                if (RFID.IsOpen) {
                     lblRFIDStatus.Text = "Ready!";
                 }
-                else
-                {
+                else {
                     RFID.Close();
                 }
                 RFID.DataReceived += new SerialDataReceivedEventHandler(RFID_DataReceived);
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 lblRFIDStatus.Text = "Not Ready!";
                 Console.WriteLine("Error Opening port: {0}", ex.Message);
             }
         }
 
-        private void RFID_DataReceived(object sender, SerialDataReceivedEventArgs e)
-        {
-            if (txtUTag.Text.Length >= 12)
-            {
+        private void RFID_DataReceived(object sender, SerialDataReceivedEventArgs e) {
+            if (txtUTag.Text.Length >= 12) {
                 RFID.Close();
             }
-            else
-            {
+            else {
                 RFIDTag = RFID.ReadExisting();
                 this.Invoke(new EventHandler(DisplayText));
             }
@@ -1045,8 +1039,7 @@ namespace SMFGC {
             calcEnergy();
         }
 
-        private void cboPort_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void cboPort_SelectedIndexChanged(object sender, EventArgs e) {
             InitRFID();
         }
     }

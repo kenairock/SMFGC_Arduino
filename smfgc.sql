@@ -1,6 +1,6 @@
 /*
 SQLyog Ultimate v12.09 (64 bit)
-MySQL - 5.7.28-log : Database - smfgc
+MySQL - 5.7.28-log : Database - smfgc_db
 *********************************************************************
 */
 
@@ -12,132 +12,108 @@ MySQL - 5.7.28-log : Database - smfgc
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`smfgc` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`smfgc_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
-USE `smfgc`;
-
-/*Table structure for table `class_sched_tb` */
-
-DROP TABLE IF EXISTS `class_sched_tb`;
-
-CREATE TABLE `class_sched_tb` (
-  `sched_id` int(11) NOT NULL AUTO_INCREMENT,
-  `course_id` int(11) NOT NULL,
-  `subject_id` int(11) NOT NULL,
-  `day` varchar(12) DEFAULT 'Sunday',
-  `start_time` time NOT NULL,
-  `end_time` time NOT NULL,
-  `room_id` int(11) NOT NULL,
-  `faculty` int(11) NOT NULL,
-  PRIMARY KEY (`sched_id`),
-  KEY `CS_CourseID` (`course_id`),
-  KEY `CS_SubjectID` (`subject_id`),
-  KEY `CS_RoomID` (`room_id`),
-  KEY `CS_FacultyID` (`faculty`),
-  CONSTRAINT `CS_CourseID` FOREIGN KEY (`course_id`) REFERENCES `course_tb` (`course_id`) ON UPDATE CASCADE,
-  CONSTRAINT `CS_FacultyID` FOREIGN KEY (`faculty`) REFERENCES `users_tb` (`users_id`) ON UPDATE CASCADE,
-  CONSTRAINT `CS_RoomID` FOREIGN KEY (`room_id`) REFERENCES `classroom_tb` (`room_id`) ON UPDATE CASCADE,
-  CONSTRAINT `CS_SubjectID` FOREIGN KEY (`subject_id`) REFERENCES `subject_tb` (`subject_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
-
-/*Data for the table `class_sched_tb` */
-
-insert  into `class_sched_tb`(`sched_id`,`course_id`,`subject_id`,`day`,`start_time`,`end_time`,`room_id`,`faculty`) values (1,1,2,'Thursday','15:00:00','18:00:00',1,1),(2,3,1,'Thursday','01:00:00','04:00:00',1,3),(10,2,4,'Wednesday','04:00:00','05:30:00',1,1);
+USE `smfgc_db`;
 
 /*Table structure for table `classroom_tb` */
 
 DROP TABLE IF EXISTS `classroom_tb`;
 
 CREATE TABLE `classroom_tb` (
-  `room_id` int(11) NOT NULL AUTO_INCREMENT,
-  `classroom` varchar(45) NOT NULL,
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
   `number` varchar(45) NOT NULL,
-  `dept` varchar(45) NOT NULL,
-  `dev_id` int(8) NOT NULL,
-  `ip_add` varchar(45) NOT NULL,
-  `port` int(5) NOT NULL DEFAULT '2316',
-  `mac_add` varchar(45) NOT NULL,
-  `relay1` int(1) NOT NULL,
-  `relay2` int(1) NOT NULL,
-  `status` int(1) DEFAULT '0',
-  `last_uidtag` varchar(12) DEFAULT NULL,
-  `uptime` datetime DEFAULT NULL,
-  PRIMARY KEY (`room_id`),
+  `dept_id` int(10) NOT NULL,
+  `dev_id` int(10) NOT NULL,
+  `relay_1` int(1) NOT NULL,
+  `relay_2` int(1) NOT NULL,
+  PRIMARY KEY (`id`),
   UNIQUE KEY `Device ID` (`dev_id`),
-  UNIQUE KEY `IP Address` (`ip_add`),
-  UNIQUE KEY `MAC Address` (`mac_add`),
-  UNIQUE KEY `Classroom Name` (`classroom`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+  UNIQUE KEY `Classroom No.` (`number`),
+  KEY `CR_Department` (`dept_id`),
+  CONSTRAINT `CR_Department` FOREIGN KEY (`dept_id`) REFERENCES `department_tb` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `CR_Device` FOREIGN KEY (`dev_id`) REFERENCES `device_tb` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 /*Data for the table `classroom_tb` */
 
-insert  into `classroom_tb`(`room_id`,`classroom`,`number`,`dept`,`dev_id`,`ip_add`,`port`,`mac_add`,`relay1`,`relay2`,`status`,`last_uidtag`,`uptime`) values (1,'514','1','2',514051,'192.168.1.51',2316,'DE-AD-BE-EF-FE-EC',1,1,0,'','2020-02-13 03:36:38'),(2,'515','1','3',515052,'192.168.1.52',2316,'DE-AD-BE-EF-FE-ED',1,0,0,'','2020-02-12 05:07:50'),(4,'516','1','3',516053,'192.168.1.53',2316,'DE-AD-BE-EF-FE-EA',0,1,0,'','2020-02-02 18:48:54');
+insert  into `classroom_tb`(`id`,`name`,`number`,`dept_id`,`dev_id`,`relay_1`,`relay_2`) values (5,'ROOM','514',1,514,1,1),(10,'ROOM','515',1,515,1,0);
 
 /*Table structure for table `course_tb` */
 
 DROP TABLE IF EXISTS `course_tb`;
 
 CREATE TABLE `course_tb` (
-  `course_id` int(11) NOT NULL AUTO_INCREMENT,
-  `course_name` varchar(45) NOT NULL,
-  `course_year` int(4) NOT NULL,
-  PRIMARY KEY (`course_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `year` int(4) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `Name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 /*Data for the table `course_tb` */
 
-insert  into `course_tb`(`course_id`,`course_name`,`course_year`) values (1,'BSCpE',5101),(2,'BSCrim',5101),(3,'BLIS',3102),(4,'BSIT',3101),(5,'BSP',4101),(6,'BSBA',5101);
+insert  into `course_tb`(`id`,`name`,`year`) values (1,'BSCpE',2020),(2,'BSIT',2020),(3,'BSBA',2020),(4,'BSCrim',2020),(5,'BLIS',2020);
 
 /*Table structure for table `department_tb` */
 
 DROP TABLE IF EXISTS `department_tb`;
 
 CREATE TABLE `department_tb` (
-  `dept_id` int(11) NOT NULL AUTO_INCREMENT,
-  `dept_name` varchar(45) NOT NULL,
-  `floor` varchar(45) NOT NULL,
-  PRIMARY KEY (`dept_id`),
-  UNIQUE KEY `Department Name` (`dept_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `floor` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `Name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 /*Data for the table `department_tb` */
 
-insert  into `department_tb`(`dept_id`,`dept_name`,`floor`) values (1,'HRM Dept','4'),(2,'IT Dept','2'),(3,'CPE Dept','3'),(4,'CASE','1');
+insert  into `department_tb`(`id`,`name`,`floor`) values (1,'CASE','2'),(6,'IT','3'),(7,'HRM','G'),(8,'CPE','4');
 
-/*Table structure for table `login_tb` */
+/*Table structure for table `device_tb` */
 
-DROP TABLE IF EXISTS `login_tb`;
+DROP TABLE IF EXISTS `device_tb`;
 
-CREATE TABLE `login_tb` (
-  `login_id` int(10) NOT NULL AUTO_INCREMENT,
-  `username` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
-  `role` varchar(8) NOT NULL,
-  PRIMARY KEY (`login_id`),
-  UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+CREATE TABLE `device_tb` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `serial_no` int(25) NOT NULL,
+  `ip_addr` varchar(16) NOT NULL,
+  `mac_addr` varchar(17) NOT NULL,
+  `port` int(5) DEFAULT '2316',
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `last_uidtag` varchar(12) DEFAULT NULL,
+  `uptime` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `IP Address` (`ip_addr`),
+  UNIQUE KEY `MAC Address` (`mac_addr`),
+  UNIQUE KEY `Serial Number` (`serial_no`)
+) ENGINE=InnoDB AUTO_INCREMENT=517 DEFAULT CHARSET=utf8;
 
-/*Data for the table `login_tb` */
+/*Data for the table `device_tb` */
 
-insert  into `login_tb`(`login_id`,`username`,`password`,`role`) values (2,'james','dean','Dean'),(4,'francis','admin','Admin');
+insert  into `device_tb`(`id`,`serial_no`,`ip_addr`,`mac_addr`,`port`,`status`,`last_uidtag`,`uptime`) values (514,415051,'192.168.1.51','DE-AD-BE-EF-FE-E0',2316,0,NULL,NULL),(515,515052,'192.168.1.52','DE-AD-BE-EF-FE-E1',2316,0,NULL,NULL);
 
-/*Table structure for table `logs_tb` */
+/*Table structure for table `faculty_tb` */
 
-DROP TABLE IF EXISTS `logs_tb`;
+DROP TABLE IF EXISTS `faculty_tb`;
 
-CREATE TABLE `logs_tb` (
-  `tstamp` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
-  `dev_id` int(8) NOT NULL,
-  `uid` varchar(12) NOT NULL,
-  `process` varchar(25) NOT NULL,
-  `alert` int(3) NOT NULL,
-  `message` text NOT NULL,
-  KEY `logsDevID` (`dev_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `faculty_tb` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `uidtag` varchar(12) NOT NULL,
+  `title` varchar(45) NOT NULL,
+  `last_name` varchar(45) NOT NULL,
+  `first_name` varchar(45) NOT NULL,
+  `mi` varchar(45) NOT NULL,
+  `picture` mediumblob,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UIDTAG` (`uidtag`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
-/*Data for the table `logs_tb` */
+/*Data for the table `faculty_tb` */
 
-insert  into `logs_tb`(`tstamp`,`dev_id`,`uid`,`process`,`alert`,`message`) values ('2020-02-12 21:22:01.691',0,'','system',64,'Server started.'),('2020-02-12 21:22:14.001',0,'','system',64,'Server closed.'),('2020-02-12 21:35:58.205',0,'','system',64,'Server started.'),('2020-02-12 21:36:28.437',0,'','system',64,'Server closed.'),('2020-02-12 21:38:07.388',0,'','system',64,'Server started.'),('2020-02-12 21:38:23.150',0,'','system',64,'Server closed.'),('2020-02-12 21:39:27.880',0,'','system',64,'Server started.'),('2020-02-12 21:39:59.396',0,'','system',64,'Server closed.'),('2020-02-12 21:44:13.168',0,'','system',64,'Server started.'),('2020-02-12 21:44:40.882',0,'','system',64,'Server closed.'),('2020-02-12 21:45:27.568',0,'','system',64,'Server started.'),('2020-02-12 21:45:46.080',0,'','system',64,'Server closed.'),('2020-02-12 21:46:33.590',0,'','system',64,'Server started.'),('2020-02-12 21:47:59.726',0,'','system',64,'Server closed.'),('2020-02-12 21:48:19.854',0,'','system',64,'Server started.'),('2020-02-12 22:06:37.255',0,'','system',64,'Server started.'),('2020-02-12 22:06:49.086',0,'','system',64,'Server closed.'),('2020-02-12 22:18:42.765',0,'','system',64,'Server started.'),('2020-02-12 22:18:55.935',0,'','system',64,'Server closed.'),('2020-02-12 22:20:32.291',0,'','system',64,'Server started.'),('2020-02-12 22:22:26.448',0,'','system',64,'Server closed.'),('2020-02-12 22:26:37.402',0,'','system',64,'Server started.'),('2020-02-12 22:26:41.291',0,'','system',64,'Server closed.'),('2020-02-12 22:27:34.464',0,'','system',64,'Server started.'),('2020-02-12 22:29:05.840',0,'','system',64,'Server closed.'),('2020-02-12 22:33:44.808',0,'','system',64,'Server started.'),('2020-02-12 22:34:07.603',0,'','system',64,'Server closed.'),('2020-02-12 22:34:45.550',0,'','system',64,'Server started.'),('2020-02-12 22:34:56.389',0,'','system',64,'Server closed.'),('2020-02-12 22:37:04.226',0,'','system',64,'Server started.'),('2020-02-12 22:37:11.244',0,'','system',64,'Server closed.'),('2020-02-12 22:38:05.055',0,'','system',64,'Server started.'),('2020-02-12 22:38:13.044',0,'','system',64,'Server closed.'),('2020-02-12 22:38:53.041',0,'','system',64,'Server started.'),('2020-02-12 22:39:17.050',0,'','system',64,'Server closed.'),('2020-02-12 22:40:14.546',0,'','system',64,'Server started.'),('2020-02-12 22:41:35.932',0,'','system',64,'Server closed.'),('2020-02-12 22:41:53.553',0,'','system',64,'Server started.'),('2020-02-12 22:41:55.711',0,'','system',64,'Server closed.'),('2020-02-12 22:42:08.204',0,'','system',64,'Server started.'),('2020-02-12 22:49:13.742',0,'','system',64,'Server started.'),('2020-02-12 22:55:29.133',0,'','system',64,'Server started.'),('2020-02-12 22:58:27.722',0,'','system',64,'Server started.'),('2020-02-12 22:58:51.483',0,'','system',64,'Server closed.'),('2020-02-12 23:05:25.080',0,'','system',64,'Server started.'),('2020-02-12 23:06:15.593',0,'','system',64,'Server closed.'),('2020-02-12 23:07:52.819',0,'','system',64,'Server started.'),('2020-02-12 23:08:09.481',0,'','system',64,'Server started.'),('2020-02-12 23:08:17.598',0,'','system',64,'Server closed.'),('2020-02-12 23:08:27.710',0,'','system',64,'Server started.'),('2020-02-12 23:08:56.987',0,'','system',64,'Server closed.'),('2020-02-12 23:12:01.067',0,'','system',64,'Server started.'),('2020-02-12 23:12:30.069',0,'','system',64,'Server closed.'),('2020-02-12 23:12:58.243',0,'','system',64,'Server started.'),('2020-02-12 23:13:10.895',0,'','system',64,'Server closed.'),('2020-02-12 23:13:59.643',0,'','system',64,'Server started.'),('2020-02-12 23:14:05.089',0,'','system',64,'Server closed.'),('2020-02-12 23:14:17.588',0,'','system',64,'Server started.'),('2020-02-12 23:17:50.045',0,'','system',64,'Server started.'),('2020-02-12 23:17:53.231',0,'','system',64,'Server closed.'),('2020-02-12 23:18:00.060',0,'','system',64,'Server started.'),('2020-02-12 23:18:04.024',0,'','system',64,'Server closed.'),('2020-02-12 23:24:13.123',0,'','system',64,'Server started.'),('2020-02-12 23:24:17.035',0,'','system',64,'Server closed.'),('2020-02-12 23:25:07.013',0,'','system',64,'Server started.'),('2020-02-12 23:25:08.174',0,'','system',64,'Server closed.'),('2020-02-12 23:25:46.652',0,'','system',64,'Server started.'),('2020-02-12 23:26:01.363',0,'','system',64,'Server started.'),('2020-02-12 23:26:54.329',0,'','system',64,'Server started.'),('2020-02-12 23:29:50.415',0,'','system',64,'Server started.'),('2020-02-12 23:31:04.930',0,'','system',64,'Server started.'),('2020-02-12 23:31:08.331',0,'','system',64,'Server closed.'),('2020-02-12 23:33:45.045',0,'','system',64,'Server started.'),('2020-02-12 23:34:57.408',0,'','system',64,'Server started.'),('2020-02-12 23:35:43.725',0,'','system',64,'Server started.'),('2020-02-12 23:35:46.919',0,'','system',64,'Server closed.'),('2020-02-12 23:36:55.901',0,'','system',64,'Server started.'),('2020-02-12 23:37:52.827',0,'','system',64,'Server started.'),('2020-02-12 23:46:22.027',0,'','system',64,'Server closed.'),('2020-02-12 23:49:57.296',0,'','system',64,'Server started.'),('2020-02-12 23:50:07.135',0,'','system',64,'Server closed.'),('2020-02-12 23:50:43.533',0,'','system',64,'Server started.'),('2020-02-12 23:51:03.191',0,'','system',64,'Server closed.'),('2020-02-12 23:51:15.440',0,'','system',64,'Server started.'),('2020-02-12 23:51:46.469',0,'','system',64,'Server closed.'),('2020-02-13 00:03:35.295',0,'','system',64,'Server started.'),('2020-02-13 00:03:44.054',0,'','system',64,'Server closed.'),('2020-02-13 00:04:15.436',0,'','system',64,'Server started.'),('2020-02-13 00:04:24.647',0,'','system',64,'Server closed.'),('2020-02-13 00:05:06.985',0,'','system',64,'Server started.'),('2020-02-13 00:05:15.850',0,'','system',64,'Server closed.'),('2020-02-13 00:06:15.707',0,'','system',64,'Server started.'),('2020-02-13 00:06:33.586',0,'','system',64,'Server closed.'),('2020-02-13 00:09:36.844',0,'','system',64,'Server started.'),('2020-02-13 00:09:47.024',0,'','system',64,'Server closed.'),('2020-02-13 00:12:23.679',0,'','system',64,'Server started.'),('2020-02-13 00:13:03.375',0,'','system',64,'Server closed.'),('2020-02-13 00:14:00.503',0,'','system',64,'Server started.'),('2020-02-13 00:14:19.506',0,'','system',64,'Server closed.'),('2020-02-13 00:14:53.510',0,'','system',64,'Server started.'),('2020-02-13 00:15:02.031',0,'','system',64,'Server closed.'),('2020-02-13 00:15:37.967',0,'','system',64,'Server started.'),('2020-02-13 00:16:19.851',0,'','system',64,'Server closed.'),('2020-02-13 00:16:46.408',0,'','system',64,'Server started.'),('2020-02-13 00:17:08.757',0,'','system',64,'Server closed.'),('2020-02-13 00:17:55.465',0,'','system',64,'Server started.'),('2020-02-13 00:42:41.624',0,'','system',64,'Server started.'),('2020-02-13 00:43:20.491',0,'','system',64,'Server started.'),('2020-02-13 00:44:00.029',0,'','system',64,'Server closed.'),('2020-02-13 00:44:30.619',0,'','system',64,'Server started.'),('2020-02-13 00:44:41.781',0,'','system',64,'Server closed.'),('2020-02-13 00:52:09.103',0,'','system',64,'Server started.'),('2020-02-13 00:52:44.900',0,'','system',64,'Server started.'),('2020-02-13 01:01:56.201',0,'','system',64,'Server started.'),('2020-02-13 01:02:49.176',0,'','system',64,'Server closed.'),('2020-02-13 01:09:43.309',0,'','system',64,'Server started.'),('2020-02-13 01:10:29.345',0,'','system',64,'Server started.'),('2020-02-13 01:30:28.437',0,'','system',64,'Server started.'),('2020-02-13 01:33:05.968',0,'','system',64,'Server started.'),('2020-02-13 01:33:11.297',0,'','system',64,'Server closed.'),('2020-02-13 01:47:54.703',0,'','system',64,'Server started.'),('2020-02-13 01:49:58.196',0,'','system',64,'Server started.'),('2020-02-13 01:51:30.129',0,'','system',64,'Server started.'),('2020-02-13 01:51:41.736',0,'','system',64,'Server closed.'),('2020-02-13 01:59:36.072',0,'','system',64,'Server started.'),('2020-02-13 02:11:16.539',0,'','system',64,'Server started.'),('2020-02-13 02:15:28.907',0,'','system',64,'Server started.'),('2020-02-13 02:16:11.149',0,'','system',64,'Server started.'),('2020-02-13 02:20:18.658',0,'','system',64,'Server started.'),('2020-02-13 02:22:08.134',0,'','system',64,'Server started.'),('2020-02-13 02:27:14.721',0,'','system',64,'Server started.'),('2020-02-13 02:27:47.076',0,'','system',64,'Server closed.'),('2020-02-13 02:33:20.355',0,'','system',64,'Server started.'),('2020-02-13 02:33:33.633',0,'','system',64,'Server closed.'),('2020-02-13 02:34:07.872',0,'','system',64,'Server started.'),('2020-02-13 02:35:33.857',0,'','system',64,'Server started.'),('2020-02-13 02:35:45.394',0,'','system',64,'Server closed.'),('2020-02-13 02:36:22.726',0,'','system',64,'Server started.'),('2020-02-13 02:36:59.361',0,'','system',64,'Server closed.'),('2020-02-13 02:37:12.371',0,'','system',64,'Server started.'),('2020-02-13 02:59:50.317',0,'','system',64,'Server started.'),('2020-02-13 03:00:09.575',0,'','system',64,'Server closed.'),('2020-02-13 03:01:09.938',0,'','system',64,'Server started.'),('2020-02-13 03:02:12.281',0,'','system',64,'Server closed.'),('2020-02-13 03:02:54.306',0,'','system',64,'Server started.'),('2020-02-13 03:05:24.161',0,'','system',64,'Server closed.'),('2020-02-13 03:07:01.807',0,'','system',64,'Server started.'),('2020-02-13 03:15:06.824',0,'','system',64,'Server started.'),('2020-02-13 03:16:19.735',0,'','system',64,'Server closed.'),('2020-02-13 03:22:34.481',0,'','system',64,'Server started.'),('2020-02-13 03:24:09.880',0,'','system',64,'Server started.'),('2020-02-13 03:24:38.464',0,'','system',64,'Server closed.'),('2020-02-13 03:25:20.482',0,'','system',64,'Server started.'),('2020-02-13 03:28:16.217',515052,'','devinfo',64,'Device Accepted.'),('2020-02-13 03:30:26.586',515052,'','devinfo',64,'Device Accepted.'),('2020-02-13 03:32:07.228',514051,'','devinfo',64,'Device Accepted.'),('2020-02-13 03:33:15.282',514051,'','devinfo',64,'Device Accepted.'),('2020-02-13 03:35:22.291',0,'','system',16,'Client connection closed by the server.'),('2020-02-13 03:35:22.426',514051,'','devinfo',64,'Device Accepted.'),('2020-02-13 03:36:38.581',0,'','system',16,'Client connection closed by the server.'),('2020-02-13 03:36:38.775',514051,'','devinfo',64,'Device Accepted.'),('2020-02-13 03:39:26.467',0,'','system',64,'Server closed.'),('2020-02-13 03:39:38.363',0,'','system',64,'Server started.'),('2020-02-13 03:39:46.884',515052,'','devinfo',64,'Device Accepted.'),('2020-02-13 03:43:54.010',514051,'','devinfo',64,'Device Accepted.'),('2020-02-13 03:47:59.745',0,'','system',64,'Server closed.'),('2020-02-13 03:51:25.544',0,'','system',64,'Server started.'),('2020-02-13 03:51:30.093',0,'','system',64,'Server closed.'),('2020-02-13 03:53:01.461',0,'','system',64,'Server started.'),('2020-02-13 04:10:50.941',515052,'','devinfo',64,'Device Accepted.'),('2020-02-13 04:15:44.405',0,'','system',64,'Server closed.');
+insert  into `faculty_tb`(`id`,`uidtag`,`title`,`last_name`,`first_name`,`mi`,`picture`) values (1,'e563c223','Doc.','Miguel','Jolly','A.',NULL);
 
 /*Table structure for table `pzem_tb` */
 
@@ -151,50 +127,90 @@ CREATE TABLE `pzem_tb` (
   `energy` double(8,4) NOT NULL,
   `frequency` double(4,2) NOT NULL,
   `pf` double(4,2) NOT NULL,
-  `t_stamp` timestamp(3) NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
+  `ts` timestamp(3) NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
   KEY `PZEM_DeviceID` (`dev_id`),
-  CONSTRAINT `PZEM_DeviceID` FOREIGN KEY (`dev_id`) REFERENCES `classroom_tb` (`dev_id`) ON UPDATE CASCADE
+  CONSTRAINT `PZ_Device` FOREIGN KEY (`dev_id`) REFERENCES `device_tb` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `pzem_tb` */
 
-insert  into `pzem_tb`(`dev_id`,`volt`,`current`,`power`,`energy`,`frequency`,`pf`,`t_stamp`) values (514051,240.3,0.60,0.0,0.0430,59.80,0.00,'2020-02-13 02:26:25.664'),(514051,240.2,0.70,0.0,0.0430,59.80,0.00,'2020-02-13 02:26:22.304'),(514051,240.2,0.98,0.0,0.0430,59.80,0.00,'2020-02-13 01:40:47.636'),(514051,240.5,0.10,0.0,0.0430,59.80,0.00,'2020-02-13 02:26:08.004'),(514051,240.3,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 04:58:54.749'),(514051,240.1,0.50,0.0,384.0430,59.80,0.00,'2020-02-13 03:01:49.875'),(514051,240.2,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 04:58:59.590'),(514051,240.3,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 04:59:02.352'),(514051,240.7,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 04:59:05.121'),(514051,240.5,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 04:59:07.891'),(514051,240.4,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 04:59:10.660'),(514051,240.5,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 04:59:13.430'),(514051,240.5,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 04:59:16.198'),(514051,240.4,0.00,0.0,0.0430,59.90,0.00,'2020-02-12 04:59:18.965'),(514051,240.4,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 04:59:21.746'),(514051,238.3,0.07,0.0,0.0430,60.00,0.00,'2020-02-12 05:26:54.536'),(514051,238.9,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:26:57.035'),(514051,238.9,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:26:59.804'),(514051,238.7,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:27:02.573'),(514051,238.6,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:27:05.342'),(514051,238.4,0.00,0.0,0.0430,59.90,0.00,'2020-02-12 05:27:08.110'),(514051,238.4,0.00,0.0,0.0430,59.90,0.00,'2020-02-12 05:27:10.966'),(514051,238.4,0.00,0.0,0.0430,59.90,0.00,'2020-02-12 05:27:13.655'),(514051,238.1,0.00,0.0,0.0430,59.90,0.00,'2020-02-12 05:27:16.426'),(514051,238.1,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:27:19.194'),(514051,238.0,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:27:21.976'),(514051,238.2,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:27:24.736'),(514051,238.1,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:27:27.511'),(514051,238.0,0.00,0.0,0.0430,59.70,0.00,'2020-02-12 05:27:30.290'),(514051,238.3,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:27:33.055'),(514051,238.2,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:27:35.824'),(514051,238.3,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:27:38.598'),(514051,238.3,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:27:41.369'),(514051,238.4,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:27:44.142'),(514051,238.5,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:27:46.912'),(514051,238.7,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:27:49.684'),(514051,238.5,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:27:52.456'),(514051,238.7,0.00,0.0,0.0430,59.90,0.00,'2020-02-12 05:27:55.229'),(514051,238.6,0.00,0.0,0.0430,59.90,0.00,'2020-02-12 05:27:58.003'),(514051,238.9,0.00,0.0,0.0430,59.90,0.00,'2020-02-12 05:28:00.773'),(514051,238.7,0.00,0.0,0.0430,59.90,0.00,'2020-02-12 05:28:03.544'),(514051,238.9,0.00,0.0,0.0430,59.90,0.00,'2020-02-12 05:28:06.317'),(514051,238.8,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:28:09.089'),(514051,238.9,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:28:11.859'),(514051,238.8,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:28:14.630'),(514051,238.8,0.00,0.0,0.0430,59.90,0.00,'2020-02-12 05:28:17.406'),(514051,238.7,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:28:20.174'),(514051,238.4,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:28:22.946'),(514051,238.6,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:28:25.724'),(514051,238.6,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:28:28.490'),(514051,238.5,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:28:31.261'),(514051,238.4,0.00,0.0,0.0430,59.90,0.00,'2020-02-12 05:28:34.041'),(514051,238.2,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:28:36.803'),(514051,238.7,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:28:39.580'),(514051,238.6,0.00,0.0,0.0430,59.90,0.00,'2020-02-12 05:28:42.348'),(514051,238.6,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:28:45.122'),(514051,238.7,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:28:47.891'),(514051,238.8,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:28:50.664'),(514051,238.6,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:28:53.435'),(514051,238.7,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:28:56.208'),(514051,238.7,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:28:58.980'),(514051,238.9,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:29:01.751'),(514051,238.7,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:29:04.522'),(514051,238.7,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:29:07.296'),(514051,238.4,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:29:10.067'),(514051,238.3,0.00,0.0,0.0430,59.90,0.00,'2020-02-12 05:29:12.841'),(514051,238.2,0.00,0.0,0.0430,59.90,0.00,'2020-02-12 05:29:15.610'),(514051,238.2,0.00,0.0,0.0430,59.90,0.00,'2020-02-12 05:29:18.382'),(514051,238.3,0.00,0.0,0.0430,59.90,0.00,'2020-02-12 05:29:21.161'),(514051,238.3,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:29:23.927'),(514051,238.1,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:29:26.697'),(514051,238.2,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:29:29.477'),(514051,238.3,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:29:32.239'),(514051,238.3,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:29:35.013'),(514051,238.1,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:29:37.783'),(514051,238.1,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:29:40.557'),(514051,238.1,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:29:43.328'),(514051,238.2,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:29:46.100'),(514051,238.3,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:29:48.871'),(514051,238.2,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:29:51.644'),(514051,238.1,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:29:54.415'),(514051,238.3,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:29:57.189'),(514051,238.3,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:29:59.999'),(514051,238.3,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:30:02.733'),(514051,238.5,0.00,0.0,0.0430,59.80,0.00,'2020-02-12 05:30:05.502'),(514051,238.4,0.00,0.0,0.0430,59.90,0.00,'2020-02-12 05:30:08.273'),(514051,238.4,0.00,0.0,0.0430,59.90,0.00,'2020-02-12 05:30:11.045'),(514051,238.4,0.00,0.0,0.0430,59.90,0.00,'2020-02-12 05:30:13.818'),(514051,238.4,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:30:16.599'),(514051,238.5,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:30:19.362'),(514051,238.6,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:30:22.132'),(514051,238.6,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:30:24.915'),(514051,238.6,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:30:27.675'),(514051,238.6,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:30:30.448'),(514051,238.6,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:30:33.228'),(514051,238.6,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:30:35.992'),(514051,238.5,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:30:38.763'),(514051,238.7,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:30:41.547'),(514051,238.7,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:30:44.308'),(514051,238.7,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:30:47.080'),(514051,238.7,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:30:49.851'),(514051,238.8,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:30:55.043'),(514051,238.9,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:30:57.012'),(514051,239.0,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:30:59.076'),(514051,238.9,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:31:01.137'),(514051,238.9,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:31:03.205'),(514051,239.1,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:31:05.971'),(514051,238.9,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:31:08.741'),(514051,239.0,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:31:11.518'),(514051,239.2,0.00,0.0,0.0430,60.10,0.00,'2020-02-12 05:31:14.285'),(514051,239.1,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:31:17.056'),(514051,239.0,0.00,0.0,0.0430,60.00,0.00,'2020-02-12 05:31:19.828');
+/*Table structure for table `schedule_tb` */
+
+DROP TABLE IF EXISTS `schedule_tb`;
+
+CREATE TABLE `schedule_tb` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `course_id` int(10) NOT NULL,
+  `subject_id` int(10) NOT NULL,
+  `room_id` int(10) NOT NULL,
+  `faculty_id` int(10) NOT NULL,
+  `day` varchar(12) DEFAULT 'Sunday',
+  `start_time` time NOT NULL,
+  `end_time` time NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `CS_CourseID` (`course_id`),
+  KEY `CS_SubjectID` (`subject_id`),
+  KEY `CS_RoomID` (`room_id`),
+  KEY `CS_FacultyID` (`faculty_id`),
+  CONSTRAINT `CS_CourseID` FOREIGN KEY (`course_id`) REFERENCES `course_tb` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `CS_Faculty` FOREIGN KEY (`faculty_id`) REFERENCES `faculty_tb` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `CS_RoomID` FOREIGN KEY (`room_id`) REFERENCES `classroom_tb` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `CS_SubjectID` FOREIGN KEY (`subject_id`) REFERENCES `subject_tb` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+
+/*Data for the table `schedule_tb` */
+
+insert  into `schedule_tb`(`id`,`course_id`,`subject_id`,`room_id`,`faculty_id`,`day`,`start_time`,`end_time`) values (11,1,10,5,1,'Monday','15:00:00','18:00:00');
 
 /*Table structure for table `subject_tb` */
 
 DROP TABLE IF EXISTS `subject_tb`;
 
 CREATE TABLE `subject_tb` (
-  `subject_id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(10) NOT NULL AUTO_INCREMENT,
   `code` varchar(45) NOT NULL,
-  `descpt` varchar(45) NOT NULL,
-  PRIMARY KEY (`subject_id`),
-  UNIQUE KEY `Subject Code` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+  `desc` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `Code` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 /*Data for the table `subject_tb` */
 
-insert  into `subject_tb`(`subject_id`,`code`,`descpt`) values (1,'PE1','Sports Unlimited'),(2,'CPE 550','Academic Funds'),(4,'CPE 440','SOFTWARE ENGINEERING');
+insert  into `subject_tb`(`id`,`code`,`desc`) values (5,'ELEC 1','IT Productivity Tools'),(6,'MT 100','College Algebra'),(7,'PE 1','Physical Fitness and Gymnastics'),(8,'NS 100','Ecology'),(9,'EN 120','Speech Communication'),(10,'CPE 440','Software Engineering'),(11,'HU 120','Introduction to Humanities'),(12,'IT 202','Operating Systems'),(13,'PE 4','Team Sports'),(14,'NSTP 1','Civic Welfare Training Service 1'),(15,'PE 2','Rhythmic Activities'),(16,'PE 3','Individual & Dual Sports'),(17,'ST 100','Statistics and Probability');
 
-/*Table structure for table `users_tb` */
+/*Table structure for table `syslog_tb` */
 
-DROP TABLE IF EXISTS `users_tb`;
+DROP TABLE IF EXISTS `syslog_tb`;
 
-CREATE TABLE `users_tb` (
-  `users_id` int(11) NOT NULL AUTO_INCREMENT,
-  `uid` varchar(12) DEFAULT NULL,
-  `title` varchar(45) NOT NULL,
-  `last_name` varchar(45) NOT NULL,
-  `first_name` varchar(45) NOT NULL,
-  `m_i` varchar(45) NOT NULL,
+CREATE TABLE `syslog_tb` (
+  `ts` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
+  `dev_id` int(8) NOT NULL,
+  `process` varchar(25) NOT NULL,
+  `alert` int(3) NOT NULL,
+  `message` text NOT NULL,
+  KEY `logsDevID` (`dev_id`),
+  CONSTRAINT `SL_Device` FOREIGN KEY (`dev_id`) REFERENCES `device_tb` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `syslog_tb` */
+
+/*Table structure for table `user_tb` */
+
+DROP TABLE IF EXISTS `user_tb`;
+
+CREATE TABLE `user_tb` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `username` varchar(45) NOT NULL,
+  `password` varchar(45) NOT NULL,
+  `fullname` varchar(45) NOT NULL,
+  `dept_id` int(10) DEFAULT NULL,
+  `role` varchar(8) NOT NULL,
   `picture` mediumblob,
-  PRIMARY KEY (`users_id`),
-  UNIQUE KEY `RFID` (`uid`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `Username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
-/*Data for the table `users_tb` */
-
-insert  into `users_tb`(`users_id`,`uid`,`title`,`last_name`,`first_name`,`m_i`,`picture`) values (1,'29234c3-','Mr.','Buscagan','Noel','B.','ÿØÿà\0JFIF\0\0`\0`\0\0ÿÛ\0C\0		\n\r\Z\Z $.\' \",#(7),01444\'9=82<.342ÿÛ\0C			\r\r2!!22222222222222222222222222222222222222222222222222ÿÀ\0\0–\0–\"\0ÿÄ\0\0\0\0\0\0\0\0\0\0\0	\nÿÄ\0µ\0\0\0}\0!1AQa\"q2‘¡#B±ÁRÑğ$3br‚	\n\Z%&\'()*456789:CDEFGHIJSTUVWXYZcdefghijstuvwxyzƒ„…†‡ˆ‰Š’“”•–—˜™š¢£¤¥¦§¨©ª²³´µ¶·¸¹ºÂÃÄÅÆÇÈÉÊÒÓÔÕÖ×ØÙÚáâãäåæçèéêñòóôõö÷øùúÿÄ\0\0\0\0\0\0\0\0	\nÿÄ\0µ\0\0w\0!1AQaq\"2B‘¡±Á	#3RğbrÑ\n$4á%ñ\Z&\'()*56789:CDEFGHIJSTUVWXYZcdefghijstuvwxyz‚ƒ„…†‡ˆ‰Š’“”•–—˜™š¢£¤¥¦§¨©ª²³´µ¶·¸¹ºÂÃÄÅÆÇÈÉÊÒÓÔÕÖ×ØÙÚâãäåæçèéêòóôõö÷øùúÿÚ\0\0\0?\0Ôøoâåûré·mû»£ˆäşë€ıkÖŒc¿ë_*ÙM%±Y\"b¯ïR;_PiwM¨èÖW¬6´ğ$„ÄŒšÚæm\"vN8¨NPúŠnÑBd´EÅ”íœñHA¦!œgK¸÷E.(À DeÎi„ÔŞ^icÖ@M4“íR˜Ç÷©…1Ş“ì)3ô©<²{Ši‹Ş˜ši§˜é¥\r\00Ÿ­0“N#qL@I¢™‘ëE0<KÓßP×\"°„3<²ÕGlkéøÑ-í¢†1…\0;\01^IğËÃBOİj¬Ä}ƒ¶[rkØ~õ’6Ó±’™º¬ù\\qL1Sº3Ôƒqõ£yõ©~Ï¦¢#¶·’ydXâK»±À\0uÍ;¡Ò„FweUQ–f8\0z“\\6­ñ{ÃzmÃA\0şEà´\ngÙ_Â¼ÛÇ¿.<Aq%Ÿ$°éYBpe#¹öö®\\œg ¦ìŠQ=’òÑ41çşZÎsú\n×Ñ¾.i·Î#Ô¬%²$ãÌFó}G~µáAås‘}K™_wÏœúTó\"¹O«áš+›hî-åI¡‘w#¡ÈaíHXw¯øwâk\'VƒN¼”ÇatÛq#accÈa™¯m0±§tCM2Ã<\Zi“•1·sMû$”]R/4v£i3íS›Y)†ÖOîÓM¥fb{Ô,*ïØä#îÓ~Ç/üó4î…bS´Uï°Êz¡…ù¬Sğ5™±Ñåºtd–öO1”öık¤i±ÈÍ=á=I5ŒgïVi#YÉÉİ’-Éõı*U”Ô~U\\[·^\nQĞÒvl™°Ç!ğk+Ävs_xsPµŠOH/×V˜OU4ñhNÃ±ñÁ¶™¥1²şğ\Zé4\Z”ÜE¿=»U?-¥Ö®sÔLû¾ã]\r½ì6`1”¨â²«\'{#ªŒ®Í¨,­R0#¶p:¡­¢ÎL	õÛQ®·hèÌ1•\0ñI½m<ŞR«³z*çc©½’1u½-Q –İÔšö†Zé×<#\Z\\×6/öyX•?—ò¯>(o¡hÔqÑºŠÚøD$‚û^¶<*ùlGûYa[SwVg-T–§ª¹áZ0¾¿­@ù=é€²ÿ\0­lsÜµzM¾õ_y=Í4¡nä~4¬,ãÔŠ9ìj¯ÙØŸ–AøÒıšP3½(Ğ5&.ù˜~tU7‡™RŠzÙ¡$²3PŞ‚¡ó‹ª²¸eaÀäL2ØÏ#œfµP3ç-n›İÀ÷¦†—?{_ÌoïRyıê9EÎiDì¿yÁ_XÔßJÑoµŒLÖĞ4¢>›ˆÆk2ÏU†õ$h¥ÄÌ®›¹R=EX–îÛËX®fŒGp\n‘€Şä~U.™J¥\"c}q}<1yåi6Ù9ÀüéÑÛjK\'•#”Cü2#V¯m?°5ÛÛEmÑÇ1UaĞ®xı1Z3ká,DPª™HùIí\\³m3Ñ„bâA¡èåî§I~oİãâ³î´;Èn1’ˆÉãË W´ßÁÁÊÊ3×päšµy¬ÊvİÛÁ*\"H’† Vw•Í¹bÑsI²¹‚æO#¯a.Æ´<0n—ÆñÁe+ {%Â¯F@¼çÚ¨A«Çw\nùg¯LWQà˜Qu«»¼5bÚ}²Gôª§w+Õ´bÙèm“À¦4DòN*&ªµÍïÙíäYÇÜÄöÙÊÏ7™n[¿\ZVWN?eØİŞË™t«B©íïïS4îzµ\n-«‰É\"Ù•€ç4‚åzj—˜ßŞ5?Ö«Ù‹Úše\'ùŠ+;Í>”QìÃÚe§xÎÿ\0K½	|Ë•ü¨d—fã€;+bïÆ|ÑÜAÛİÆFĞ²¬:á³Ôf¼Ú)’5Ç9ïRı¨Ÿ­vÊœfµ:8½Ñè3|H¸Kß[¤eHˆœdc•T“â6©sÄ‘D¬ãEtç9‡­rqÏ\rÌ\"ÈüØCŸ™}ÁíMN{Ü!i¢şêQéïèk†½9ÓÓº!ÓŠ5cñöšƒ]Ú*Es&C•èÀõÈ§j:ôºµ­¤×%’Ü“Œ9üOzÄÖHç¼m¸uÈàÕÄ‹íÛ¢„VÀù—®G\'µÃ•İÛùºkİ˜ä”õŒ•\0÷íYŒ$òâİ—pùHjéÖ×ÈEtó<Ã‚Ùã•ÎM²ËP’%É…»Àÿ\0…JmßF_Òôë«±çMqKíïåWïâÔ\"T7÷1ã’É´XÑ[àæ;’¨yá±[6²Áë7ù4›:–Å]/Çgñ’=+×t·¶‹G°¶b†WåÁàç5å–1	õt lŸzêmuˆ•&FYví$£¯áÍ—+9ëkduö\ZÌ/46Êğ›hQº¨ß˜¤ŠŞV–5·Ü%™>bd ü LàÖNŸ}ê±Ìğ‘#£¹\np¢ˆ º¸óÜÉş\\¼asØ*×LæäŠ7WWÄö„‘r3„a³$}jC{€ùz•š9İ‘\\…Æ«§[ŞŞÀÏä\\E†‘1ò±è}yéTŸÆ[Ç#Çh¡¥AûÉ0ÁOÓ½»R\\`wë12„kËe%Ç²gñNí—Ñ‚¡‰6==ıûW]ë³j‘Å0TŞ§œ~<Ö}ÕÒÇÕ@pN>lôúö¨úÄú–=×_|C“,¶±.àı×?.?ÆŠáS¶É@{8ëEÖ§qrDT\nw=;SÕyæà}+Ü:H$—a=kOIÔ°=±`7 e\'¦îÕwŸ-›ı“OÑ%TÖ,ƒ€È]U”ô ñık¼½É/!Æ<ÒQ}M_íF8wñlf®Ã¬ÇnË+FDˆ8=Æ}*;í9-<æ™,lÄ6~ğíYm¨6ß’Ú!è_šò!5tbàã\'¨é ¾·Ô\'Ê¹è {šçuåC©0ˆp€)>§şµJ)æ¼Õìà™†Ó\"ª01šŸ]¸6:Á3!1Núràÿ\0*¾NW¡­(Ys2¬	#¶Õ|{Vµ­“¥ÜµgÛ\\Ú´Á’hÈ=˜àÎ¶à¹·EËÜ@‹×™D›:b‘¯g²Ú/3û¢¯êörÛÚıªm±ù(¬áø;OB=jBšåò¼$³¶}Ò·f#°õşõÍüBñš—ˆæµ‚f6M£€Xzúâª”®ÌkI9+Î—i$¿½µ’+ˆ|²ÆX¤:c9¤Õn¯l4kKˆ„~rÜ3¸aÉp+É-5+»<Û;‰ ™FC#c>ÇÔVçü$²êÖÊ·nÅĞòzàú‘Ş´pdÅ½õŞßÍvc1	Nà²C7P(D\n¹füÁûíSÚZ‰Ú/_—ÊçØf¤şÎ–ê(UWÌ|Óü8>Ÿ¥sNI|Z)Ê	ªÌHAQÕ{úb¥’ÔL›¼£æ¯!=	<VŒmÂÇp›ñ““ß±ÁqåÈŒŒ¥W¡¾õ*¬^±eN…H=Q‘¦ÍÓÈ>ñÚ3Ø÷ÿ\0>ÔS®lä·eòá×w–ÌA‡ùëEi¾·3i§f3y>ÂŒïàV÷‹ü:š%ÜSZln²bV9hÈÆTúõ>•Îï¾ı«İ„Ôâ¤¶6Ûr=@ˆí¤SÕğçYĞÊa•eSó«_b:S/®Ø#ÁªñÉòãÒ¹kT¼¬‰½™£{¨]_1{›‡‘½ÏJ`™Ê.ãÚ©ù™2¶Q~•Ï¢V@Ûnì·¦H^²wnñçé‘]\'4Ö]&Şèb¸hÉöa‘ü«Œg1Ì²«†…zÏŠãŞ	¼uQ©r‡×¡?Ì×%y¸T‡™¤d•9GĞñ²¼ô§Ã“Ï!id`ˆ u$àRšî¾ècP×›Q™Cf>@İ\ZCşùŠè“²2;f†ÛÁÉ\0Ê±ü§¡i§×5âí#Ë+I#w%˜ú“]·Ä¿ÿ\0ij‰¦A!6ö²õ«‡^´CkƒÜ]Û]¾)w¥ó#8`y÷¦J>S­7~[?Ş\\ÕÜ\rK{÷‰·ÆÅ|\ZÚƒWk±Ëpğ›ĞãÓÿ\0¯\\Š¾÷©ÒbZRJJÌèô!°À[¿”G-#|ÄƒEÃ9EHä`ØİŒdxƒáÍbÒÈãÔâó¬Ë|à“Ç¿½r=ÃÂ®4ØÙA\rÌŠ~&¸e„ièÎ¥‰MZHóá<êÅŠ³ÇËÆ(¯Dÿ\0„gÂ.rú}ÚŸiËçEKÂ?\"–+¿èGªYC«Ú½­ò‡´şíÃãa^Cgqß¸à×ˆİåøxØ£}AÁ¯fŠÖ([†o3bG ÉÚŒw¯ñ¥õ-Oiëq!1¸×§†” ¤ÆwŠ}LGrò§!Ç5Jvy¨næDªrqVcÏ–3U#5iîÇÖ€m§•ZHá‘ÑÌÊ¤…úšõ\r\"Oí?ÛÆÄömÉî2¿á\\˜%¾FÒìv²¸–i%p¹Ç÷úWg \\YÅm%–—#Ï”FK“É#ñ®i»ÊÍ\nrP3W<ÃŸÅÓõê¨\'|ok?´ï°„õcôéø\nÀ6šf4Ë*ï».e:ó\rÀÇnqîjk„IšOx ïg]°Ztãzÿ\0.ô¥ˆízyšF-³ŠÜÒîÅ™I\'’is†ÔèmzwÔ®bM;J6Ê=	íêÕZóM°Õuu°ğÅ­Ä¸?4²>TûóÑ}ÍZÄE¾^ÛöAÈís¹ªÄìlá9ü\rvzÿ\0ƒbğöœ“]k™Ùr-Ägsöyéîk˜cŸÏéZB¤j.h’ÓNÌfHFİ5#¶9ê«1SüêMÙE«<3ì|•ÚxkÄ“Úa-Ì‰ªmÜ)ôúWÕrÚQ,{ò:\Z<€÷m1®.¡|Üà˜ÓÒŠã<ã+{d³Ö$)´f)ğNáè}ıè¡&&u>!ÖÎ›§j@ŠñN¥¡!d8ÀÇP\0É?LW]dÄìOPsõ¯Wñ8¹—Ã‚áŠ&EiU‡Üç^MxO’Üñ]nš„XÕNus7²ŸjİúS¿ƒ˜kc‘»UÈîÿ\0\Z¢†­ÂÙSõ D<o\"àùc,;àœgóÇç^ğ¤İÚ[ên-Àie¶’Lã*Øïº3^s„•C#æ6ú0Åuö\ZÂé>+Öåw*Ø½½º»µmÇäâjfíÚåÓ~ö¦~¦º†µ©ê3évÒ6n„’É¸.O³Ê³nôı~ffºµ¾”À2ÌÊ\\ ë×¥kjP3>‹`öÓİ¬ \\Ëon0ì»U@@ŸsIâKÃ§éš5•šµ¼VòM\"¢Ì_q`xÏ Ö1nä]™×ZÆ»{aµÔ÷OhÄlS½\0 sô«ú/‹õZ=¤–¨?¼’\"ÄœóŠÕÒ|QöMgYÕIg°·D[h7HË²€Ê§Ê3zƒûOÄßÚZ…Œ¾ ŠX­\02¾¡ƒÉ\0[\'¬İ\nn<­h\nn÷2ôİSO—Y}CÄj¼lî\0`‚Ú·°â±.î>Õw4¯æ¹qŒdô­­šës9 ’\"¨Y Ç–\\¨ß·Ã»8¬]¹ôéISQ•Ğù®ˆä_—=ÇÅ?&*Å½œ÷—mî‘ÎŠv¥¦\\è×ŸeºP$(„\Z +gŠXœ£ÓÁ¤Î\r\0jÇ uÁ±ES‰ø¢ªâ±Ôkš¬ºµó1gñ|FÇ;SÔŸZÅ¼âEÙSáe%dWKBÑn3ïTØ`‘EÂ¡IFn0ñ©íŞQLEËk¤³¹y eC®3ø­iê:¥•À‰d¶›ì€|â7!\' ÎŠ*Äˆ¥õy?4:÷YÓ5k”º’MFÆâ8V¶á]B:’§œóZÆMZğ·0ÙYZ›smä©$á¾`ww-”Q[£e§‡ÆÖÖ“Üyë}}l­¶=¸U$ıò*¾·§ŞXiºÍÕÛÄÒ^ß ıÛ—cÔj(¢Àr£˜ô4ÌÑEfQ¿àÛa{â‹(Kîl÷\0^¡«øWIÖÉº€‰”’3†CíşQIä)ğÔ¾Š¹Yã™KÆÁvœ{ZÂ¢ŠiéÖjBìûW Š(¬\'&™¼!µ?ÿÙ'),(2,'-','Ms.','Galang','Rose','R.','ÿØÿà\0JFIF\0\0`\0`\0\0ÿÛ\0C\0		\n\r\Z\Z $.\' \",#(7),01444\'9=82<.342ÿÛ\0C			\r\r2!!22222222222222222222222222222222222222222222222222ÿÀ\0\0–\0–\"\0ÿÄ\0\0\0\0\0\0\0\0\0\0\0	\nÿÄ\0µ\0\0\0}\0!1AQa\"q2‘¡#B±ÁRÑğ$3br‚	\n\Z%&\'()*456789:CDEFGHIJSTUVWXYZcdefghijstuvwxyzƒ„…†‡ˆ‰Š’“”•–—˜™š¢£¤¥¦§¨©ª²³´µ¶·¸¹ºÂÃÄÅÆÇÈÉÊÒÓÔÕÖ×ØÙÚáâãäåæçèéêñòóôõö÷øùúÿÄ\0\0\0\0\0\0\0\0	\nÿÄ\0µ\0\0w\0!1AQaq\"2B‘¡±Á	#3RğbrÑ\n$4á%ñ\Z&\'()*56789:CDEFGHIJSTUVWXYZcdefghijstuvwxyz‚ƒ„…†‡ˆ‰Š’“”•–—˜™š¢£¤¥¦§¨©ª²³´µ¶·¸¹ºÂÃÄÅÆÇÈÉÊÒÓÔÕÖ×ØÙÚâãäåæçèéêòóôõö÷øùúÿÚ\0\0\0?\0†/3w\'Ù«É&W;AÇqPÇòÄc52ÜíŒV¦$Ÿ{#CBœ9ø4»œ§œS@q7=;’i’Z^Fp2{TOYŸÜU…À\\•Zê`#	»O8¦öÕ”¦Uê©Á8aQVH øæ—j‚:uZçV²°e~OİQÔĞ†ËK¼!o½ƒŞ¤µnùóµNsí\\ãkw—w8³XâP¹ÄÌï¥héz–øó/Ë(%\\ÆªÄó&ìm¢¨f*Kn?.iæ4·h9‡øUh¤Œ–úœ{T ¯B{\0\r4KE¢ËöfÊ€Z…Fq…Ç9àÓ²0À|ÁOÅıÛ\0UbÒüƒ\0Æ§qOsU¥³“Vü°#ÜßZ¡/\'ƒÈëOóJƒƒU”À”;èâ>yj*|¯^(«B9SÊåÎsëH\\BŸ{954‘¢€åIn¼\Z­ 2´ŸJä:Qj)”íì;ÔW‡¦)Š ‡\nHãŸ,›#Æ#Ú€$I\nÛòH=€æªÏqhd‘Ô·S“\\Æ³ât´/<Àñ´ğ+¸Ô®ï\\´Ò°Sü àQt;>‡WªxÄ•xlÀÏ#yé\\¿Úæšs$®YÉûÄÕt(:ŒÔÊé5I‰¢ïÛm¡³òğ>•47’.d`sëÖª£>L}jÌ>[½Eh¥ÜC¥Òõ[‘QƒÇÍë[zÜ2±.ÆÎ®NÅ\".YdÚqŠ×T‚8d‘Bôc×éKF-Nº+¸Nå/+µ<eXÉ»œ&s^uöfšèº9Lÿ\0µÒµm¦¾°@Í6øÏŞ³‘íNÂ;;•v¶ßN*À,ªT–=¸îk\nñr¨TŸZÙo™p@ÀíŞ‹ƒD±,ç\'Ğæ†‘Y°;pI¤8òÁwÉÏ>ÕÅß¸¿¥R&ÅÈİq’>”TQ¸ÁïE;ŠÇ1%ä¨ä0zjU“Í\\îã¸¬ë„2WvßZXœ[ÆYÛÌtŞOº-€:v®/^ñ^Q­­‰~óz}(ñ²U$ôæ¸‡-$Üœ’j[-+—\"óneÂ)f\'êk~ÏÃ2€ÓÈ#MXğı’¢Ú7s]„¦Ğ{×;ªïdtFšµÙÏÁá[U\0“#Ÿ~iC Û&”¼{Vº•æ“šÜQ—&“l‘\Zä{U	tˆ‚7–Ÿ0¶äf=:Ô=ëU#7‰v{IÁÁâ§7…£}­”n«•·aêxç±ï\\Åå…ÍŒŠÛISÖ¶ŒÑŒ©±évêãkFßRr¦6l¯§§¸®u¦ÚÁ‡LàŠ›Î(DŠkU$Ì\\]Îš\rF[gÜíï]v›©$‘	\"Ãâ_O¥yÂÜPz\n¿¤êMexï‘zm\\V±éÍ0– Øe=iˆ¤«2­QŠçÌµ%yœç¥Mãº6á™¬îW)f7İ÷xÇŠ} B¥ÁÆzÑUrlJ[–Š?—=JÃÕ®Ş;vg!sïÖ§¸¹a6À=ûŠå¼Cq œFäŒñØW=ÍÒÔÆ¸˜ÜNÒ‘Ú£µO2ñô7Ë{ÒéÌ>ßOª%±¬w;ı<yHª1ÓµmÄùQX‘^ØE-0È•b-jÃ8óˆúŠáQ–çkqØ×ç4§9ª1êVò’@jÇÚÆ+TÉhŸ‡8â©Ï¨,G¦k:}zdùb„õ­¹\rXÛòÉ9ÆiÆÕ\'‘ú×;öµtùTX×ÔÕè›UN^U?AZ+»ö1õß<¶\\«öô¬Œ¡¡eı+ĞşÕ#¼KsÜœn+ÅšR›/·@1,_ÄµQ™œ¡trğÈFAïúTû»ÜŠ¡É!êÕ„|6­”Œ\\ODğµêÏ«œ‚0yèkpI\",ˆ?…«…ğ›†»’Ç=T\nîù|ä«Ê‹ŠÄÖ~hVİ‘Ÿz)È²“…Ã9¢šd´)ÜÎùluÏ¸-^ãÏÔ¥oNvzä²Øi“HX‚xëë^xX¶XIæ°6ˆNØP)¶Hd»DÎ2qšŠfËÔšüEîÂ¥–·=ÆÓO‚\0\'[¾îi—CÇÊê­èÿ\0\Z‘t.IpÓ7ñP\\h\Z|•¶˜|¼f¹ ÓİrRè„·ÙÎ`pF{\ZÙ€§âªé\ZZ;J¶æ,Œaœ’\nÜ†Üy¸Æ*g¤´*7¶¥ˆËÉ5œ+xyÀTSŞºv¶VÈüªœšfì}Ü©È ŒÖÜºÍ©ÏÏâo±Í“ã(@ëøššÏÅ©p>{€ÏU]ßÊµ†›>y\nßğWítÙï`zàSMlK‹Şåx.­îÊ”èÂ¬Ü@“ÙÉ•”ŒUáf¸Î9RèùLãµ\rŠÇŒ]#[^É?qÈ«PÏ¸sEíµÅş±r¶I3yÄk“Ö«ˆæ¶™¢7ŠEê0En™ÌÎ³Â÷B=n#ÎÖâ½ ypyµãºEÁ†şôqÖ½ø÷V-+E©Ğ¿cn\0beCÏ8\"Šh`§)ÔõæŠ¥c;;â{™¥aÉ¹@Ü0?Ï5É#pAé]gˆ¢g½‘óÆ8ã¥r `}q\\æëa>jšÉ‚^ÂÇ qüê7ÓWå`GcCE&{nš¹IèGqÊ¥bè\Z’\\ip0<ì¥½ÔKKåB71ïé\\qVĞîzš~rR[F]·zô¬èšx-™’5’B:1¦\rRâ8ÿ\0yFôÑk»‡Cl¨S—ÏáPË2¡è{Öšİÿ\0›ˆ-üÁKäş½X¹¾¹¾Æ`ò‚œ»zû\nßs&oBààÕ´`ÜW=\rËDØlí=+B+¼œŠÍ;=JjèÔo‘rH®3ÄZ‹¶£­»|ÀnsıÚİÔu1mhÎAfèª:±ì+ŸÓ4öût£}Ã2fÇOAZSİŞÈ‰;hhøcG‹M¶|/+ogaÉ¯?ñeÿ\0Û|WvÊÙHˆ‰Oû½\\×ªßİ®—¢İ]¹†&`=ñÇë^®ÎÏ#³ŸrzÖ¨Êo¡¡aóŞF¤àúW³[¸K@¦@ÙùW‘øn×íº´1öİ“ôê°ÛmŒF…U”ä†çŠÒ&ÜÒ‰Õ‰éïEaÉq,ÆÊr9 ¢š‘<§/©ÛMp_àãEp×–Æ˜ã\nNE}2ş³rÌ‘C*ã¦0å\\Ÿˆ¾i÷¼öÎğJFJãr“ôëWì_BUd·Ğğ½¹ZŒ©¥u\ZÇƒu}--±’¢X~aø÷Ï°Ç~5“‹Z3U$õF×†µlM¬­µIùNJèEïÙåg H§îâ¸£±Á«ö·Ò/îÙÉ²kSÖèŞ5\ZV;ÅÖßÊ¡˜ULÓ?µrë½%POR¸¨ômA.b>	ó«×\"aş¤¶=dV|«ftE¢ƒk	»% »i?·Š²³zl4à.¿zìŠ;FµdI*\n§?íUû¤Évmª=ÌªK)õ5ª³¤yf`\0õ5ÍË<×7è-“s¡jì:UÜ÷#íÄıœt3’çßÚ³q»\Z•‘~+¤ºg¾˜oÏ«VŞ«ä	\0ÃËó±úÕ¤Ñ¾Ñb`t®Ü74Ë_&ÒV„*ªŒŒVû$‘VÙÉüN¾1i¶¶(ø3I¹Æy*¿ıs^h8vşu×|EŠáüB³”smäªÆøùsÎEbhš[êÚœvÊ@w;Âš2gYàmÀké…a„5Ş»Â²xÜ)–v‹c0Ä\0HÓ¬O¶4İ‡<V‹Ddõf-åŒÍ;½¾1œ(«©:ÇŸ•¾oNÔR¸ìz¤F$=›Çğ+asSÉf²±>B)Û÷³œŸLW>——feDJIÎõÿ\0ëÕ”Õf/&Xå\rÓæ8c][Í\\mşŸ ŠFhJ`€èúÕçz¯´ûû©˜¬¶×¯–Ìû×ªÅ¨$,,&C€2¿1üê†º‰F) ©#œÖ‘jZ36¥Qó±¡İhÓùw	ÉèEe…9Î1^çâ-û^×i‰d—<l`£é¸×.„¶Òù1—Ôr§è{ÖXŠ<«;aësû²Üç,.ä¶•dRr:ŠìlüA‘İGZÌm\Z,p*6ÑN2¹®$wÅ´oË«[²ğGåXó]µÔËºîv<TÍ„‹Áf­=\n×ì÷şcãîàY»\Z+›ze¢i¶ù`\ZCË6:šyÖšK¡½³ÊıñÂ©«‰&÷h6=©.u;H,¶Eˆ(ÉÚ¿15QC¹n	ï®ŸÉßlGDÉ?­X’³]ÌÜ—gÉ&¼Şo^­éš×)³ŸßQVG‹u+’‘Æ[Û<ı*Œİ›;k›XuY-¯\0xÜ`¨=şµOIĞàÒ#Ùi‰ß%äŸcŠÅ´Ôï.›¿ºÙº[36ÕPhM‘$¬j2¼‘.r„1Û“Ö ™Ù¡±Ï@İ@«–¬\ZİUùT<ê\nÎû1K™ğØ;=¶g:‘\n\rÄäõ\'“EK&$9\nøæŠh5;0KŠ\Z)7¶>Sì\rU-­Ë4$ÎÜoŒ©(=ùÍyõÖ½w“.¢|®ê¹¨ì%k{À·S4P•Ú„şí»Æº]ZMÙ3F¢Wg®é×·’¢@åö’\Z6nİòj?ïy­àŒ…Mİ^+ÁwÁç¹k‚Šcƒ·q=ã[ï§¹6-!¡İŸÌÕ¥i·tfÇo8\\#+2ğê0\rs!ÑgÕ	’Ü@‚±’ü{ık·¸&±ef\n>`¿+şRL,À‘ˆ?øVÑw9ä¹ZhòĞí) +\"õ¦[€:×Mâİ^Ş«éğ(%³Óş\\T»á•¢”mu8\"¸q~_z;~G¥‡Äs«=Í3±ñĞÔdyd€uÅf	Ú3qVc¼YFûİ+†JÇles¤†Q$*9#½j½ÿ\0•»1]Ç QÜúVEµãÛÉåàŸC+bÊs\'pà¶>U„Ôš¸´D®aÙxtİ8–D7gŸâ?á]Zºc1&G â¶#¨@\n¥€^î*·\'b§Ù¢TÚÑ!LŠ»¦Ç\n¾ç8\\|‹Ãÿ\0­TËngÚÈœ¶ÑÍj	#ÄR¨\"Ûµ£<)ô5Õ‡§ÍïHäÄUå\\±Ü¸l£¸MèvJ£sŸ×µcNó-Û0,­ĞÆİ8­BÒBì¬?18éÛëVMŠjZs;ö˜ÏÈØ0ô­ªĞ[£\nUÌÉE2F®F3ØŠ)–ZœjòZ²çaÈÈü(®T›³\ZUÀÅf].Aô¢ŠçGWS¦øq6ÿ\0·ÛÈ7…e(O8ë^‚\"/nà)1üø\\ã\"Š+º“Ğá«¤Š×Rmæ«>Ù@8=¾”Øˆ[”ˆ‘PÏ$æŠ+¢;Òø‰$št³–dÙò’Ê§Œ(íÅxî·3jWá‘#»\r©Âÿ\0WUFQ’‘Œäã8´a99ÁªìåyŠ+ÂšI´{IèZ¶½ÜFôÜTsî+rÕ#v\n\"£øQEbj†‘¸º„`:¸è21SÁ%ÜÃ9W¿$š(«D²ü1Œ€Ømß)È©t¸Ì\\iòñ!Ü€p\0=3Eß…mÅ£ÏÅ+I3jŞĞKA.22Ã#œÓô÷ho©ln‚£€j(®§³9æ-Í¼1j7\rùd±ÎsEWœ÷=%±ÿÙ'),(3,'79eb5a59-','Ms.','Ramos','Wendy','B.','ÿØÿà\0JFIF\0\0`\0`\0\0ÿÛ\0C\0		\n\r\Z\Z $.\' \",#(7),01444\'9=82<.342ÿÛ\0C			\r\r2!!22222222222222222222222222222222222222222222222222ÿÀ\0\0–\0–\"\0ÿÄ\0\0\0\0\0\0\0\0\0\0\0	\nÿÄ\0µ\0\0\0}\0!1AQa\"q2‘¡#B±ÁRÑğ$3br‚	\n\Z%&\'()*456789:CDEFGHIJSTUVWXYZcdefghijstuvwxyzƒ„…†‡ˆ‰Š’“”•–—˜™š¢£¤¥¦§¨©ª²³´µ¶·¸¹ºÂÃÄÅÆÇÈÉÊÒÓÔÕÖ×ØÙÚáâãäåæçèéêñòóôõö÷øùúÿÄ\0\0\0\0\0\0\0\0	\nÿÄ\0µ\0\0w\0!1AQaq\"2B‘¡±Á	#3RğbrÑ\n$4á%ñ\Z&\'()*56789:CDEFGHIJSTUVWXYZcdefghijstuvwxyz‚ƒ„…†‡ˆ‰Š’“”•–—˜™š¢£¤¥¦§¨©ª²³´µ¶·¸¹ºÂÃÄÅÆÇÈÉÊÒÓÔÕÖ×ØÙÚâãäåæçèéêòóôõö÷øùúÿÚ\0\0\0?\0æíÂ±Â²Ÿ¡Í_H½«’“Ã>#Óf,ú& 6ÿ\0\ZBX~™¦«jvË–KÈ1ÙÃ/ó­£[º<ùå×ÚGlŠpJãâÖïÑãêOø¬Çâk°pZ>…9ı*½´z˜ÿ\0gU[4uĞÚË;Š\'‘€É¤)ßf•ïŠEí)oÁs¶±opeWF•dÀFsş5èñN±[Ëƒ\Z¸Œ¤Š ÈúÒuuĞÒšo[Vè¹<Š­,Uê—¶[B™ÒÍË«ºÁü^µ•6“g!Äš}“6Oú¶*qÿ\0Ö£Û.Áõ	t‘æ’ æ«2]g‰t»Kƒì£@ÄòHÀÆ:×4éùQ~eta8:rådJÆŒ8É<ƒNw2í,Uvä¿_zB´à	ëRsia¡*U‰S¤~Õv\"äkN*qÎX‚<J„ñƒj`‹?J-¨›ĞÍxƒ]Ä˜ûª\\ñø\n”ÅÇJqtŠæifpªYbClÕ’€®G ôÅh‘Œ™à€sê\0éEXxùéE.RyÙÙè~;³¼\"9ØZÎÖ;²™úÿ\0ãùÖ÷ü$PÌ1àíRà21¥xÕ¬ük}-³\\²¶c;z¨®»Â­6¡á–¸’c½Ø†Ç±İ:Šç¥i;3éäì®zÚÃ¦êLúM“Ÿ<Ùı+øƒá=ÓÃ—\Z­—kis İ\nm ïVôY­¦	\n\"»…,ßt1<öâ§øßñAŞöâ?øğªœytcNïCø`¤Ù»#ª6îlãïóÓÚ½×íMqr’ˆ£·óŠÄÛñ¹1É÷?ızà¾•Ky²ª–Àûıx«^ ñ4Ûˆm§/“#9R¥·tP8î3\\õgÉc:›™.ïó6åÕ,RÂîhQ†Õ`G]ÇãÒ¸İWŸí!¥°h´ù>Ty[’{ãLê`Û´\'şz>9úV©,Ë\nÂn<É3÷\"l„ü}k™Tm4Î¯e­Î‡]¼D¹X‘Á¾èô–N?w÷û¡ëøW<óİ§ü|ùÎ ·$~u©¥Ê—?,.A€ßÂ~”•IÓÙŠ¦Uï-I\nå°>”áî1]6‘5­ÕÚØjÁ¤íŞñƒÏbO\\{×]\'Ã¤ê¶°·ısv_ı˜ÿ\0*í§]M^Ç“S8;\\ó8Ò¬¤uÛÉàN\\§û²ªçU_Áw\np’Ê£AŸıŸå]\n¤Niaj­‘Í\"Ôën ~U°Ş½şZ@Ş,ŸúÇĞõ4‰Ìv¾k8H¯=Z”_S	Ñª·‹9©4åÔ#…¤¡óFBHİOj¿äˆã\n Q€aWÆ›ug\nG5¬ñíP>xÈíç‘Z¤I¹lÌ÷^zQN™ãO¼ê¼ÿ\0Å©Ç|CÁñ]Ã/*ñÆÀÿ\0(­ï|9$n[i”óØqÍdøö5‹_Ø¹Ú @3V¼\ZéW)2`sCü«‹\r¬¬“÷NÖ[ekz¼N AéŸËçgÄú½Õ†££OuæY+eF$æº©î.ì´é§Êƒvõ\\šóËvS}·î¶HúoXµi\"¨;™á-Gû+Â²H¯¶Y#Ø„vËŸÀJæu\r@—i±’NØÇ½XC‡,À=Pş¬k&öi\"şG?^¦¼ê³æ—¡¶\Z›Šwêßæ]Óôy§¹V‘˜±cG·µv–Z½¼@¤KŸ\\TZD\0Cæ‘ó9ÏáÚ·¡p1XŞçm’ØÇ¸Ñà—†@\nÇŸA³	íşW^Fuî5ˆÇ­fÍ#n§=vúÑX\r·qíô¯Køkâ&Ö´#k;îº³!2z²v?Ò¼öîÜÄşbEiø?Æ!T•†íHÀ8äóüël<í+¸ªK–èöz¿×\'°&-»JãëƒJ¨CfÜq˜¯Dól?jªÔT/ek\'ß¶‰¾¨*zZE¿²ìñ…‡gısb¿ÈÕIü;g?Şg?ï…ı\Z×¢Ù.)îq:‡Ã}+P`e†ÙÀ9¢+ÿ\0 ‘EvÔQÌÉöPì|Ÿãé7ëH>ëÂ0~„Óü‰-”…¤ÚÑMæ…XÁşb³üPml•ÉÜ’ÜÆÙ<ñ)ÿ\0\Z×ø}¥Ë¨YÜÍÈÛdòÎ1ÆsÏÿ\0\n¬<”g©¬Õá¡¶Â)Ú9êWYR¼“À¯:ÎÍSQ³0÷Ø¯^¸Ğ“N±šà(S\Z–Ã6âOòşuãq}Jé‡üµfÏâÙ§Šœd×.ÉBúÜíİBi61öXÃÊ±ü3¾ææ{†ÿ\0–®yúšÕÔåX*ç¤8÷ÍEà›}ÚloI5å_FÎø­QİÚ‚±( «ñ°Ç<W=wcmåù÷zƒÃãßµEc´°³íÓ¼@eqØ>i$is¼$v¦+K¼¸òŠ\\Mæ¾x5_\\–F+›Ç·‰A/´ã5sT™µy-²Gûé‘>¦£ĞW[±hÜ6ÉÔ«ÔŠá­5ı7m–·7{9iqœ{ã9ı+¯Ñ.-fÕ4ë›@DrL¹ãÇj¸ÅÆJæUZ”y¥rBúõ§n\n2H½3ÇCè¦†V8=\r:‘AE&ih\0¢“4P+Ÿ+|I–Ïe7;–ÈÆOË“úVçÁù1£ê‰épù©ÿ\0\ngÅH\0Ñ¬_9\"všÿ\0õª¯ÂYü¸58ùåÑˆü\rfµ5Ş\'q®ÎïgsF~h¸rÀ.sÓ×5àÖ°Éı¢ªñº±l|ËŒs_A\\ZÛ\\îBÀwë\\‰ô›K5gµb ÜG½\\dp0iTú‡/®8S\0\'å.Tÿ\0*×ğ,ñ*XÏŞBAö9¬mn?>KX‡ñ3ÿ\0:İğ¬‚0À°`XÙÂãc½-n_Õ<%£8fšp½#/òÃ¥R¶ğ|e!¶™AÆZI9\\zÕÚÛÌ;\r-Ü±År@f•®h¢›½Œˆ,ã¶e–î}i/,¡¸,²(!½Fi¢äÌ|Å)<U™CyA²ÅK6Šw*A¢¤mÉ´ú ·ôkX¿µl 1ç)ü«&Òó-²AƒüëgEXÿ\0×QUOY£:ÊÔÙêcıoüœÈa†Fi«Í>½Vx)‘ı;}\r:8öîcÆ9©3FjKºŸ˜Ræ™Ü“HXNÄó6\rVIy¢ªÄ\\ğŸ‰ÑnğÌM¹:ş¡«–øk#E}yƒ˜·PXë]§Ä8ÃøRCÔ¬ˆ\\Zà<+E¯,ş[4`ş\r`Î•ğÀé„ØÃ‚1õ®GÇÖäxqîÃÈ¦	S‘†Ë£×ÿ\0¯YšŒµ8µ=m ¹FKRZ%x”…ÁÆ:f¡Õõûká‡Ú¯%šKï$ùJ@!NAÆjZtÊ—d¾²a÷YÇšK¦±ñT–¯…å–qü`…65?gÒ¤?óìµ[ÄP7œ¬UÓd‘¸ê¼ŸÀãó®(«K•íûŠHîã¹‘x\'\"¢{äuyR5…fq¬]_MB\0—*#¹O•ÀèO¨­»­:ÚşÙãšpÃËœTµgftF^íĞË˜,Ù³ı¢°î‰F?*b¼lË^,ÛyÜ!T-&»Ò—ìÍkm*)ùLĞï\'ñ«©j·1ıŠİ;¼ˆBg>ôÜNºt¥kş¥…¸ğn´B1]ì¸që[:û|Ce9q\"–öô¬—uÒt´La©ÿ\0\nƒÃWëm{\rıÁfÌÛØ’qéSOãLåÄ?q¤{ú5KšÀÑ<I¥kğ´šmär•8hÉÃ¯ÕO\"µ·ÕìèÏŸ±cx¥İUKâ2ËõÉLi8ªÒKT‰\"º”\r±´œÿ\0	ùš+]ÔÖÒ%.¤©|†Š­©ÌkÖpê\ZsÙ\rän!z\0sŠóˆ-¬tÙµµÃÏåLä(ÀÔ×_â-i)-lÛæHOaş5ÅÛ¢‰Goå\\Mës¶ĞÉ’ÎY/.&f+æ³1<÷9­[˜å—Á–ºe¸ónQm±¯ŞÉPSV^&ßÀm§îñÅ4jRéÒ´>\\ËœJpJgû¾‡ŞšNOAÊÑZšZÍƒéqéöRHKkuˆìz‘ôäÖuğYíÑø“nB?‘ü+>ÇQ7Ë#ÈÌÌÏÁc’qïÜÕ»Œÿ\0g3`å7òÿ\0\Zá”y*Xí¤Ô©\"nûknùI÷ÙÛM=¡	&^>Ç¸®\ZîSŠÊå	mÁ‡c]‡‡µxõ[\"}©wù×?xx{*&¹¡#q>ÏpäÓä6¶´ÓJ©\ZŒ–c€*¤–»[å—ªÙ´ÖÌ¸\'ŠÇšæÊ:hÌkÍlj÷’ÏEº®ØAî9çñ©ì™šÆßŒîır+š±a\nÍÿ\0–giúÏé]œÅl£RGîÙ—?¨?‘­œyv9ù®rŸiŞóÍI9ãn$VÃ­w^ñV¹«Î¶iªH.È%wÈ>;d÷®ğï»–@1¹³P$Ò[È²Äåe`yWªŸºxÕ ›±íboEş®v¤ˆ­gjş4ñÆƒ\ZÉv6«)tø\ZÔğ7ˆmü[§È’¢¦¥k:ã£è{ú\ZÔñ„¡×4Ù-nâG^¨Ã¡Èñ2´‘K\rÕIÓuêZMÜZ–š$!!hBç¶á‘M¸¾ø€•tİ*x®vŸüx\nóÛ/ë’=õ¡È-åÏ\"·Î‡ì:ãŞºtñŞ«j¥´I£%¢`xõÖ›©U;ÃTZ¥£v0õ/İj,lu,Å=«•tó\nİF:ÑT¼K®Zë×KrAy„Æ>eœzÑ]P©x§c	PšÙd<eˆüêX_[=«¶ÿ\0„6ßnîeú 5ËøÂÚßÃ°zÒMq W×óãó®h®gc¯$fj\Zš*ùı/ŸĞVÓ¼MVyÖE[¨¨KõÖ’ŠĞæmÉİ’iò‚`1ìk«ug™Ğ7æOøWdòØú0ÁÏéş}ë®ºœI¥Éq?5¶qî¤ú\\áï£º…KShçu‹²nWæwê	ÿ\0ëQos\Z¼wÓ<2+ü2¥Oò¬íFBÓ?Â¸Nµ½ÃÛ±Á;OQéî=ëeFÃ§‰åÇ|Ÿ.ãŒ	ôè¦(v´ˆå3øÁ©ÄKCæi“†ôŞ¤W,®ÌÇîNN]°0}‡Ò©ÏlT¬–í¾6?>=+eM½QÙRD¹¢ô÷ÏºY#Â¼’´ŸOjé´;¯?NÂúeG°ê¿‡?†+Œ‘B¡^sZ¾¾0NèÙÚ>qÏzÖtÓ‡9µ;1.O•s\"•pEE\'ú²Àæ¤¼*nå)÷Ke~•P‚€8t­ÖÇ<—¼:ÆàÁª@|Ù\"G`Ñ±S´yè—:úÇºËÄ÷àÿ\0’EysÓ®;s^™ı¸öÚ~–×±Ëºş Ñ:G•b8<çƒßñ®z¼Úr¤Ë§Ë¯3±‹®èz¬½Ìş ìB7¤nï¸c	ïU´:F-®Ihû9_qíê?*µ­ëQİh¾t¼¹ADf\\sƒÇÓ5ÈGv§=F=«JNI{ÊÄÕQ½¢îw—6Ï$‹-­ì–ÌËœÁ&Ğê{ûÑ\\’j7iA)Û×oÏ®ëEkÌG)ô¢ôäàw>•á~2Õ¿¶õ©î\0-ñCÑ\0ÿ\0_Æ½OÆZ™Òü/tèø–Ü\'¯Í×ôÍxlîçîœjÎŠê ˆ´4OĞr‡ÔT¦Ozˆ±•Ÿ¾¼©ş•ìŠÕ±!’I¾F\r÷zWE¢ŞfÀFÿ\00‰Š²ú©?¡ı+˜œ`ç×Š³kvm¦\0Ln¸p?ŸÖ±©di	r²Ö«måÊ…~eÛ€Ã¾:Ê³qZís\rÄBn?2H:ÿ\0×¬çc‘ƒW‰aíÔl´[²W\'©¨GY€ò‰ËÖ:È\"¬Á9u0³mvè½ìj%³]ÆV×‘f[v¸\'ï†A\\gëYöã¿(Sæ9R§kIUíš‘·`EG{\Zÿ\0hE>K«8GÁÏáJ/¡µZiÚkF˜’ƒÁld§*,f´®Ò ìˆ¡\n¶A¬ÑÖ´‹º914ıœír’.Xÿ\0x÷¯PÕ¼Q _øfßHµÍÌá¡‘“dpº¦3“ë’?\Zó»´jAÏï%TüÎ+{WÒJ¸ºµnvğ‡y	ÎJÎi9+ô2OFcëŒ°-•„GtPÀ­¸tb{ÿ\0ŸZ§i7ü³Æs[š®›ö©ÜÄ>x•S¯\0+Òİ„í¹NSŒU7¡$®™ÆĞTã“´U†Z*K=âÛnÓlÆvm’cîsè:ó\\H4QZSøLä®ÓÇÖ¢Ï?^h¢›\Z#˜f\"}\rF¼Æ(¢¥$´QT€1Q8Š)1švw/,\\–d;I=Å_xÌÖH¥º6àqÜQEb÷=Š.ğ×°Ù0kòaê>¿eçœQE\\\\nè×ğ–oüSkp¥\\Ë“şÈÍzN±§A|…¦E3Gã·R?J(¬ª|G$v8yƒÃs4„ƒ½‰ÅeÈGÚ×*[®(¢¨’É¢Š)ŒÿÙ'),(4,'e563c223','Doc.','Miguel','Jolly','A.','ÿØÿà\0JFIF\0\0`\0`\0\0ÿÛ\0C\0		\n\r\Z\Z $.\' \",#(7),01444\'9=82<.342ÿÛ\0C			\r\r2!!22222222222222222222222222222222222222222222222222ÿÀ\0\0–\0–\"\0ÿÄ\0\0\0\0\0\0\0\0\0\0\0	\nÿÄ\0µ\0\0\0}\0!1AQa\"q2‘¡#B±ÁRÑğ$3br‚	\n\Z%&\'()*456789:CDEFGHIJSTUVWXYZcdefghijstuvwxyzƒ„…†‡ˆ‰Š’“”•–—˜™š¢£¤¥¦§¨©ª²³´µ¶·¸¹ºÂÃÄÅÆÇÈÉÊÒÓÔÕÖ×ØÙÚáâãäåæçèéêñòóôõö÷øùúÿÄ\0\0\0\0\0\0\0\0	\nÿÄ\0µ\0\0w\0!1AQaq\"2B‘¡±Á	#3RğbrÑ\n$4á%ñ\Z&\'()*56789:CDEFGHIJSTUVWXYZcdefghijstuvwxyz‚ƒ„…†‡ˆ‰Š’“”•–—˜™š¢£¤¥¦§¨©ª²³´µ¶·¸¹ºÂÃÄÅÆÇÈÉÊÒÓÔÕÖ×ØÙÚâãäåæçèéêòóôõö÷øùúÿÚ\0\0\0?\0óKIÒò9â8hdV_Â½®Ù »‚9Õ¤ŠN;kÊõŸ\rÏ¤<lÓÚœûpPúñ®ßÁwßhĞÒrÖìcü:ĞÔW•:ÔÕZnèÖš”$ã#¢kK|gÊOÊ©Kml­Ÿ/BkBWÂVMÔÛ{×Š7LæüK$fâ;xÉÛËç“ÿ\0Ö­_\nšÆH„Ò)\00ıUÆ­ójM#ıñ+Ã<WIáYÄû‚«ÆÀ–8òk	F·+Üö¥Oœz+ÿ\0™ÖIÛx»}TUK•—ş?	ú ­¸cµ½\0G«i ú5Êÿ\0JÊÔ¡K;Ä‹íÖ3Èİ•vüº×T°õRøYâF¤ÜÂñÌË6¯\"0s¼í\\:Ÿj³áWg´“aV\rŒgƒÿ\0ê¬ZãÎÔå,pì\0ûõóVü;uömVÇ	.c?OÖ¸T¿x{ÏşÅË×s³d¹ÇÆ~«U¤7kÈ17çWdlU9$®›‰%ßñD‡>^qªx‚Y¼möˆ–iR ë‚3ü«¿Ô/\r¦™s0`\nFv“ØãŠñ˜ƒw1Ë¾XŸs]x8&äÌ+İ$Ïsk±“û©ü˜×±…ËU4š}À»Ò,îGYaV?\\súÓåp­pÉ5¡¼u)­Â31Ü0Oø\\µÌ„°+À^:×õ¦ÚYÃyrÆ¤d–8ç<–éÄ‘íÚªÜÚ¹«JQp·Vkšw$=h¨¾Î„ıçF¢¶±Ï(Ñ5‰´é÷¶rq4/Èaß‡ĞøBál¼Iu`˜eRc9ëGş:k“3EHy\Zºã¾â@¡©´Ë—±ÕíæbCC.[ƒ¡–kŞKšPİïëĞáS’²}d‘Ã/½sú¬Â(]‹c\0ò}k]å_+y`\rÅ‰àZóø¶[›É °“e²ñ½GÌşùê?\ná¥MIİìo9ÙYŞ¾°ÑÇ‘­x^+ÛIatÇÊ•[Ü±\0¯ üj?xƒAÔ-^ÏI´¶Ó!bB…¦‘±Èô<ğ{WŸMxd%ävvîÌÙ?S{äÏèûJj|ê*æÕ9y9»pÕ4Ôó®	ÇU„şmUMõ›ÌÒ—ví(=sµË›îx§}±v}ï›Ò¶úõEÔËÙ#²¶ñío±k§r@H>Ü‚*Õ­=ü‰ö³‹Œî@¡W>„÷À®)·rH«á¿„ãë³…xÚ¤QÑBµJæƒ=å.LÖÑLr¥ĞcŞªO7 Wá4.4éæg‚Cû¢ç%ÓètóÜ1…yU)¸;1’¨©â»²ÖVÖ*~k¹0Ø=MprG²Iû¤Šé®å7zìŒNc¶ˆF¿ï7\'ô¬]F.íˆû®ë[à*/k(yì;<ÿ\03Ğüsæø^İIÉ‰š?×?Ö¯_Np85Êxğ/Û,Ù0²¨ıô«ÚÎ¢°	]›„RIö¬±0åªÑËIŞë¼3™	¸aò“Çáÿ\0×¥¼âöo÷êş‡‡HµUÌJÇñª¿ñõ)Æ>n•çã—, üÑ½w/B*)´Vö32fÓ-İ#8Ò/-	GU)ääÇsÃ5æÚŒorË\Z$q	ÖVov õü«¤ÿ\0„±şÌìÑÆ-Ê»Îà»öã?ŞÛÎ}k’¼¹ónÜ’Ÿùj©´¿¹Œ×^WF½\'/k±–.tä—)½®ø‰åğm¬oûÙFÉıp¼cñàşÂ—­+¬2*gå?fÈ g+²IEÙ÷or¤îÌŞZõ¦ElepˆÜô\n*]‡\0îv\n+¨··µÒ%¸kŒáÚ8Á\\÷õ¬\'S”Ö>mö9f±™>ôø	¨ŒC8äW¬ï‚M;Ï]›ŠuÛÏå\\³Ú[ŞMûİ>ò@İføb±\"û£iám³8í¥9V5rÊÇ¸«Zö˜º\\Ñ˜‰hdé Öl.7‚;õ®šsæW9§fjÃ\'–á”GB+¾´Ô¾×cÃ˜¯Î}ÇZóÅjÜÓå‘´Ö·Cƒ,¢5ö©ü³Ex^7ìiA¾~UÔÛ³¸2–Ì¤Ÿ~Ÿ¦*\rR-ÑÇ/÷NĞÕàGEMĞ<Gø†Ö¼¬=_gYMŸYŠ¡ípî’ìPğåÉ¶Ö#lá\\?ˆÿ\0õS<_|İ¡Vù¥;OÓ½S·&+˜Û¡V³<M;Ë¨ <&İËï“ÿ\0Ö¯_ŞEŸ!JV¦Ñïş¾ûƒt»œåÕŸqòŸåI~¥o$¹ô¬ß„ÙŸÀÖk×Ë’PsÛæ\'úÖ¾®KjùÎTW™¯İ§Ù£¯\nıëyå»ÑI(«»â…É\\dóÅDÜjÖŸcs©ŞGgh‹$Ò.Xøšì<;¤[i(ÛT·K—<Bì>@İ˜Ôœ×»V¼)îqÒÃÎ­ùVÚœ;Bî¨À`‚ÍÀ–áÊ2ßŞ#ù\nô?h¶öZê¡GÖèïT\\ˆ½\0CY7\ZX]Im\"5N\Z\\îÏùqĞc¹®8ÖSnú3¢¶Ù¤Ö©­ÎKK¶Äz|s’I@ç×µz\\Öp88êkÌµI~Ã¬C*|‡Y¾kÕn&{ËXo-n±îEİ´û×%µ$tá-ÊÑØ­£²İ+F¬OS óéN²²¶}ÅÏ p¸ãëY&k¤<YÛ$€ıÖ·$ŠĞ¶ûlŒ²]¬1ãî¬yÏãšç•Ò;9m¹Ìøúİ#°ƒhóx?¯?·‰ä¸X£RÎO\0W{ãëÈÜ[Z‚<Á—aè:\nç´ËyÌA­£faÕ•z~5ß…Ö\nç—ŠW«¡VÒÚ}+£ÓlŒ\n&pØ‰K8ñ×éüè¶³›rÉuˆÙ\n¦»ß]Ä—²i²Ùr»•Xd½Gåü«JÕa?İEêÎŒ6\Z¥õ™ÇHôî`èú]Ö«q½ºŒã.íÂ¯¹5«{á{2Éîona@,\\öÅz­¼v‘˜!\"@xDP£>§ÿ\0¯\\·ŒôûË«ëwˆ™G‚€ò­§ê;×ğÊ0¾ìî¥˜Î­d®£Ëõ^1+üÂ«x®ÔÉıŒöñ—ó-q€;†ÿ\0]¿¤=”R\\Ï\\n,°F	*½É?•bÅo£k‘{$WbQ®2\\œC]S›ta)oÜpN”%‰”ağËUoëÔôo…má¹±û[şæ$–û†sË{r1[úÅäaxˆutÊĞZòÿ\0ê\Z]¯#ÓÚ\ZqÒy’Ò8RC9ê+b;‹ûè\"…\'\rahÏoÒW9×¥pb—5KÔŞâê·ÓËïêuA¾EoQEAjTÛÆp•Eİ&rµgcØËàİ+X²‰a{t3F\0èØİõÏó®]Oí¿Úk¨xoTêñø	éíšç¾j6óÁ>‰vå—s´(zGÌ?¨ükwÁ÷ÙºÅî‹rÅà™˜£2çq}Vºj%{wüÎŠ—³Mo\r}WRİğ>(ğˆgÇÚ­ÁgT<ï{ğ#Ÿ©ö¨õ‹©jğØË¥ÃqOâd	´p9ô>Õ†¦Ãş.¸Óå}Ö7„n£ı¯u5Újv1Xx†æôˆĞ-“…İÓä±ù\nóñx‰Ñq”åª·šØÕÆ:Óû;¯F|õã‹û-KÅ—\Z|I©Ø#XÆİürMZğ_‹eÓ%]:è,Øü„uˆûzjæo&k›©¦¿,Œí’sÓñ¨as\rÂH?…³^´à§3Ê„Ü\'t{ËŞÙ:‰„ÈêG5sZ×‰à¶VKUóÛ ük\"	£’İAÜ2ïY:Ó-½¹Çßn\0ô®\nt½ë3Ò©RÑº0î®f¼ºy§rò¹Ëü«Ø¾/|6Ÿ$Š¨ûÄ?+~WŠƒòä÷¯BğŸ‡g°–=RûT‡I„(*ÎrÍŸö{jïr§i;]‘æÅÏ›š=õZ-QlÜ$2~;µ4÷rXOi}	Ki„ŠIãßô«Ú÷Ø¦ÔÆ¡i¨-âH^jÄÑüİÉ¡<W=âãIeO¼]Gç\\´âé×Š’·®‡ÑN¼q9Ê/[ÖÚÒ_X[]i…|¹ã	™rAê+6õå‚Öâéc’åÕÛzC†¹‡ÚÊ¥´Ú’e_:úüùë])˜ˆåVm‘Œî;€ãßÚ»¦œ[‰ó‰«¦yıåó¸–yÈ’âO¼·¢@*®•Ù.$ˆ€»>V=¾aÖ¯kZÂKq›iå­º¾é>‘Ûó§é–Âïí,›|ĞËç†é^uY:p”__ó=ús…^J–·.–òhÏŸÏÑõ‹T‡MC²!¸”&àÊ[æÎ+Ğ-t÷]\Zÿ\0R°ØÜ\\+Á>f=	öæwZ¥ı¾£5¬÷?e·‰Ó0É\'ÆyÁï^¦m5]*5¾Õ#¼·gvG\'ô§ì_7c–­Dê{²ë·Ï§ü8lEôcŠ)!ıàf\\cy¢³¥ğ/C–§ÆÏ³Ôît›¿:Ü§˜œõz{W¥]É>¯á];ÄÑ\"Ãr«‰‘:mRyQØwõ¯*ò›c‡R¤\rÀŠôO_É6œš$²•¶¸è:gÕ=ò\nô*¥kw#9©s/²¿§¡xkE2]#T8–ÒE’dÇ<íüÀ zfºÿ\0k¶ZªŞİ[ı¤ˆ†Øvä1íŸlâ±~DÚeÆ±¦>æV‘fŠB1½qåŠŠô«ícSşÏÔã„X¾çT¶b¯)$$JÄôù˜ô®Z´*¹Ó«\rÓÖÿ\0pêN.n\rû«oÌùzõüëÙ%ÎL\\ñŒdæ pZ@\0ã¦jİõ«ØŞKo0l,Qğ{ƒŠÛÑ|ªk7bya·˜35Ü‹û¥UûÇ>£Ò»\'R0\\ÒvG4bÛ±>–¦-:-í¸ƒ´sÏÒ±5idšä‰T¦Ó÷qÍzMİ÷‡<-¦ı‹H¨ê÷ÊI˜|«Ğ~ú×—Üù¯pæO¼ìrji»ëÊ×›Òş‹·©¤å}/±[å.¸=ÇZõ½áö±â8ã¼Ô\'6Ğ,`©~duÇW¢¯å^aco—@H_\0dl\0’{o­{z[ø·Å±F±5…ƒ(Îï‘{ÿ\0ÿ\0*©Ê¤#Í(.²}=Vcî·g¯—ù‘Yê>\rğ¤¿c{Szãïü¢n}Ë|¿•s~3\Z]ÃÇq£C\"ÂØ™íÊ£ªsÈÏ=?*î,¾hZe±½Ö&’è¯-æÉåF?©üê®¥®øF+xí`Ò#º·WâXĞ ˆô9?y”×.TªNôTêµö›ÿ\0=>Z{J”“»QOK#c©Ë±ı¡d™	ÙƒÆ:Ei^k7úŠì¹¹v9Ø8\\ı+¢ñ–‹áÆŒŞè°İÙ]œoµ—®ñ)Ï#ĞşÆ¦NGQ^ƒæzÉ4üÎk®Œ”0N[¥]¶¾šÍÃG3!ê5@¯ñõ¨ãLGæÊsjNÍj	ö­^}¾q<ˆ|å¦#æltì\r¬Iªhñ\\3¶ÚñÜ>¦¼jëO¼’4ù\0lÆß‡8¯CĞµ(ïìÆ™mk:´6ß<Œ6©ÀÎNMs×57oBVšlß±b,£ã9$ş´StÜ›}‡õ¢¸b½ÔtÏâg‘½ìúÌ’Ü¸gdÚ00\0\0ö®×BÒ—û/K¾•ÌW1ÄÍon>üø\'şÊŒc8ç·­p6«^E3æŸv63êE\"¸Ìƒ½ßÎ@*œú/Lœşô\\<j»Ë[{«(|,ôj×ö÷]½»KtÒ§îÉÚ\\ç‘ÏO”¿…vŞ?‚îïÃÚšL›\'µpaÔ(!¿0Tqõ¬†°[]›r8Â[œCoòX…$•ì#ƒĞWOª‘%µÎŞşê&cÆ[ïËœ}kf\">Ñ”^‡ÉúÎ<@İİ¶f»s!Ï^yÏë^—aáíLÙÚi×7ş^Š#Y#Xq¿æçÓïVõi—?ìü1µÅµ´r‘œ;•\'ÕF1şíOı…|l`Ó¼A}meamˆePó8Éì@\nòñU$š„$“ïk¿X®­luAEêÕ×õ¿·“øOÃWâX\"æíbò‚[¶÷ŞCÂŸ§>Õå³øYÕ-gÔ,´ÆKH·8çÉÆy5ê¶óhZQò¼?¤O¨]ã*FÍø~™öêö¿a‚Î\"ÇNNÒAê9ËÀ\n#Ms½/¼ª=_¤wô\'™=7òŠıN{Á¶^ğø´ÔŞf¿»™ˆL@²÷Oõ<×G­|LÔ®î-:ŞXÁâG>kè?Z×Ó>Øiv\"K»éGä”P€~\'&­Ç\'€¼+´—ZwÚ”do=Çà3ü©Æ¾\\å´«KÓO»OÉ™ÉV{Z(ã_J×<C¨«Æó]+ct×\rû´úÇàtx7HÑ¡’ç\\»W¶UÌÀ·—sÔı8úU}Oãm”ˆağæ”÷,Ä÷gËAôQÉúq^y­j×ş%¹[bàİr°¶÷\n?™Éäs]ßğ¡‹´ajTü·ş¾ã(ª4õ—¼Î›Sø™àÛxVÆÇÃM¨Ç“ûü27}ñ\\N·}áÍnæKÊ÷N‘<ĞLT£rÛƒréW,­í‚ùrD‡ŒíÛÔ}*-NÆÚÚ+››xÑ`FÚ¹Ü¬ÊAöÆ>õ«Ë\n|ğ“vîØF¿<¹ZÜ‡LšŞ$ÿ\0}«°?~EÉ®Šch#EÇM \\}¼»PóŠ°·eG5ÏsnCwP½{µÃ×ğãÃw©¢\\jöĞî’f(€	UôÏ©Ïå^KÃÍ2\"òîÁTz“Ò¾²ĞtÄÑt-9åŞF>­üGñ9§w¨Mr£Ãµy5*u„èw[˜³108PIè?ïâXÉ :’:ŒÑB¥¶!ÎMî|+ky	?óÑz’Á=á2»­³‘£‚?¯\"¼élŠŞ„\Zô+ÏêÚ5‹^ê¦;;™™‘°Ê¹ûØê?¥z8Zª	¦c8ÜöOjÖ^Ó_N²œ¬ï$ËmÎÌKrzğ3Zº…Ôz…›ÛKğÜÂwªÈ˜d=C\nÆğ4>·µšYËÓ­YG?*±fb?*î±z°h²ß»´ŞUÚCT¨?{i<öÏá^j3©=Û»¿Né~m>T×õınEàí&×PĞ/.â‚)5hïfo>lîY‡İ9Ägë\\V·ã]kv–0éz¾µ‘Åë.ØUÇP½Iœp:W)sâÍwO¸Öì¬oå‚Îöíš@€nşï\rÔdÓÒ©ø:añ_i\0Jb•ÃÌ\0ü³Z¼7.ÚË¢¿múiÒıææ¯Ëæz]¯ˆ<Cynv%•œ# `ÏÇ°ÈşUrÓûFpZ÷U”FªYÙÄ¨£©8çfÚŞE\")Ã>é¬ŸëFÛC‡H€m{ã¾áúb%ÇËô\'¯Ğõó´¨J½uFI·ÛeÕ…F©ÁÏ±Ëx›Y\"ÔÙã’d±ƒ+n¬äï^îÀõ\'=À¬ÆkU·`!HŸaÜ3Ãum¤Äâªê.\n£`ÈÌ6àôÿ\0ëc5÷ôhÓÃÒTé­àÎr©.ih–ûdTx =zô?Ïğ­Ù,§Tù0ó+)£#nH#>¸Àª‘}‚ÊÎ\'„æ6!Üd}ÜtôëŠIg¸·ğÌsn6t«gœ·,?_Ò·ŠQ‰wnæ•¬Ènâ‚ÑQPÉ Wİ’å@Ï?E35Ëù38E‘]BãƒƒƒŸÃ~5Ÿ£ÚÍ°$ ‡GgäôR0¥6÷QI˜”Vo0ÎqÈ9áTåîûÂKŞĞÌk;Äºke„³€r\0>üÖŞŸàêQ,–ºD»ãt¿»ü~lq]ïÂ«Á{¤šŒ#«£Ã²ÛÌq×8Ç# ®öşêXŒ1­íÌSÌÌ\"3Y2’2N	ÅxUbã6’=JsƒŠrzœ‰ğç÷O©Ü,\n KS™½L‡…è~&»¯ønï@¿kÆ×5œ§—äİMæ¡^9ö<uvºµÊäë³&OHìYÿ\0Pk]|+4¶e¦ÖïK‘÷„{GıóÖ³JftmkšßÚ1ÆÌÒ˜Kì@4W›k^†	wİø¢dRp<Ëi:ızQK÷l3İŸ;Mm\"£Êbt@ØbÃ\'Ò½zúÅ>\ZÓµWšÕ¬d³q•*v¶ì¤‚¼ÏQy\'³_ €{V÷Ã½hïìBöå4ò¯qI!TÈİ£3õ­Ö’Rìq§Ğ÷h<Ïiši’İåÛh‰2îäp9‡~µ‡âo¦¡d±­§‘m™s\rÌqÈé™ëéRj÷†R±ù’¶aù•şî~•Æx¢àÁ£,i‘æá>ÿ\0ıjùì>\"­IªPvRç¤éÆç–èáåv`3ËI.ãøsüë¨ğu’k¾;°µŠ \'¹ääŒd¨>ä\0>µÊ><Ñè©Ä×ağ†úoÜ¬á·MfËü¤¹ï_YZIRqîyPøÓ=ZÒ¡·š+›;qn‘ºÅ2(\"0LwõÏÿ\0^¼_ÅºÌ—ş*¼¸\0ùq“\n!şâ£õÉükŞ<QqØím_3<·BæV”p¾ısôóeã5êIyÉK#é¹‰şµæa(F—4îÔ7ÿ\0\0é¯;ÑKÏô-,ˆT­Œ”ş¹ı?È¨,.u¨Ã©`„õèx¨_ßEå3ÎzÉ¨ôéH‰àŒû×°ª^I<¦©)™İ†HØ{Æ*	o¦à	Ì!]Øíz~4ûœ4VpIˆ’É¹Ã6Fá‘ÇùRæ¼¯r­¡¡i<–Ğ›·\'Í¸#`cÈJÌ™¨\0s˜÷¨`jËÈÒÉ½ß&ˆÄ-$éÏ’Á€ƒÖ¶Ræ\"Ö74OjZF”ÑéÒ¬>sâF’vôëÇsZzŠõ‹JÍo5\0Ğ¬£\"DP1ĞóŒŠäôæ2[ù\n2şfG¿ ­ßøF<AÔèz–?ëÕÿ\0Â¼ŒS½f×—äzøhEĞ´¼ÏfÒ…ã¦a0Ø%™ºı+¥·‡Qæ6¿]àp ÿ\0]xf‘uã—ìzƒ\"r°\\Z; ö­µø‹â˜şm_Á÷á[‚Öåˆü†E•Î:”Ü§¦ê¶ÒF¢â_:=Ù\nJãEqğ—IªÛ¬í£kKÏ;¬²sõS±	‘Uà\'¥kø_C¶şÉşÖóåûCÜµ¨‹hØíù³×9>(¢®\r©]	ìz•Ó¹U\n ªÇÖ¸Ï\Z’XG“óeÏåÿ\0×¢Šù¬­/¬Ãçù3×Å	œ„œFÍï]/Ã(bŸÄ×‚UÎ-ğË(âŠ+ès&Övìy”?ˆF—N’İ.îŒ»Ú[k1$³¥|ÿ\0oq\"éb~GÆáô¢Šòò)7*¾ß©ÕÕGúì6A„’AÃ+Œ}1Q[³?Ô\Z(¯}npd”µä6ÇëĞWGuàë˜ay »‰‚.æWR¿—Z(®LUYÂ¤T^æô ¥ÙÎÊe¶ÆæŸJ¹£í–ç{eDÍ±±ÔqŠ(®Ê-ó#{\Z–zséòyŒÈø¸euÛƒÈük²Óüy«9‘î]<ˆ†JÆ\'·7Q^}ãHõ!õdìv6\Zş¤Ğù·r:#Æ°\\>GÔœWšxïÅZÔ)–4¿4¶E@”œÿ\0N{óúQED¹Ï8¥Ñş_k‹ái¤½óşĞÍ*ù’gû§ĞŸÆŠ(¬Üå}Æ¢¬ÿÙ');
+/*Data for the table `user_tb` */
 
 /* Function  structure for function  `UC_Words` */
 
@@ -239,134 +255,54 @@ BEGIN
 END */$$
 DELIMITER ;
 
-/*Table structure for table `class_sched_view` */
+/*Table structure for table `classroom_v` */
 
-DROP TABLE IF EXISTS `class_sched_view`;
+DROP TABLE IF EXISTS `classroom_v`;
 
-/*!50001 DROP VIEW IF EXISTS `class_sched_view` */;
-/*!50001 DROP TABLE IF EXISTS `class_sched_view` */;
+/*!50001 DROP VIEW IF EXISTS `classroom_v` */;
+/*!50001 DROP TABLE IF EXISTS `classroom_v` */;
 
-/*!50001 CREATE TABLE  `class_sched_view`(
- `ID` int(11) ,
- `Course` varchar(45) ,
- `Subject` varchar(45) ,
+/*!50001 CREATE TABLE  `classroom_v`(
+ `ID` int(10) ,
+ `Name` varchar(45) ,
+ `Number` varchar(45) ,
+ `Deptparment` varchar(45) ,
+ `Device S/N` int(25) ,
+ `Fan/Lights` varchar(3) ,
+ `Outlet` varchar(3) 
+)*/;
+
+/*Table structure for table `schedule_v` */
+
+DROP TABLE IF EXISTS `schedule_v`;
+
+/*!50001 DROP VIEW IF EXISTS `schedule_v` */;
+/*!50001 DROP TABLE IF EXISTS `schedule_v` */;
+
+/*!50001 CREATE TABLE  `schedule_v`(
+ `ID` int(10) ,
+ `Course` varchar(59) ,
+ `Subject Code` varchar(45) ,
  `Day` varchar(12) ,
  `Start Time` varchar(8) ,
  `End Time` varchar(8) ,
- `Room` varchar(45) ,
+ `Room` varchar(91) ,
  `Faculty` varchar(183) 
 )*/;
 
-/*Table structure for table `classroom_view` */
+/*View structure for view classroom_v */
 
-DROP TABLE IF EXISTS `classroom_view`;
+/*!50001 DROP TABLE IF EXISTS `classroom_v` */;
+/*!50001 DROP VIEW IF EXISTS `classroom_v` */;
 
-/*!50001 DROP VIEW IF EXISTS `classroom_view` */;
-/*!50001 DROP TABLE IF EXISTS `classroom_view` */;
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `classroom_v` AS (select `ct`.`id` AS `ID`,`ct`.`name` AS `Name`,`ct`.`number` AS `Number`,`dt`.`name` AS `Deptparment`,`dv`.`serial_no` AS `Device S/N`,if((`ct`.`relay_1` = 1),'Yes','NO') AS `Fan/Lights`,if((`ct`.`relay_2` = 1),'Yes','NO') AS `Outlet` from ((`classroom_tb` `ct` join `department_tb` `dt` on((`dt`.`id` = `ct`.`dept_id`))) join `device_tb` `dv` on((`dv`.`id` = `ct`.`dev_id`))) limit 100) */;
 
-/*!50001 CREATE TABLE  `classroom_view`(
- `ID` int(11) ,
- `Name` varchar(45) ,
- `Dept` varchar(45) ,
- `Dev ID` int(8) ,
- `IP Address` varchar(45) ,
- `MAC Address` varchar(45) ,
- `Relay 1` int(1) ,
- `Relay 2` int(1) 
-)*/;
+/*View structure for view schedule_v */
 
-/*Table structure for table `course_view` */
+/*!50001 DROP TABLE IF EXISTS `schedule_v` */;
+/*!50001 DROP VIEW IF EXISTS `schedule_v` */;
 
-DROP TABLE IF EXISTS `course_view`;
-
-/*!50001 DROP VIEW IF EXISTS `course_view` */;
-/*!50001 DROP TABLE IF EXISTS `course_view` */;
-
-/*!50001 CREATE TABLE  `course_view`(
- `course_id` int(11) ,
- `cs_name` varchar(57) 
-)*/;
-
-/*Table structure for table `department_view` */
-
-DROP TABLE IF EXISTS `department_view`;
-
-/*!50001 DROP VIEW IF EXISTS `department_view` */;
-/*!50001 DROP TABLE IF EXISTS `department_view` */;
-
-/*!50001 CREATE TABLE  `department_view`(
- `ID` int(11) ,
- `Name` varchar(45) ,
- `Floor` varchar(45) 
-)*/;
-
-/*Table structure for table `subject_view` */
-
-DROP TABLE IF EXISTS `subject_view`;
-
-/*!50001 DROP VIEW IF EXISTS `subject_view` */;
-/*!50001 DROP TABLE IF EXISTS `subject_view` */;
-
-/*!50001 CREATE TABLE  `subject_view`(
- `ID` int(11) ,
- `Code` varchar(45) ,
- `Description` varchar(45) 
-)*/;
-
-/*Table structure for table `users_view` */
-
-DROP TABLE IF EXISTS `users_view`;
-
-/*!50001 DROP VIEW IF EXISTS `users_view` */;
-/*!50001 DROP TABLE IF EXISTS `users_view` */;
-
-/*!50001 CREATE TABLE  `users_view`(
- `ID` int(11) ,
- `Tag` varchar(12) ,
- `Fullname` varchar(183) 
-)*/;
-
-/*View structure for view class_sched_view */
-
-/*!50001 DROP TABLE IF EXISTS `class_sched_view` */;
-/*!50001 DROP VIEW IF EXISTS `class_sched_view` */;
-
-/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `class_sched_view` AS (select `ct`.`sched_id` AS `ID`,`crt`.`course_name` AS `Course`,`st`.`code` AS `Subject`,`ct`.`day` AS `Day`,time_format(`ct`.`start_time`,'%h:%i %p') AS `Start Time`,time_format(`ct`.`end_time`,'%h:%i %p') AS `End Time`,`cr`.`classroom` AS `Room`,concat(`ut`.`title`,' ',`ut`.`last_name`,' ',`ut`.`first_name`,' ',`ut`.`m_i`) AS `Faculty` from ((((`class_sched_tb` `ct` join `classroom_tb` `cr` on((`cr`.`room_id` = `ct`.`room_id`))) join `subject_tb` `st` on((`st`.`subject_id` = `ct`.`subject_id`))) join `course_tb` `crt` on((`crt`.`course_id` = `ct`.`course_id`))) join `users_tb` `ut` on((`ut`.`users_id` = `ct`.`faculty`)))) */;
-
-/*View structure for view classroom_view */
-
-/*!50001 DROP TABLE IF EXISTS `classroom_view` */;
-/*!50001 DROP VIEW IF EXISTS `classroom_view` */;
-
-/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `classroom_view` AS (select `cr`.`room_id` AS `ID`,`cr`.`classroom` AS `Name`,`cr`.`dept` AS `Dept`,`cr`.`dev_id` AS `Dev ID`,`cr`.`ip_add` AS `IP Address`,`cr`.`mac_add` AS `MAC Address`,`cr`.`relay1` AS `Relay 1`,`cr`.`relay2` AS `Relay 2` from `classroom_tb` `cr`) */;
-
-/*View structure for view course_view */
-
-/*!50001 DROP TABLE IF EXISTS `course_view` */;
-/*!50001 DROP VIEW IF EXISTS `course_view` */;
-
-/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `course_view` AS (select `course_tb`.`course_id` AS `course_id`,concat(`course_tb`.`course_name`,' ',`course_tb`.`course_year`) AS `cs_name` from `course_tb`) */;
-
-/*View structure for view department_view */
-
-/*!50001 DROP TABLE IF EXISTS `department_view` */;
-/*!50001 DROP VIEW IF EXISTS `department_view` */;
-
-/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `department_view` AS (select `department_tb`.`dept_id` AS `ID`,`department_tb`.`dept_name` AS `Name`,`department_tb`.`floor` AS `Floor` from `department_tb`) */;
-
-/*View structure for view subject_view */
-
-/*!50001 DROP TABLE IF EXISTS `subject_view` */;
-/*!50001 DROP VIEW IF EXISTS `subject_view` */;
-
-/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `subject_view` AS (select `subject_tb`.`subject_id` AS `ID`,`subject_tb`.`code` AS `Code`,`subject_tb`.`descpt` AS `Description` from `subject_tb`) */;
-
-/*View structure for view users_view */
-
-/*!50001 DROP TABLE IF EXISTS `users_view` */;
-/*!50001 DROP VIEW IF EXISTS `users_view` */;
-
-/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `users_view` AS (select `users_tb`.`users_id` AS `ID`,`users_tb`.`uid` AS `Tag`,concat(`users_tb`.`title`,' ',`users_tb`.`last_name`,' ',`users_tb`.`first_name`,' ',`users_tb`.`m_i`) AS `Fullname` from `users_tb`) */;
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `schedule_v` AS (select `st`.`id` AS `ID`,concat(`cu`.`name`,' - ',`cu`.`year`) AS `Course`,`sj`.`code` AS `Subject Code`,`st`.`day` AS `Day`,time_format(`st`.`start_time`,'%h:%i %p') AS `Start Time`,time_format(`st`.`end_time`,'%h:%i %p') AS `End Time`,concat(`cr`.`name`,' ',`cr`.`number`) AS `Room`,concat(`ft`.`title`,' ',`ft`.`last_name`,' ',`ft`.`first_name`,' ',`ft`.`mi`) AS `Faculty` from ((((`schedule_tb` `st` join `course_tb` `cu` on((`cu`.`id` = `st`.`course_id`))) join `subject_tb` `sj` on((`sj`.`id` = `st`.`subject_id`))) join `classroom_tb` `cr` on((`cr`.`id` = `st`.`room_id`))) join `faculty_tb` `ft` on((`ft`.`id` = `st`.`faculty_id`))) limit 100) */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
