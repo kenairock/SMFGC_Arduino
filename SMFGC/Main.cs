@@ -27,9 +27,7 @@ namespace SMFGC {
         mServer server = new mServer();
         pingClient clientPinger = new pingClient();
 
-        bool confirmExit = true;
         int room_index = -1;
-
         string RFIDTag = "";
 
         public Main() {
@@ -40,9 +38,12 @@ namespace SMFGC {
         }
 
         public void setMode() {
-            if (pVariables.AdminMode) this.Text = "Administrator - " + pVariables.Project_Name;
+            if (pVariables.AdminMode) {
+                this.Text = "Administrator - " + pVariables.Project_Name;
+                toplabel.Text = pVariables.Project_Name;
+            }
             if (pVariables.DeptMode) {
-                this.Text = "Department - " + pVariables.Project_Name;
+                this.Text = "Department Mode - " + pVariables.Project_Name;
                 toplabel.Text = "College of Arts, Science and Engineering";
 
                 btnFaculty.Hide();
@@ -53,24 +54,24 @@ namespace SMFGC {
 
         private void Main_Load(object sender, EventArgs e) {
             try {
-                server.startServer();
+                //server.startServer();
                 clientPinger.startPing();
 
-                sysLog(0, "", "system", "Server started.", 64);
+                sysLog("sys", "Server started.", 64);
             }
             catch (Exception ex) {
-                confirmExit = false;
+                pVariables.confirmExit = false;
                 MessageBox.Show(ex.Message, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Environment.Exit(0);
             }
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e) {
-            if (confirmExit && MessageBox.Show("Do you really want to Exit?", this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) {
+            if (pVariables.confirmExit && MessageBox.Show("Do you really want to Exit?", this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) {
                 e.Cancel = true;
             }
             else {
-                sysLog(0, "", "system", "Server closed.", 64);
+                sysLog("sys", "Server closed.", 64);
             }
         }
 
@@ -85,7 +86,6 @@ namespace SMFGC {
 
         private void btnHome_Click(object sender, EventArgs e) {
             tabMain.SelectedIndex = 0;
-            //RefreshClassrooms();
         }
 
         private void btnFaculty_Click(object sender, EventArgs e) {
@@ -610,7 +610,7 @@ namespace SMFGC {
                     cmd.ExecuteNonQuery();
                     conn.Close();
                     RefreshFacultyDatagrid();
-                    sysLog(0, "", "information", "Record deleted on: [" + tabFaculty.SelectedTab.Text + "] Ref: (" + tmp_res + ")", 64);
+                    sysLog("data", "Record deleted on: [" + tabFaculty.SelectedTab.Text + "] Ref: (" + tmp_res + ")", 64);
                     btnNew_Click(sender, e);
                     MessageBox.Show("Record Deleted.");
                 }

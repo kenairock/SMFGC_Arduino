@@ -25,14 +25,14 @@ namespace SMFGC {
 
         public void startPing() {
             this.options.DontFragment = true;
-            cmd = conn.CreateCommand();
-            cmd.CommandText = pVariables.qRoomPing;
 
             try {
+                cmd = conn.CreateCommand();
+                cmd.CommandText = pVariables.qDevices;
                 conn.Open();
                 reader = cmd.ExecuteReader();
 
-                while (reader.Read()) ips.Add(reader["ip_add"].ToString());
+                while (reader.Read()) ips.Add(reader["ip_addr"].ToString());
 
                 t = new Thread(doTask);
                 t.Priority = ThreadPriority.BelowNormal;
@@ -53,16 +53,29 @@ namespace SMFGC {
 
         private void doTask() {
             try {
+                PingReply reply;
+
                 while (true) {
 
-                    foreach (string ipadd in ips) {
-                        Console.Write("Ping Client: {0} - ", ipadd);
+                    // Clear all previous ipaddresses
+                    ips.Clear();
 
-                        PingReply reply = pingSender.Send(ipadd, 15, Encoding.ASCII.GetBytes("."), options);
+                    // Query List of ipaddress
+                    cmd = conn.CreateCommand();
+                    cmd.CommandText = pVariables.qDevices;
+                    conn.Open();
+                    reader = cmd.ExecuteReader();
+                    while (reader.Read()) ips.Add(reader["ip_addr"].ToString());
+                    conn.Close();
+
+                    foreach (string ip_addr in ips) {
+                        Console.Write("Pinging Client: {0} -> ", ip_addr);
+
+                        reply = pingSender.Send(ip_addr, 30, Encoding.ASCII.GetBytes("1"), options);
                         Console.WriteLine(reply.Status);
 
                         cmd = conn.CreateCommand();
-                        cmd.CommandText = pVariables.qRoomPingUpdateStatus;
+                        cmd.CommandText = pVariables.qUpdateDevPing_IP;
 
                         if (reply.Status == IPStatus.Success) {
                             cmd.Parameters.Add("@p1", MySqlDbType.Int32).Value = 1;
@@ -71,17 +84,15 @@ namespace SMFGC {
                             cmd.Parameters.Add("@p1", MySqlDbType.Int32).Value = 0;
                         }
 
-                        cmd.Parameters.Add("@p2", MySqlDbType.VarChar).Value = ipadd;
+                        cmd.Parameters.Add("@p2", MySqlDbType.VarChar).Value = ip_addr;
                         conn.Open();
                         cmd.ExecuteNonQuery();
                         conn.Close();
 
-                        Thread.Sleep(3000);
+                        Thread.Sleep(3000); // Delay between client pings
                     }
-
-                    Thread.Sleep(10000);
+                    Thread.Sleep(15000); // Task Delay
                 }
-
             }
             catch (Exception ex) {
                 throw new ArgumentException(ex.Message);

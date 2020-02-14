@@ -20,8 +20,8 @@ namespace SMFGC {
 
         Thread t;
 
-        public void startClient(TcpClient inClientSocket) {
-            this.clientSocket = inClientSocket;
+        public void startClient(TcpClient inClient) {
+            this.clientSocket = inClient;
             t = new Thread(doTasks);
             t.Start();
         }
@@ -31,12 +31,14 @@ namespace SMFGC {
         }
 
         private void doTasks() {
-            // Buffer for reading data
             Byte[] buffer = new Byte[1024];
-            String dev_ip = "", room_name = "", data = null, faculty = "";
-            int dev_id = 0, room_id = 0, sched_id = 0, room_status = 0, next_tcp_check = 10, timeleft_led = 3; // <-- TL_LED Delay before send another command
-            bool dev_verified = false, relay1 = false, relay2 = false;
             byte[] msg;
+
+            bool dev_verified = false, relay1 = false, relay2 = false;
+            int dev_id = 0, room_id = 0, sched_id = 0, room_status = 0, dev_check_delay = 10, timeleft_led = 3; // <-- TL_LED Delay before send another command
+
+            String dev_mac = "", data, room_name = "", faculty = "";
+            String dev_ip = ((IPEndPoint)clientSocket.Client.RemoteEndPoint).Address.ToString();
 
             DateTime end_time = DateTime.Parse("00:00:00");
 
@@ -49,21 +51,22 @@ namespace SMFGC {
                     // Translate data bytes to a ASCII string.
                     data = System.Text.Encoding.ASCII.GetString(buffer, 0, i);
 
+                    // Checking data headers
                     if (!data.Contains("DEV:")) {
-                        Console.WriteLine("Unknown Device: \"{0}\" (Server Connection Closed)", data);
-                        sysLog(0, "", "devinfo", "Unknown: (Sending data that doesn't known to server!) Device Denied.", 16);
+                        Console.WriteLine("Unknown Message: \"{0}\"; (Connection Closed).", data);
+                        sysLog("dev", String.Format("Unknown Device: IP Address: {0}; Denied.", dev_ip), 16);
                         break;
                     }
 
                     // Verify if the device is known to server.
-                    if (!dev_verified) {
+                    if (!dev_verified && data.Contains("MAC:")) {
                         dev_id = Convert.ToInt32(data.Split(',')[0].Replace("DEV:", ""));
-                        dev_ip = ((IPEndPoint)clientSocket.Client.RemoteEndPoint).Address.ToString();
+                        dev_mac = data.Split(',')[1].Replace("MAC:", "");
 
                         cmd = conn.CreateCommand();
                         cmd.CommandText = pVariables.qDeviceCheck;
                         cmd.Parameters.Add("@p1", MySqlDbType.Int32).Value = dev_id;
-                        cmd.Parameters.Add("@p2", MySqlDbType.VarChar).Value = dev_ip;
+                        cmd.Parameters.Add("@p2", MySqlDbType.VarChar).Value = dev_mac;
                         conn.Open();
                         reader = cmd.ExecuteReader();
 
@@ -75,19 +78,24 @@ namespace SMFGC {
                             room_status = Convert.ToInt32((reader["status"]));
                             dev_verified = true;
                             Console.WriteLine("Device Accepted: {0}, {1}, Room: {2}:{3}", dev_id, dev_ip, room_id, room_name);
-                            sysLog(dev_id, "", "devinfo", "Device Accepted.", 64);
+                            sysLog("dev", String.Format("Device ID: {0}; Accepted.", dev_id), 64);
                         }
                         conn.Close();
 
                         if (dev_verified) {
                             // Update the status and uptime
-                            RoomUpdateSingle(room_id, 2);
+                            //RoomUpdateSingle(room_id, 2);
                         }
                         else {
+                            sysLog("dev", String.Format("Device ID: {0}, IP: {1}; Unknown Device.", dev_id, dev_ip), 16);
                             Console.WriteLine("Unknown Device: {0}, {1} (Server Connection Closed)", dev_id, dev_ip);
-                            sysLog(dev_id, "", "devinfo", "Unknown: (Device is known but not registered to database!) Device Denied.", 16);
                             break;
                         }
+                    }
+                    else {
+                        sysLog("dev", String.Format("Device IP: {0}; Unknown Device.", dev_ip), 16);
+                        Console.WriteLine("Unknown Device: {0} (Server Connection Closed)", dev_ip);
+                        break;
                     }
 
                     // CONTINUES BLINKING RED 	- 10 MINUTES LEFT WARNING
@@ -102,9 +110,9 @@ namespace SMFGC {
                                 stream.Write(msg, 0, msg.Length);
 
                                 room_status = 2;
-                                RoomUpdateSingle(room_id, room_status);
+                                //RoomUpdateSingle(room_id, room_status);
 
-                                sysLog(dev_id, "", "userauth", "Room: " + room_name + ", Faulty: " + faculty + ", Shedule Ended.", 64);
+                                sysLog("userauth", String.Format("Room: {0}, Faulty: {1}, Shedule Ended.", room_name, faculty), 64);
                                 Console.WriteLine("Schedule ended on Room: {0} automatically.", room_name);
                             }
                             else {
@@ -159,7 +167,7 @@ namespace SMFGC {
                                 // Send back a response.
                                 stream.Write(msg, 0, msg.Length);
                                 Console.WriteLine("Schedule started on Room: {0}:{1} with Schedule ID: {2}", room_id, room_name, sched_id);
-                                sysLog(dev_id, uidtag, "userauth", "Room: " + room_name + ", Faulty: " + faculty + ", Logged in.", 64);
+                                //sysLog(dev_id, uidtag, "userauth", "Room: " + room_name + ", Faulty: " + faculty + ", Logged in.", 64);
                                 conn.Close();
 
                                 room_status = 3;
@@ -171,7 +179,7 @@ namespace SMFGC {
                                 stream.Write(msg, 0, msg.Length);
 
                                 Console.WriteLine("No schedule available on Room: {0}:{1}", room_id, room_name);
-                                sysLog(dev_id, uidtag, "userauth", "Room: " + room_name + ", Faulty: " + faculty + ", No Schedule available.", 48);
+                                //sysLog(dev_id, uidtag, "userauth", "Room: " + room_name + ", Faulty: " + faculty + ", No Schedule available.", 48);
                             }
 
                             conn.Close();
@@ -193,16 +201,16 @@ namespace SMFGC {
                                 stream.Write(msg, 0, msg.Length);
 
                                 room_status = 2;
-                                RoomUpdateSingle(room_id, room_status);
+                                //RoomUpdateSingle(room_id, room_status);
                                 Console.WriteLine("Schedule ended on Room: {0}:{1} with Schedule ID: {2}", room_id, room_name, sched_id);
-                                sysLog(dev_id, uidtag, "userauth", "Room: " + room_name + ", Faulty: " + faculty + ", Logged out.", 64);
+                                //sysLog(dev_id, uidtag, "userauth", "Room: " + room_name + ", Faulty: " + faculty + ", Logged out.", 64);
                             }
                             else {
                                 // Send command to blink LEDs
                                 msg = System.Text.Encoding.ASCII.GetBytes("g");
                                 stream.Write(msg, 0, msg.Length);
 
-                                sysLog(dev_id, uidtag, "userauth", "Room: " + room_name + ", Faulty: " + faculty + ", Login and Logout Tag are not same.", 48);
+                                // sysLog(dev_id, uidtag, "userauth", "Room: " + room_name + ", Faulty: " + faculty + ", Login and Logout Tag are not same.", 48);
                             }
                             conn.Close();
                         }
@@ -212,13 +220,13 @@ namespace SMFGC {
                             stream.Write(msg, 0, msg.Length);
 
                             Console.WriteLine("Unknown uidTag: {0}", uidtag);
-                            sysLog(dev_id, uidtag, "userauth", "Unknown User [RFID Tag]: Denied by server.", 48);
+                            // sysLog(dev_id, uidtag, "userauth", "Unknown User [RFID Tag]: Denied by server.", 48);
                         }
                     }
                     else if (dev_verified && data.Contains("PZM:")) {
 
                         if (data.Contains("NaN")) {
-                            sysLog(dev_id, "", "system", "Part Zone Expansion Module (PZEM) is not reading data.", 16);
+                            // sysLog(dev_id, "", "system", "Part Zone Expansion Module (PZEM) is not reading data.", 16);
                             Console.WriteLine("Error Reading PZEM Data.");
                         }
                         else {
@@ -244,51 +252,51 @@ namespace SMFGC {
                     }
                     else if (dev_verified && data.Contains("RLY:")) {
                         Console.WriteLine("Device acknowledge the command.");
-                        sysLog(dev_id, "", "devinfo", "Client aknowledge the command given by the server.", 64);
+                        // sysLog(dev_id, "", "devinfo", "Client aknowledge the command given by the server.", 64);
                     }
 
                     // get ping status checked by pingClient class
-                    if (dev_verified && next_tcp_check <= 0) {
+                    if (dev_verified && dev_check_delay <= 0) {
 
                         cmd = conn.CreateCommand();
-                        cmd.CommandText = pVariables.qTCPBrokenCheck;
+                        cmd.CommandText = pVariables.qDevPingCheck;
                         cmd.Parameters.Add("@p1", MySqlDbType.Int32).Value = dev_id;
                         conn.Open();
                         reader = cmd.ExecuteReader();
 
                         if (reader.Read()) {
                             Console.WriteLine("TCP Link check on Device: {0}, IP: {1} - OK.", dev_id, dev_ip);
+                            dev_check_delay = 10;
                         }
                         else {
-                            RoomUpdateSingle(room_id, 1);
-                            sysLog(dev_id, "", "devinfo", "Client connection lost.", 16);
+                            sysLog("dev", "Connection to the client lost.", 16);
                             Console.WriteLine("System detected Broken TCP Link on Device: {0}, IP: {1} - Connection Lost.", dev_id, dev_ip);
                             break;
                         }
                         conn.Close();
-                        next_tcp_check = 10;
                     }
-                    else if (dev_verified && next_tcp_check > 0) {
-                        next_tcp_check -= 1;
+                    else if (dev_verified && dev_check_delay > 0) {
+                        dev_check_delay -= 1;
                     }
 
                     Thread.Sleep(1000);
                 }
             }
             catch (Exception ex) {
-                Console.WriteLine("Error: " + ex.ToString());
+                Console.WriteLine("Error: " + ex.Message);
+                sysLog("sys", ex.Message, 16);
             }
             finally {
                 // If we're in error (timeout, thread stopped...) close socket and return
+                if (conn != null && conn.State == ConnectionState.Open) conn.Close();
 
-                if (conn.State == ConnectionState.Open) conn.Close();
-
-                if (dev_verified) RoomUpdateSingle(room_id, 1);
+                if (dev_verified) UpdateDevPing(dev_id, 1);
 
                 if (clientSocket != null) {
-                    if (clientSocket.Connected) clientSocket.Close();
+                    clientSocket.Close();
+
                     Console.WriteLine("Client Connection Closed.");
-                    sysLog(0, "", "system", "Client connection closed by the server.", 16);
+                    sysLog("sys", "Client connection closed by the server.", 16);
                 }
             }
         }
@@ -311,14 +319,14 @@ namespace SMFGC {
             return ret;
         }
 
-        private void RoomUpdateSingle(int room_id, int status) {
+        private void UpdateDevPing(int dev_id, int status) {
             if (conn.State == ConnectionState.Open) conn.Close();
 
             // Update the status and uptime
             cmd = conn.CreateCommand();
-            cmd.CommandText = pVariables.qRoomUpdateSingle;
+            cmd.CommandText = pVariables.qUpdateDevPing;
             cmd.Parameters.Add("@p1", MySqlDbType.Int32).Value = status;
-            cmd.Parameters.Add("@p2", MySqlDbType.Int32).Value = room_id;
+            cmd.Parameters.Add("@p2", MySqlDbType.Int32).Value = dev_id;
             conn.Open();
             cmd.ExecuteNonQuery();
             conn.Close();

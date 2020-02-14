@@ -200,7 +200,11 @@ void clientConnect() {
       
       digitalWrite(connpin, HIGH);
       Serial.println(F("-> Connected!"));
-      client.println(dev_id);
+      
+      tmp_res.concat(dev_id);
+      tmp_res.concat(",MAC:");
+      tmp_res = String((char*)mac);
+      client.println(tmp_res);
       
     } else {
       Serial.print(F("."));

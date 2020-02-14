@@ -25,7 +25,7 @@ namespace SMFGC {
             Application.Run(new Login());
         }
 
-        public static void sysLog(int dev_id, string uid, string process, string message, int alert) {
+        public static void sysLog(string process, string message, int alert) {
             //Error   16
             //The message box contains a symbol consisting of white X in a circle with a red background.
 
@@ -41,20 +41,21 @@ namespace SMFGC {
             //Warning     48
             //The message box contains a symbol consisting of an exclamation point in a triangle with a yellow background.
 
+            try {
+                if (conn != null && conn.State == ConnectionState.Open) conn.Close();
 
-            if (conn != null && conn.State == ConnectionState.Open) conn.Close();
-
-            MySqlCommand cmd = conn.CreateCommand();
-
-            cmd.CommandText = pVariables.qLogger;
-            cmd.Parameters.Add("@p1", MySqlDbType.Int32).Value = dev_id;
-            cmd.Parameters.Add("@p2", MySqlDbType.VarChar).Value = uid;
-            cmd.Parameters.Add("@p3", MySqlDbType.VarChar).Value = process;
-            cmd.Parameters.Add("@p4", MySqlDbType.VarChar).Value = alert;
-            cmd.Parameters.Add("@p5", MySqlDbType.VarChar).Value = message;
-            conn.Open();
-            cmd.ExecuteNonQuery();
-            conn.Close();
+                MySqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = pVariables.qLogger;
+                cmd.Parameters.Add("@p1", MySqlDbType.VarChar).Value = process;
+                cmd.Parameters.Add("@p2", MySqlDbType.Int32).Value = alert;
+                cmd.Parameters.Add("@p3", MySqlDbType.VarChar).Value = message;
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex) {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public static Bitmap ResizeImage(Image image, int width, int height) {

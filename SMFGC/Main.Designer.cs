@@ -2539,7 +2539,6 @@
             // 
             // tmrRooms
             // 
-            this.tmrRooms.Enabled = true;
             this.tmrRooms.Interval = 5000;
             this.tmrRooms.Tick += new System.EventHandler(this.tmrRooms_Tick);
             // 
