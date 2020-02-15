@@ -7,6 +7,7 @@
 #include <PZEM004Tv30.h>
 
 String dev_id = "DEV: 514051";
+String m_uid = "";
 String tmp_res = "";
 bool nfc_enable = true;
 bool pzem_enable = false;
@@ -84,40 +85,46 @@ void loop() {
   // check if connected
   clientConnect();
 
+  if (nfc_enable) {
+    // send uid tag to server
+    uint8_t uid[] = { 0, 0, 0, 0, 0, 0, 0 };
+    uint8_t uidLength;
+  
+    if (nfc.readPassiveTargetID(PN532_MIFARE_ISO14443A, &uid[0], &uidLength, 50)) {
+      
+      tmp_res = ",UID: ";
+      for (uint8_t i = 0; i < uidLength; i++) {
+        tmp_res.concat(String(uid[i], HEX));
+      }
+
+      if (conn) client.print(dev_id + tmp_res);
+      Serial.print(tmp_res);
+      Serial.println(F(" -> Sent!"));  
+
+      lasttag = millis();
+      digitalWrite(nfcledpin, LOW);
+      nfc_enable = false;
+
+      if (tmp_res == m_uid) {
+        cmd("c");
+        delay(500);
+        Serial.println(F("Master Key Found!"));  
+      }
+    }
+    delay(500);
+      
+  } else {
+    // if seconds have passed since your last tap,
+    // then allow nfc:
+    if (millis() - lasttag > tagint) {
+      // NFC LED HERE! 
+      digitalWrite(nfcledpin, HIGH); 
+      nfc_enable = true;  
+    }      
+  }
+
   // when the client sends the first byte, say hello:
   if (conn) {
-    if (nfc_enable) {
-      // send uid tag to server
-      uint8_t uid[] = { 0, 0, 0, 0, 0, 0, 0 };
-      uint8_t uidLength;
-    
-      if (nfc.readPassiveTargetID(PN532_MIFARE_ISO14443A, &uid[0], &uidLength, 50)) {
-        
-        tmp_res = ",UID: ";
-        for (uint8_t i = 0; i < uidLength; i++) {
-          tmp_res.concat(String(uid[i], HEX));
-        }
-
-        client.print(dev_id + tmp_res);
-        Serial.print(tmp_res);
-        Serial.println(F(" -> Sent!"));  
-
-        lasttag = millis();
-        digitalWrite(nfcledpin, LOW);
-        nfc_enable = false;
-      }
-      delay(500);
-        
-    } else {
-      // if seconds have passed since your last tap,
-      // then allow nfc:
-      if (millis() - lasttag > tagint) {
-        // NFC LED HERE! 
-        digitalWrite(nfcledpin, HIGH); 
-        nfc_enable = true;  
-      }      
-    }
-    
     if (client.available() > 0) {
       // get the relay commands from server
       cmd(client.read());

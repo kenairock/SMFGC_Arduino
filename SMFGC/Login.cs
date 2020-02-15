@@ -46,9 +46,10 @@ namespace SMFGC {
                     }
 
                     if (pVariables.AdminMode || pVariables.DeptMode) {
+                        pVariables.confirmExit = true;
                         txt_username.Text = "Username";
                         txt_password.Text = "Password";
-                        txt_password.PasswordChar  = '\0';
+                        txt_password.PasswordChar = '\0';
                         this.Hide();
                         frm_main.setMode();
                         frm_main.Show();
@@ -97,6 +98,15 @@ namespace SMFGC {
                 txt_password.Clear();
             }
             txt_password.PasswordChar = '●';
+        }
+
+        private void Login_FormClosing(object sender, FormClosingEventArgs e) {
+            pVariables.confirmExit = false;
+            frm_main.Close();
+        }
+
+        private void Login_FormClosed(object sender, FormClosedEventArgs e) {
+            Environment.Exit(0);
         }
     }
 }

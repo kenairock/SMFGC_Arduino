@@ -27,13 +27,6 @@ namespace SMFGC {
             this.options.DontFragment = true;
 
             try {
-                cmd = conn.CreateCommand();
-                cmd.CommandText = pVariables.qDevices;
-                conn.Open();
-                reader = cmd.ExecuteReader();
-
-                while (reader.Read()) ips.Add(reader["ip_addr"].ToString());
-
                 t = new Thread(doTask);
                 t.Priority = ThreadPriority.BelowNormal;
                 t.Start();

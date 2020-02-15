@@ -35,13 +35,14 @@ namespace SMFGC {
             byte[] msg;
 
             bool dev_verified = false, relay1 = false, relay2 = false, sfv_enable = false;
-            int dev_id = 0, room_id = 0, faculty_id = 0, faculty_level = 0, sched_id = 0, dev_status = 0, dev_check_delay = 10, timeleft_led = 3; // <-- TL_LED Delay before send another command
+            int dev_id = 0, room_id = 0, faculty_id = 0, faculty_level = 0, sched_id = 0, dev_status = 0, dev_check_delay = 10, tleft_led_delay = 3; // <-- TL_LED Delay before send another command
 
             String dev_mac = "", data, room_name = "", faculty = "", last_uid = "", log_msg = "";
             String dev_ip = ((IPEndPoint)clientSocket.Client.RemoteEndPoint).Address.ToString();
 
-            DateTime end_time = DateTime.Parse("00:00:00");
-            DateTime sfv_time = DateTime.Parse("00:00:00");
+            DateTime session_start = DateTime.Parse("00:00:00");
+            DateTime end_time = DateTime.Parse(String.Format("{0} {1}", DateTime.Now.ToString("yyyy-MM-dd"), "23:59:59"));
+            TimeSpan sfv_time = TimeSpan.Parse("00:00:00");
 
             try {
                 NetworkStream stream = clientSocket.GetStream();
@@ -85,7 +86,7 @@ namespace SMFGC {
                             relay2 = Convert.ToBoolean((int)reader["relay_2"]);
 
                             sysLog("dev", String.Format("Device ID/IP: {0}:{1} on Room ID/Name: {2}:{3}; Accepted.", dev_id, dev_ip, room_id, room_name), 64);
-                            Console.WriteLine("Device Accepted: {0}:{1}, on Room: {2}", dev_id, dev_ip, room_name);
+                            Console.WriteLine("Device Accepted: {0}:{1}, on Room: ID/Name: {2}:{3}; Accepted.", dev_id, dev_ip, room_id, room_name);
                         }
                         conn.Close();
 
@@ -98,7 +99,7 @@ namespace SMFGC {
                             stream.Write(msg, 0, msg.Length);
 
                             sysLog("dev", String.Format("Device ID/IP: {0}:{1}; Not registered.", dev_id, dev_ip), 16);
-                            Console.WriteLine("Unknown Device: {0}, {1} (Server Connection Closed)", dev_id, dev_ip);
+                            Console.WriteLine("Device ID/IP: {0}:{1}; Not registered. (Server Connection Closed)", dev_id, dev_ip);
                             break;
                         }
                     }
@@ -138,7 +139,7 @@ namespace SMFGC {
 
                                     // Professor Monitoring/Verification
                                     if (Convert.ToInt32(reader["sfv_count"]) >= Convert.ToInt32(reader["sfv_limit"])) {
-                                        sfv_time = DateTime.Parse(reader["sfv_time"].ToString());
+                                        sfv_time = TimeSpan.Parse(reader["sfv_time"].ToString());
                                         sfv_enable = true;
                                     }
 
@@ -151,6 +152,12 @@ namespace SMFGC {
                                             msg = Encoding.ASCII.GetBytes("d");
                                             stream.Write(msg, 0, msg.Length);
                                             log_msg = "Logged-Out.";
+
+                                            // remove sfv points
+                                            TimeSpan tleft = end_time - DateTime.Now;
+                                            if (tleft.TotalMinutes < 10) {
+                                                FacultySFVPoints(faculty_id, -1);
+                                            }
                                         }
                                         else {
                                             msg = Encoding.ASCII.GetBytes("g");
@@ -172,7 +179,7 @@ namespace SMFGC {
                                         if (reader.Read()) {
 
                                             sched_id = Convert.ToInt32(reader["id"]);
-                                            end_time = DateTime.Parse(reader["end_time"].ToString());
+                                            end_time = DateTime.Parse(String.Format("{0} {1}", DateTime.Now.ToString("yyyy-MM-dd"), reader["end_time"].ToString()));
 
                                             if (relay1 && relay2) {
                                                 msg = Encoding.ASCII.GetBytes("c");
@@ -233,6 +240,7 @@ namespace SMFGC {
                                         // Turn on all relay
                                         msg = Encoding.ASCII.GetBytes("c");
                                         stream.Write(msg, 0, msg.Length);
+                                        end_time = DateTime.Parse(String.Format("{0} {1}", DateTime.Now.ToString("yyyy-MM-dd"), "23:59:59"));
 
                                         last_uid = uidtag;
                                         dev_status = 3;
@@ -250,14 +258,14 @@ namespace SMFGC {
                             stream.Write(msg, 0, msg.Length);
 
                             sysLog("userauth", String.Format("Faculty UIDTag: {0}; not found.", uidtag), 48);
-                            Console.WriteLine("Unknown Faculty UIDTag: {0}", uidtag);
+                            Console.WriteLine("Faculty UIDTag: {0}; not found.", uidtag);
                         }
                         conn.Close();
                     }
                     else if (dev_verified && data.Contains("PZM:")) {
 
                         if (data.Contains("NaN")) {
-                            // sysLog(dev_id, "", "system", "Part Zone Expansion Module (PZEM) is not reading data.", 16);
+                            sysLog("dev", String.Format("Device ID/IP: {0}:{1}; Part Zone Expansion Module (PZEM) error on reading data.", dev_id, dev_ip), 16);
                             Console.WriteLine("Error Reading PZEM Data.");
                         }
                         else {
@@ -283,39 +291,41 @@ namespace SMFGC {
                     }
                     else if (dev_verified && data.Contains("RLY:")) {
                         Console.WriteLine("Device acknowledge the command.");
-                        // sysLog(dev_id, "", "devinfo", "Client aknowledge the command given by the server.", 64);
                     }
 
                     // CONTINUES BLINKING RED 	- 10 MINUTES LEFT WARNING
-                    if (dev_verified && room_status == 3 && !data.Contains("UID:")) {
-                        TimeSpan tdiff = end_time - DateTime.UtcNow;
+                    if (dev_verified && dev_status == 3 && !data.Contains("UID:")) {
+                        TimeSpan tleft = end_time - DateTime.Now;
 
-                        if (tdiff.Minutes < 10) {
-                            // Send command to blink LEDs
-                            if (tdiff.Minutes <= 0 && tdiff.Seconds <= 0) {
-                                // Turn off all relays
-                                msg = System.Text.Encoding.ASCII.GetBytes("d");
+                        if (tleft.TotalMinutes < 0) {
+                            last_uid = "";
+                            dev_status = 2;
+
+                            UpdateDevStatus(dev_id, dev_status, last_uid);
+
+                            msg = Encoding.ASCII.GetBytes("d");
+                            stream.Write(msg, 0, msg.Length);
+
+                            log_msg = "Schedule Ended.";
+                            sysLog("userauth", String.Format("Faculty ID/Name: {0}:{1}, on Room ID/Name: {3}:{4}; {5}", faculty_id, faculty, faculty_level, room_id, room_name, log_msg), 64);
+                            tleft_led_delay = 3; //reset
+
+                            // add sfv points
+                            FacultySFVPoints(faculty_id, 1);
+                        }
+                        else if (tleft.TotalMinutes < 10) {
+                            if (tleft_led_delay <= 0) {
+                                msg = System.Text.Encoding.ASCII.GetBytes("f");
                                 stream.Write(msg, 0, msg.Length);
 
-                                room_status = 2;
-                                //RoomUpdateSingle(room_id, room_status);
-
-                                sysLog("userauth", String.Format("Room: {0}, Faulty: {1}, Shedule Ended.", room_name, faculty), 64);
-                                Console.WriteLine("Schedule ended on Room: {0} automatically.", room_name);
+                                tleft_led_delay = 3; //reset
+                                log_msg = String.Format("Schedule is ending in -> {0} Minutes and {1} Seconds Left.", tleft.Minutes, tleft.Seconds);
                             }
                             else {
-                                if (timeleft_led <= 0) {
-                                    msg = System.Text.Encoding.ASCII.GetBytes("f");
-                                    stream.Write(msg, 0, msg.Length);
-
-                                    timeleft_led = 3; //reset
-                                    Console.WriteLine("Schedule on Room: {0} is ending in -> {1} Minutes and {2} Seconds Left.", room_name, tdiff.Minutes, tdiff.Seconds);
-                                }
-                                else {
-                                    timeleft_led -= 1;
-                                }
+                                tleft_led_delay -= 1;
                             }
                         }
+                        Console.WriteLine("Faculty ID/Name: {0}:{1}, on Room ID/Name: {3}:{4}; {5}", faculty_id, faculty, faculty_level, room_id, room_name, log_msg);
                     }
 
                     // get ping status checked by pingClient class
@@ -332,8 +342,8 @@ namespace SMFGC {
                             dev_check_delay = 10;
                         }
                         else {
-                            sysLog("dev", "Connection to the client lost.", 16);
-                            Console.WriteLine("System detected Broken TCP Link on Device: {0}, IP: {1} - Connection Lost.", dev_id, dev_ip);
+                            sysLog("dev", String.Format("Device ID/IP: {0}:{1}; Connection to the client has been lost.", dev_id, dev_ip), 16);
+                            Console.WriteLine("System detected Broken TCP Link on Device ID: {0}, IP: {1} - Connection Lost.", dev_id, dev_ip);
                             break;
                         }
                         conn.Close();
@@ -378,18 +388,17 @@ namespace SMFGC {
             conn.Close();
         }
 
-        private void UpdateRoomTagStatus(int room_id, string uidtag, int status) {
+        private void FacultySFVPoints(int fid, int val) {
             if (conn.State == ConnectionState.Open) conn.Close();
 
-            // Update room last_uidtag
             cmd = conn.CreateCommand();
-            cmd.CommandText = pVariables.qRoomUpdateUID;
-            cmd.Parameters.Add("@p1", MySqlDbType.VarChar).Value = uidtag;
-            cmd.Parameters.Add("@p2", MySqlDbType.Int32).Value = status;
-            cmd.Parameters.Add("@p3", MySqlDbType.Int32).Value = room_id;
+            cmd.CommandText = pVariables.qFacultSFV;
+            cmd.Parameters.Add("@p1", MySqlDbType.Int32).Value = val;
+            cmd.Parameters.Add("@p2", MySqlDbType.Int32).Value = fid;
             conn.Open();
             cmd.ExecuteNonQuery();
             conn.Close();
         }
+
     }
 }

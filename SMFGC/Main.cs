@@ -991,7 +991,15 @@ namespace SMFGC {
         }
 
         private void btnAbout_Click(object sender, EventArgs e) {
-            Console.WriteLine(DateTime.Now.ToString("yyyy-MM-dd 04:00:00"));
+            DateTime start_time = DateTime.Parse("15:30:00");
+
+            TimeSpan tdiff =  start_time - DateTime.UtcNow;
+            Console.WriteLine("TDIFF: {0} Mins", tdiff.Minutes);
+
+
+            if (tdiff.Minutes > TimeSpan.Parse("00:30:00").TotalMinutes) {
+                Console.WriteLine("verify");
+            }
         }
 
         private void bExport_Click(object sender, EventArgs e) {

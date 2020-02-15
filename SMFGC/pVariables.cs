@@ -50,24 +50,15 @@ namespace SMFGC {
         public static readonly String qPZEMLog = @"INSERT INTO `pzem_tb` (`dev_id`, `volt`, `current`, `power`, `energy`, `frequency`, `pf`) VALUES (@p1, @p2, @p3, @p4, @p5, @p6, @p7);";
 
         public static readonly String qDevPingCheck = @"SELECT `id` FROM `device_tb` WHERE `id`=@p1 AND (`status` > 0);";
-
-        public static readonly String qRoomUpdateUID = "UPDATE `classroom_tb` SET `last_uidtag`=@p1, `status`=@p2 WHERE `room_id`=@p3;";
-
-        public static readonly String qGetRoomUID = "SELECT `room_id` FROM `classroom_tb` WHERE `dev_id`=@p1 AND `last_uidtag`=@p2;";
-
-        public static readonly String qLogReport = @"SELECT DATE_FORMAT(`tstamp`, '%b %d, %Y - %r') AS `Date/Time Logged`,
-                                                      IF(`dev_id` = 0, '-', `dev_id`) AS `Device ID`,
-                                                      IF(`uid` = 0, '-', `uid`) AS `UID Tag`,
+        
+        public static readonly String qLogReport = @"SELECT DATE_FORMAT(`ts`, '%b %d, %Y - %r') AS `Date/Time Logged`,
                                                       IF(`alert` = 64,'Information',
                                                         IF(`alert` = 48,'Warning',
                                                           IF(`alert` = 32,'Question',
-                                                            IF(`alert` = 16, 'Error', '-')
-                                                            )
-                                                          )
-                                                        ) AS `Alert`,
+                                                            IF(`alert` = 16, 'Error', '-')))) AS `Alert`,
                                                       `message` AS `Message` 
-                                                    FROM
-                                                      logs_tb
-                                                    WHERE `process` = @p1 ORDER BY `tstamp` DESC LIMIT 100;";
+                                                    FROM `syslog_tb` WHERE `process` = @p1 ORDER BY `ts` DESC LIMIT 100;";
+
+        public static readonly String qFacultSFV = @"UPDATE `faculty_tb` SET `sfv_count`= `sfv_count` + @p1 WHERE `id`=@p2;";
     }
 }
