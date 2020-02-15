@@ -8,7 +8,6 @@
 
 String dev_id = "DEV: 514051";
 String tmp_res = "";
-String tap_type = ",IN";
 bool nfc_enable = true;
 bool pzem_enable = false;
 bool conn = false;
@@ -99,9 +98,8 @@ void loop() {
           tmp_res.concat(String(uid[i], HEX));
         }
 
-        client.print(dev_id + tmp_res + tap_type);
+        client.print(dev_id + tmp_res);
         Serial.print(tmp_res);
-        Serial.print(tap_type);
         Serial.println(F(" -> Sent!"));  
 
         lasttag = millis();
@@ -219,21 +217,18 @@ void cmd(char data) {
     case (char)'a':
       digitalWrite(r1pin, HIGH);
       digitalWrite(r2pin, LOW);
-      tap_type = ",OUT";
       pzem_enable = true;
       break;
   
     case (char)'b':
       digitalWrite(r1pin, LOW);
       digitalWrite(r2pin, HIGH);
-      tap_type = ",OUT";
       pzem_enable = true;
       break;
   
     case (char)'c':
       digitalWrite(r1pin, HIGH);
       digitalWrite(r2pin, HIGH);
-      tap_type = ",OUT";
       pzem_enable = true;
       break;
   
@@ -241,12 +236,11 @@ void cmd(char data) {
       digitalWrite(r1pin, LOW);
       digitalWrite(r2pin, LOW);
       pzem_enable = false;
-      tap_type = ",IN";
       Serial.println(F("Logged out!"));
       break;
 
     case (char)'e':
-      tap_type = ",OUT";
+      Serial.println(F("Logged in!"));
       break;
 
     case (char)'f':
