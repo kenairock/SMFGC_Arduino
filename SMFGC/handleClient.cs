@@ -113,6 +113,13 @@ namespace SMFGC {
                         reader = cmd.ExecuteReader();
                         if (reader.Read()) {
                             // Backup old ID's
+                            if (Convert.ToInt32(reader["level"]) > 0 && !last_uid.Equals("") && last_uid != uidtag) {
+                                msg = Encoding.ASCII.GetBytes("g");
+                                stream.Write(msg, 0, msg.Length);
+                                if (conn != null && conn.State == ConnectionState.Open) conn.Close();
+                                Console.WriteLine("Login tag is not same to logout tag.");
+                                continue;
+                            }
                             faculty_id = Convert.ToInt32(reader["id"]);
                             faculty = reader["faculty"].ToString();
                             faculty_level = Convert.ToInt32(reader["level"]);
@@ -130,7 +137,7 @@ namespace SMFGC {
                                 case 1:  // for prof schedules
 
                                     // Professor Monitoring/Verification
-                                    if (last_uid == uidtag && Convert.ToInt32(reader["sfv_count"]) >= Convert.ToInt32(reader["sfv_limit"])) {
+                                    if (Convert.ToInt32(reader["sfv_count"]) >= Convert.ToInt32(reader["sfv_limit"])) {
                                         sfv_time = TimeSpan.Parse(reader["sfv_time"].ToString());
                                         sfv_enable = true;
                                     }
@@ -158,20 +165,16 @@ namespace SMFGC {
                                                 FacultySFVPoints(faculty_id, -1);
                                             }
                                         }
-                                        else {
-                                            msg = Encoding.ASCII.GetBytes("g");
-                                            stream.Write(msg, 0, msg.Length);
-                                            log_msg = "Login tag is not same to logout tag.";
-                                        }
                                     }
                                     else {
-                                        conn.Close();
+                                        if (conn != null && conn.State == ConnectionState.Open) conn.Close();
                                         // Session Resume & Login
                                         
                                         // check schedule
                                         cmd = conn.CreateCommand();
                                         cmd.CommandText = pVariables.qCheckSched;
                                         cmd.Parameters.Add("@p1", MySqlDbType.Int32).Value = room_id;
+                                        cmd.Parameters.Add("@p2", MySqlDbType.Int32).Value = faculty_id;
                                         conn.Open();
                                         reader = cmd.ExecuteReader();
 
@@ -179,6 +182,7 @@ namespace SMFGC {
                                             
                                             sched_id = Convert.ToInt32(reader["id"]);
                                             end_time = DateTime.Parse(String.Format("{0} {1}", DateTime.Now.ToString("yyyy-MM-dd"), reader["end_time"].ToString()));
+                                            session_start = DateTime.Now;
 
                                             if (relay1 && relay2) {
                                                 msg = Encoding.ASCII.GetBytes("c");
@@ -207,7 +211,7 @@ namespace SMFGC {
                                             UpdateDevStatus(dev_id, dev_ip, dev_status, last_uid);
                                         }
                                         else {
-                                            msg = Encoding.ASCII.GetBytes("f");
+                                            msg = (session_resume) ? Encoding.ASCII.GetBytes("d")  : Encoding.ASCII.GetBytes("f");
                                             stream.Write(msg, 0, msg.Length);
                                             log_msg = "No schedule available.";
                                             session_resume = false;
@@ -229,11 +233,6 @@ namespace SMFGC {
                                             msg = Encoding.ASCII.GetBytes("d");
                                             stream.Write(msg, 0, msg.Length);
                                             log_msg = "Logged-Out.";
-                                        }
-                                        else {
-                                            msg = Encoding.ASCII.GetBytes("g");
-                                            stream.Write(msg, 0, msg.Length);
-                                            log_msg = "Login tag is not same to logout tag.";
                                         }
                                     }
                                     else {
@@ -260,7 +259,7 @@ namespace SMFGC {
                             sysLog("userauth", String.Format("Faculty UIDTag: {0}; not found.", uidtag), 48);
                             Console.WriteLine("Faculty UIDTag: {0}; not found.", uidtag);
                         }
-                        conn.Close();
+                        if (conn != null && conn.State == ConnectionState.Open) conn.Close();
                     }
                     else if (dev_verified && data.Contains("PZM:")) {
 
@@ -315,7 +314,7 @@ namespace SMFGC {
                         }
                         else if (tleft.TotalMinutes < 10) {
                             if (tleft_led_delay <= 0) {
-                                msg = System.Text.Encoding.ASCII.GetBytes("f");
+                                msg = Encoding.ASCII.GetBytes("f");
                                 stream.Write(msg, 0, msg.Length);
 
                                 tleft_led_delay = 2; //reset
@@ -343,7 +342,7 @@ namespace SMFGC {
                             }
                             Console.WriteLine("Verification Alarm: {0} Mins", talarm.TotalMinutes);
 
-                            if (talarm.TotalMinutes > (sfv_time.TotalMinutes + 5)) {
+                            if (talarm.TotalMinutes > (sfv_time.TotalMinutes + 2)) {
                                 last_uid = "";
                                 dev_status = 2;
                                 UpdateDevStatus(dev_id, dev_ip, dev_status, last_uid);
@@ -351,6 +350,8 @@ namespace SMFGC {
                                 stream.Write(msg, 0, msg.Length);
                                 log_msg = "Classroom closed by the system.";
                                 sysLog("userauth", String.Format("Faculty ID/Name: {0}:{1}, on Room ID/Name: {3}:{4}; {5}", faculty_id, faculty, faculty_level, room_id, room_name, log_msg), 64);
+                                // add sfv points
+                                FacultySFVPoints(faculty_id, 1);
                             }
                         }
                     }

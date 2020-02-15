@@ -63,7 +63,7 @@ namespace SMFGC {
                 foreach (string ip_addr in ips) {
                     Console.Write("Pinging Client: {0} -> ", ip_addr);
 
-                    reply = pingSender.Send(ip_addr, 30, Encoding.ASCII.GetBytes("1"), options);
+                    reply = pingSender.Send(ip_addr, 100, Encoding.ASCII.GetBytes("1"), options);
                     Console.WriteLine(reply.Status);
 
                     cmd = conn.CreateCommand();

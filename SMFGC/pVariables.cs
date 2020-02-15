@@ -35,7 +35,7 @@ namespace SMFGC {
                                                         FROM `faculty_tb` `ft` WHERE `uidtag` = @p1 LIMIT 1;";
 
         public static readonly String qCheckSched = @"SELECT `st`.`id`, `st`.`end_time` FROM `schedule_tb` st 
-                                                      WHERE `room_id` = @p1 
+                                                      WHERE `room_id` = @p1 AND `faculty_id` = @p2
                                                           AND (`start_time` < NOW() AND `end_time` > NOW()) 
                                                           AND `day` = DAYNAME(NOW()) LIMIT 1;";
 
