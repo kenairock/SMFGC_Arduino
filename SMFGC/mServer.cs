@@ -34,22 +34,18 @@ namespace SMFGC {
         }
 
         private void doTask() {
-            try {
-                serverSocket.Start();
 
-                while (true) {
-                    this.cl = serverSocket.AcceptTcpClient();
+            serverSocket.Start();
 
-                    handleClient hc = new handleClient();
-                    hc.startClient(this.cl);
+            while (true) {
+                this.cl = serverSocket.AcceptTcpClient();
 
-                    Console.WriteLine("Client IP: {0} - Listened by the servers!", ((IPEndPoint)this.cl.Client.RemoteEndPoint).Address.ToString());
+                handleClient hc = new handleClient();
+                hc.startClient(this.cl);
 
-                    Thread.Sleep(1000);
-                }
-            }
-            catch (Exception ex) {
-                throw new ArgumentException(ex.Message);
+                Console.WriteLine("Client IP: {0} - Listened by the server!", ((IPEndPoint)this.cl.Client.RemoteEndPoint).Address.ToString());
+
+                Thread.Sleep(1000);
             }
         }
     }

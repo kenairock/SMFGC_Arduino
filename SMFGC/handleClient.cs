@@ -35,14 +35,14 @@ namespace SMFGC {
             byte[] msg;
 
             bool dev_verified = false, relay1 = false, relay2 = false, sfv_enable = false;
-            int dev_id = 0, room_id = 0, faculty_id = 0, faculty_level = 0, sched_id = 0, dev_status = 0, dev_check_delay = 10, tleft_led_delay = 3; // <-- TL_LED Delay before send another command
+            int dev_id = 0, room_id = 0, faculty_id = 0, faculty_level = 0, sched_id = 0, dev_status = 0, dev_check_delay = 10, tleft_led_delay = 5, alarm_led_delay = 3; // <-- TL_LED Delay before send another command
 
             String dev_mac = "", data, room_name = "", faculty = "", last_uid = "", log_msg = "";
             String dev_ip = ((IPEndPoint)clientSocket.Client.RemoteEndPoint).Address.ToString();
 
-            DateTime session_start = DateTime.Parse("00:00:00");
+            DateTime session_start = DateTime.Now;
             DateTime end_time = DateTime.Parse(String.Format("{0} {1}", DateTime.Now.ToString("yyyy-MM-dd"), "23:59:59"));
-            TimeSpan sfv_time = TimeSpan.Parse("00:00:00");
+            TimeSpan sfv_time = TimeSpan.Parse("00:30:00");
 
             try {
                 NetworkStream stream = clientSocket.GetStream();
@@ -141,6 +141,12 @@ namespace SMFGC {
                                     if (Convert.ToInt32(reader["sfv_count"]) >= Convert.ToInt32(reader["sfv_limit"])) {
                                         sfv_time = TimeSpan.Parse(reader["sfv_time"].ToString());
                                         sfv_enable = true;
+                                    }
+
+                                    TimeSpan talarm = DateTime.Now - session_start;
+                                    if (sfv_enable && sfv_time.TotalMinutes < talarm.TotalMinutes) {
+                                        session_start = DateTime.Now;
+                                        break;
                                     }
 
                                     //Logout
@@ -318,7 +324,7 @@ namespace SMFGC {
                                 msg = System.Text.Encoding.ASCII.GetBytes("f");
                                 stream.Write(msg, 0, msg.Length);
 
-                                tleft_led_delay = 3; //reset
+                                tleft_led_delay = 5; //reset
                                 log_msg = String.Format("Schedule is ending in -> {0} Minutes and {1} Seconds Left.", tleft.Minutes, tleft.Seconds);
                             }
                             else {
@@ -326,6 +332,24 @@ namespace SMFGC {
                             }
                         }
                         Console.WriteLine("Faculty ID/Name: {0}:{1}, on Room ID/Name: {3}:{4}; {5}", faculty_id, faculty, faculty_level, room_id, room_name, log_msg);
+                    }
+
+                    // Professor Verification
+                    if (dev_verified && sfv_enable && dev_status == 3 && !data.Contains("UID:")) {
+                        TimeSpan talarm = DateTime.Now - session_start;
+                        if (sfv_time.TotalMinutes < talarm.TotalMinutes) {
+
+                            if (alarm_led_delay <= 0) {
+                                msg = System.Text.Encoding.ASCII.GetBytes("f");
+                                stream.Write(msg, 0, msg.Length);
+
+                                alarm_led_delay = 3; //reset
+                            }
+                            else {
+                                alarm_led_delay -= 1;
+                            }
+                            Console.WriteLine("Verification Alarm: {0} Mins", talarm.TotalMinutes);
+                        }
                     }
 
                     // get ping status checked by pingClient class

@@ -54,7 +54,7 @@ namespace SMFGC {
 
         private void Main_Load(object sender, EventArgs e) {
             try {
-                //server.startServer();
+                server.startServer();
                 clientPinger.startPing();
 
                 sysLog("sys", "Server started.", 64);
@@ -991,15 +991,15 @@ namespace SMFGC {
         }
 
         private void btnAbout_Click(object sender, EventArgs e) {
-            DateTime start_time = DateTime.Parse("15:30:00");
-
-            TimeSpan tdiff =  start_time - DateTime.UtcNow;
-            Console.WriteLine("TDIFF: {0} Mins", tdiff.Minutes);
-
-
-            if (tdiff.Minutes > TimeSpan.Parse("00:30:00").TotalMinutes) {
-                Console.WriteLine("verify");
+            Console.WriteLine("verify");
+            try {
+                server.exitThread();
+                clientPinger.exitThread();
             }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+            }
+
         }
 
         private void bExport_Click(object sender, EventArgs e) {
