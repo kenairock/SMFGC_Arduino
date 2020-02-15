@@ -61,10 +61,10 @@ namespace SMFGC {
                 conn.Close();
 
                 foreach (string ip_addr in ips) {
-                    Console.Write("Pinging Client: {0} -> ", ip_addr);
+                    //Console.Write("Pinging Client: {0} -> ", ip_addr);
 
                     reply = pingSender.Send(ip_addr, 100, Encoding.ASCII.GetBytes("1"), options);
-                    Console.WriteLine(reply.Status);
+                    //Console.WriteLine(reply.Status);
 
                     cmd = conn.CreateCommand();
                     cmd.CommandText = pVariables.qUpdateDevPing_IP;
@@ -81,7 +81,7 @@ namespace SMFGC {
                     cmd.ExecuteNonQuery();
                     conn.Close();
 
-                    Thread.Sleep(3000); // Delay between client pings
+                    Thread.Sleep(1000); // Delay between client pings
                 }
                 Thread.Sleep(15000); // Task Delay
             }

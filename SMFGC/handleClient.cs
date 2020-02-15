@@ -35,7 +35,9 @@ namespace SMFGC {
             byte[] msg;
 
             bool dev_verified = false, session_resume = false, relay1 = false, relay2 = false, sfv_enable = false;
-            int dev_id = 0, room_id = 0, faculty_id = 0, faculty_level = 0, sched_id = 0, dev_status = 0, dev_check_delay = 10, tleft_led_delay = 2, alarm_led_delay = 3; // <-- TL_LED Delay before send another command
+            int dev_id = 0, room_id = 0, faculty_id = 0, faculty_level = 0, sched_id = 0;
+            int dev_status = 0, dev_check_delay = 10, tleft_led_delay = 2, alarm_led_delay = 3; // <-- TL_LED Delay before send another command
+            int pzem_err_rpt = 60; // In seconds
 
             String data, room_name = "", faculty = "", last_uid = "", log_msg = "";
             String dev_ip = ((IPEndPoint)clientSocket.Client.RemoteEndPoint).Address.ToString();
@@ -52,7 +54,7 @@ namespace SMFGC {
 
                     // Translate data bytes to a ASCII string.
                     data = Encoding.ASCII.GetString(buffer, 0, i);
-                    Console.WriteLine("Data Recieved: {0}", data);
+                    //Console.WriteLine("Data Recieved: {0}", data);
 
                     // Checking data headers
                     if (!data.Contains("DEV:")) {
@@ -263,15 +265,16 @@ namespace SMFGC {
                     }
                     else if (dev_verified && data.Contains("PZM:")) {
 
-                        if (data.Contains("NaN")) {
+                        if (data.Contains("NaN") && pzem_err_rpt <= 0 ) {
+                            pzem_err_rpt = 60; //reset
                             sysLog("dev", String.Format("Device ID/IP: {0}:{1}; Part Zone Expansion Module (PZEM) error on reading data.", dev_id, dev_ip), 16);
                             Console.WriteLine("Error Reading PZEM Data.");
                         }
-                        else {
+                        if (!data.Contains("NaN") && pzem_err_rpt <= 0) {
+                            pzem_err_rpt = 60; //reset
                             data = data.Split(',')[1].Replace("PZM:", "").Trim();
 
                             String[] pzem = data.Split('-');
-
                             cmd = conn.CreateCommand();
                             cmd.CommandText = pVariables.qPZEMLog;
                             cmd.Parameters.Add("@p1", MySqlDbType.Int32).Value = dev_id;
@@ -287,6 +290,7 @@ namespace SMFGC {
 
                             Console.WriteLine("PZEM Data recorded to database.");
                         }
+                        pzem_err_rpt -= 1;
                     }
                     else if (dev_verified && data.Contains("RLY:")) {
                         Console.WriteLine("Device acknowledge the command.");
@@ -342,7 +346,7 @@ namespace SMFGC {
                             }
                             Console.WriteLine("Verification Alarm: {0} Mins", talarm.TotalMinutes);
 
-                            if (talarm.TotalMinutes > (sfv_time.TotalMinutes + 2)) {
+                            if (talarm.TotalMinutes > (sfv_time.TotalMinutes + 5)) {
                                 last_uid = "";
                                 dev_status = 2;
                                 UpdateDevStatus(dev_id, dev_ip, dev_status, last_uid);
