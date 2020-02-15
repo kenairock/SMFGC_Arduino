@@ -34,7 +34,7 @@ namespace SMFGC {
             Byte[] buffer = new Byte[1024];
             byte[] msg;
 
-            bool dev_verified = false, session_resume = false,  relay1 = false, relay2 = false, sfv_enable = false;
+            bool dev_verified = false, session_resume = false, relay1 = false, relay2 = false, sfv_enable = false;
             int dev_id = 0, room_id = 0, faculty_id = 0, faculty_level = 0, sched_id = 0, dev_status = 0, dev_check_delay = 10, tleft_led_delay = 2, alarm_led_delay = 3; // <-- TL_LED Delay before send another command
 
             String data, room_name = "", faculty = "", last_uid = "", log_msg = "";
@@ -92,7 +92,7 @@ namespace SMFGC {
 
                             if (!last_uid.Equals("")) session_resume = true;
                         }
-                        else { 
+                        else {
 
                             sysLog("dev", String.Format("Device ID/IP: {0}:{1}; Not registered.", dev_id, dev_ip), 16);
                             Console.WriteLine("Device ID/IP: {0}:{1}; Not registered. (Server Connection Closed)", dev_id, dev_ip);
@@ -120,6 +120,7 @@ namespace SMFGC {
                         conn.Open();
                         reader = cmd.ExecuteReader();
                         if (reader.Read()) {
+                            // Backup old ID's
                             faculty_id = Convert.ToInt32(reader["id"]);
                             faculty = reader["faculty"].ToString();
                             faculty_level = Convert.ToInt32(reader["level"]);
@@ -137,13 +138,13 @@ namespace SMFGC {
                                 case 1:  // for prof schedules
 
                                     // Professor Monitoring/Verification
-                                    if (Convert.ToInt32(reader["sfv_count"]) >= Convert.ToInt32(reader["sfv_limit"])) {
+                                    if (last_uid == uidtag && Convert.ToInt32(reader["sfv_count"]) >= Convert.ToInt32(reader["sfv_limit"])) {
                                         sfv_time = TimeSpan.Parse(reader["sfv_time"].ToString());
                                         sfv_enable = true;
                                     }
 
                                     TimeSpan talarm = DateTime.Now - session_start;
-                                    if (sfv_enable && sfv_time.TotalMinutes < talarm.TotalMinutes) {
+                                    if (last_uid == uidtag && sfv_enable && sfv_time.TotalMinutes < talarm.TotalMinutes) {
                                         session_start = DateTime.Now;
                                         break;
                                     }
@@ -173,7 +174,7 @@ namespace SMFGC {
                                     else {
                                         conn.Close();
                                         // Session Resume & Login
-
+                                        
                                         // check schedule
                                         cmd = conn.CreateCommand();
                                         cmd.CommandText = pVariables.qCheckSched;
@@ -182,7 +183,7 @@ namespace SMFGC {
                                         reader = cmd.ExecuteReader();
 
                                         if (reader.Read()) {
-
+                                            
                                             sched_id = Convert.ToInt32(reader["id"]);
                                             end_time = DateTime.Parse(String.Format("{0} {1}", DateTime.Now.ToString("yyyy-MM-dd"), reader["end_time"].ToString()));
 
@@ -388,20 +389,17 @@ namespace SMFGC {
                     Thread.Sleep(1000);
                 }
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 Console.WriteLine("Error: " + ex.Message);
                 sysLog("sys", ex.Message, 16);
             }
-            finally
-            {
+            finally {
                 // If we're in error (timeout, thread stopped...) close socket and return
                 if (conn != null && conn.State == ConnectionState.Open) conn.Close();
 
                 if (dev_verified) UpdateDevStatus(dev_id, dev_ip, 1, "-");
 
-                if (clientSocket != null)
-                {
+                if (clientSocket != null) {
                     clientSocket.Close();
 
                     Console.WriteLine("Client Connection Closed.");
