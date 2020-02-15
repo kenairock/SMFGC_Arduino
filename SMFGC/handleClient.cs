@@ -34,10 +34,10 @@ namespace SMFGC {
             Byte[] buffer = new Byte[1024];
             byte[] msg;
 
-            bool dev_verified = false, relay1 = false, relay2 = false, sfv_enable = false;
-            int dev_id = 0, room_id = 0, faculty_id = 0, faculty_level = 0, sched_id = 0, dev_status = 0, dev_check_delay = 10, tleft_led_delay = 5, alarm_led_delay = 3; // <-- TL_LED Delay before send another command
+            bool dev_verified = false, session_resume = false,  relay1 = false, relay2 = false, sfv_enable = false;
+            int dev_id = 0, room_id = 0, faculty_id = 0, faculty_level = 0, sched_id = 0, dev_status = 0, dev_check_delay = 10, tleft_led_delay = 2, alarm_led_delay = 3; // <-- TL_LED Delay before send another command
 
-            String dev_mac = "", data, room_name = "", faculty = "", last_uid = "", log_msg = "";
+            String data, room_name = "", faculty = "", last_uid = "", log_msg = "";
             String dev_ip = ((IPEndPoint)clientSocket.Client.RemoteEndPoint).Address.ToString();
 
             DateTime session_start = DateTime.Now;
@@ -56,8 +56,6 @@ namespace SMFGC {
 
                     // Checking data headers
                     if (!data.Contains("DEV:")) {
-                        msg = Encoding.ASCII.GetBytes("access is denied.");
-                        stream.Write(msg, 0, msg.Length);
 
                         Console.WriteLine("Unknown Message: \"{0}\"; (Connection Closed).", data);
                         sysLog("dev", String.Format("IP Address: {0}; The device is unknown.", dev_ip), 16);
@@ -65,14 +63,12 @@ namespace SMFGC {
                     }
 
                     // Verify if the device is known to server.
-                    if (!dev_verified && data.Contains("MAC:")) {
+                    if (!dev_verified && data.Contains("DEV:")) {
                         dev_id = Convert.ToInt32(data.Split(',')[0].Replace("DEV:", ""));
-                        dev_mac = data.Split(',')[1].Replace("MAC:", "");
 
                         cmd = conn.CreateCommand();
                         cmd.CommandText = pVariables.qDeviceCheck;
                         cmd.Parameters.Add("@p1", MySqlDbType.Int32).Value = dev_id;
-                        cmd.Parameters.Add("@p2", MySqlDbType.VarChar).Value = dev_mac;
                         conn.Open();
                         reader = cmd.ExecuteReader();
 
@@ -92,11 +88,11 @@ namespace SMFGC {
 
                         if (dev_verified) {
                             // Device accepted update the db status and uptime                 
-                            UpdateDevStatus(dev_id, 2, null);
+                            UpdateDevStatus(dev_id, dev_ip, 2, last_uid);
+
+                            if (!last_uid.Equals("")) session_resume = true;
                         }
-                        else {
-                            msg = Encoding.ASCII.GetBytes("access is denied.");
-                            stream.Write(msg, 0, msg.Length);
+                        else { 
 
                             sysLog("dev", String.Format("Device ID/IP: {0}:{1}; Not registered.", dev_id, dev_ip), 16);
                             Console.WriteLine("Device ID/IP: {0}:{1}; Not registered. (Server Connection Closed)", dev_id, dev_ip);
@@ -113,9 +109,9 @@ namespace SMFGC {
                     }
 
                     // Process the data sent by the client.
-                    if (dev_verified && (data.Contains("UID:") || !last_uid.Equals(""))) {
+                    if (dev_verified && (data.Contains("UID:") || session_resume)) {
 
-                        string uidtag = (!last_uid.Equals("")) ? last_uid : data.Split(',')[1].Split(' ')[1];
+                        string uidtag = (session_resume) ? last_uid : data.Split(',')[1].Split(' ')[1];
 
                         cmd = conn.CreateCommand();
                         cmd.CommandText = pVariables.qUidTagCheck;
@@ -124,12 +120,15 @@ namespace SMFGC {
                         conn.Open();
                         reader = cmd.ExecuteReader();
                         if (reader.Read()) {
-                            faculty_id = Convert.ToInt32(reader["fid"]);
+                            faculty_id = Convert.ToInt32(reader["id"]);
                             faculty = reader["faculty"].ToString();
                             faculty_level = Convert.ToInt32(reader["level"]);
 
                             switch (faculty_level) {
                                 case 0: // for guard/visor.
+                                    last_uid = "";
+                                    dev_status = 2;
+                                    UpdateDevStatus(dev_id, dev_ip, dev_status, last_uid);
                                     msg = Encoding.ASCII.GetBytes("d");
                                     stream.Write(msg, 0, msg.Length);
                                     log_msg = "Classroom closed.";
@@ -154,7 +153,7 @@ namespace SMFGC {
                                         if (last_uid == uidtag) {
                                             last_uid = "";
                                             dev_status = 2;
-                                            UpdateDevStatus(dev_id, dev_status, last_uid);
+                                            UpdateDevStatus(dev_id, dev_ip, dev_status, last_uid);
                                             msg = Encoding.ASCII.GetBytes("d");
                                             stream.Write(msg, 0, msg.Length);
                                             log_msg = "Logged-Out.";
@@ -206,20 +205,21 @@ namespace SMFGC {
                                             }
                                             else {
                                                 log_msg = "Session Resumed.";
+                                                session_resume = false;
                                             }
 
                                             last_uid = uidtag;
                                             dev_status = 3;
-                                            UpdateDevStatus(dev_id, dev_status, last_uid);
+                                            UpdateDevStatus(dev_id, dev_ip, dev_status, last_uid);
                                         }
                                         else {
                                             msg = Encoding.ASCII.GetBytes("f");
                                             stream.Write(msg, 0, msg.Length);
                                             log_msg = "No schedule available.";
-
+                                            session_resume = false;
                                             last_uid = "";
                                             dev_status = 2;
-                                            UpdateDevStatus(dev_id, dev_status, last_uid);
+                                            UpdateDevStatus(dev_id, dev_ip, dev_status, last_uid);
                                         }
                                     }
                                     break;
@@ -231,7 +231,7 @@ namespace SMFGC {
                                         if (last_uid == uidtag) {
                                             last_uid = "";
                                             dev_status = 2;
-                                            UpdateDevStatus(dev_id, dev_status, last_uid);
+                                            UpdateDevStatus(dev_id, dev_ip, dev_status, last_uid);
                                             msg = Encoding.ASCII.GetBytes("d");
                                             stream.Write(msg, 0, msg.Length);
                                             log_msg = "Logged-Out.";
@@ -250,7 +250,7 @@ namespace SMFGC {
 
                                         last_uid = uidtag;
                                         dev_status = 3;
-                                        UpdateDevStatus(dev_id, dev_status, last_uid);
+                                        UpdateDevStatus(dev_id, dev_ip, dev_status, last_uid);
                                         log_msg = "Logged-In.";
                                     }
                                     break;
@@ -307,7 +307,7 @@ namespace SMFGC {
                             last_uid = "";
                             dev_status = 2;
 
-                            UpdateDevStatus(dev_id, dev_status, last_uid);
+                            UpdateDevStatus(dev_id, dev_ip, dev_status, last_uid);
 
                             msg = Encoding.ASCII.GetBytes("d");
                             stream.Write(msg, 0, msg.Length);
@@ -324,14 +324,13 @@ namespace SMFGC {
                                 msg = System.Text.Encoding.ASCII.GetBytes("f");
                                 stream.Write(msg, 0, msg.Length);
 
-                                tleft_led_delay = 5; //reset
+                                tleft_led_delay = 2; //reset
                                 log_msg = String.Format("Schedule is ending in -> {0} Minutes and {1} Seconds Left.", tleft.Minutes, tleft.Seconds);
                             }
                             else {
                                 tleft_led_delay -= 1;
                             }
                         }
-                        Console.WriteLine("Faculty ID/Name: {0}:{1}, on Room ID/Name: {3}:{4}; {5}", faculty_id, faculty, faculty_level, room_id, room_name, log_msg);
                     }
 
                     // Professor Verification
@@ -340,7 +339,7 @@ namespace SMFGC {
                         if (sfv_time.TotalMinutes < talarm.TotalMinutes) {
 
                             if (alarm_led_delay <= 0) {
-                                msg = System.Text.Encoding.ASCII.GetBytes("f");
+                                msg = Encoding.ASCII.GetBytes("x");
                                 stream.Write(msg, 0, msg.Length);
 
                                 alarm_led_delay = 3; //reset
@@ -349,6 +348,16 @@ namespace SMFGC {
                                 alarm_led_delay -= 1;
                             }
                             Console.WriteLine("Verification Alarm: {0} Mins", talarm.TotalMinutes);
+
+                            if (talarm.TotalMinutes > (sfv_time.TotalMinutes + 5)) {
+                                last_uid = "";
+                                dev_status = 2;
+                                UpdateDevStatus(dev_id, dev_ip, dev_status, last_uid);
+                                msg = Encoding.ASCII.GetBytes("d");
+                                stream.Write(msg, 0, msg.Length);
+                                log_msg = "Classroom closed by the system.";
+                                sysLog("userauth", String.Format("Faculty ID/Name: {0}:{1}, on Room ID/Name: {3}:{4}; {5}", faculty_id, faculty, faculty_level, room_id, room_name, log_msg), 64);
+                            }
                         }
                     }
 
@@ -379,17 +388,20 @@ namespace SMFGC {
                     Thread.Sleep(1000);
                 }
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Console.WriteLine("Error: " + ex.Message);
                 sysLog("sys", ex.Message, 16);
             }
-            finally {
+            finally
+            {
                 // If we're in error (timeout, thread stopped...) close socket and return
                 if (conn != null && conn.State == ConnectionState.Open) conn.Close();
 
-                if (dev_verified) UpdateDevStatus(dev_id, 1, null);
+                if (dev_verified) UpdateDevStatus(dev_id, dev_ip, 1, "-");
 
-                if (clientSocket != null) {
+                if (clientSocket != null)
+                {
                     clientSocket.Close();
 
                     Console.WriteLine("Client Connection Closed.");
@@ -398,7 +410,7 @@ namespace SMFGC {
             }
         }
 
-        private void UpdateDevStatus(int dev_id, int status, string lastuid) {
+        private void UpdateDevStatus(int dev_id, string ip, int status, string lastuid) {
             if (conn.State == ConnectionState.Open) conn.Close();
 
             // Update the status and uptime
@@ -406,7 +418,8 @@ namespace SMFGC {
             cmd.CommandText = pVariables.qUpdateDevPing;
             cmd.Parameters.Add("@p1", MySqlDbType.Int32).Value = status;
             cmd.Parameters.Add("@p2", MySqlDbType.VarChar).Value = lastuid;
-            cmd.Parameters.Add("@p3", MySqlDbType.Int32).Value = dev_id;
+            cmd.Parameters.Add("@p3", MySqlDbType.VarChar).Value = ip;
+            cmd.Parameters.Add("@p4", MySqlDbType.Int32).Value = dev_id;
             conn.Open();
             cmd.ExecuteNonQuery();
             conn.Close();
