@@ -18,7 +18,7 @@ PN532 nfc(pn532i2c);
 
 byte server[] = { 192, 168, 0, 5 }; // SMFGC
 IPAddress ip(192, 168, 0, 52);
-byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xEC };
+byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
 int port = 2316;
 EthernetClient client;
 

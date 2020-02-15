@@ -99,14 +99,6 @@ namespace SMFGC {
                             break;
                         }
                     }
-                    else if (!dev_verified && !data.Contains("MAC:")) {
-                        msg = Encoding.ASCII.GetBytes("access is denied.");
-                        stream.Write(msg, 0, msg.Length);
-
-                        sysLog("dev", String.Format("Device IP: {0}; Unknown Device MAC Address.", dev_ip), 16);
-                        Console.WriteLine("Unknown Device: {0} (Server Connection Closed)", dev_ip);
-                        break;
-                    }
 
                     // Process the data sent by the client.
                     if (dev_verified && (data.Contains("UID:") || session_resume)) {
@@ -146,6 +138,7 @@ namespace SMFGC {
                                     TimeSpan talarm = DateTime.Now - session_start;
                                     if (last_uid == uidtag && sfv_enable && sfv_time.TotalMinutes < talarm.TotalMinutes) {
                                         session_start = DateTime.Now;
+                                        log_msg = "Presence Verified.";
                                         break;
                                     }
 
