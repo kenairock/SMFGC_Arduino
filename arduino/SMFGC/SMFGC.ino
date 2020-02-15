@@ -6,8 +6,8 @@
 #include <Ethernet.h>
 #include <PZEM004Tv30.h>
 
-String dev_id = "DEV: 514051";
-String m_uid = "";
+String dev_id = "DEV: 515052";
+String m_uid = "79eb5a59";
 String tmp_res = "";
 bool nfc_enable = true;
 bool pzem_enable = false;
@@ -16,8 +16,8 @@ bool conn = false;
 PN532_I2C pn532i2c(Wire);
 PN532 nfc(pn532i2c);
 
-byte server[] = { 192, 168, 1, 6 }; // SMFGC
-IPAddress ip(192, 168, 1, 51);
+byte server[] = { 192, 168, 0, 5 }; // SMFGC
+IPAddress ip(192, 168, 0, 52);
 byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xEC };
 int port = 2316;
 EthernetClient client;
@@ -97,19 +97,21 @@ void loop() {
         tmp_res.concat(String(uid[i], HEX));
       }
 
-      if (conn) client.print(dev_id + tmp_res);
-      Serial.print(tmp_res);
-      Serial.println(F(" -> Sent!"));  
+      if (tmp_res.indexOf(m_uid)>0) {
+        cmd('c');
+        Serial.println(F("Master Key Found!"));  
+      }
+
+      if (conn) {
+        client.print(dev_id + tmp_res);
+        Serial.print(tmp_res);
+        Serial.println(F(" -> Sent!"));          
+      }
 
       lasttag = millis();
       digitalWrite(nfcledpin, LOW);
       nfc_enable = false;
 
-      if (tmp_res == m_uid) {
-        cmd("c");
-        delay(500);
-        Serial.println(F("Master Key Found!"));  
-      }
     }
     delay(500);
       
@@ -206,10 +208,8 @@ void clientConnect() {
       digitalWrite(connpin, HIGH);
       Serial.println(F("-> Connected!"));
       
-      tmp_res.concat(dev_id);
-      tmp_res.concat(",MAC:");
-      tmp_res = String((char*)mac);
-      client.println(tmp_res);
+      client.println(dev_id);
+      Serial.println(dev_id);
       
     } else {
       Serial.print(F("."));

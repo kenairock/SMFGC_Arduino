@@ -28,7 +28,7 @@ namespace SMFGC {
                                                         FROM
                                                             `device_tb` `dt` 
                                                             JOIN `classroom_tb` `ct` ON `dt`.`id` = `ct`.`dev_id` 
-                                                        WHERE `dt`.`id` = @p1 AND `dt`.`mac_addr` = @p2 LIMIT 1 ;";
+                                                        WHERE `dt`.`id` = @p1 LIMIT 1 ;";
 
         public static readonly String qUidTagCheck = @"SELECT `ft`.`id`, CONCAT(`ft`.`title`,' ',`ft`.`last_name`,' ',`ft`.`first_name`,' ',`ft`.`mi`) AS `faculty`,
                                                           `ft`.`level`,`ft`.`sfv_count`,`ft`.`sfv_limit`,`ft`.`sfv_time` 
@@ -39,7 +39,7 @@ namespace SMFGC {
                                                           AND (`start_time` < NOW() AND `end_time` > NOW()) 
                                                           AND `day` = DAYNAME(NOW()) LIMIT 1;";
 
-        public static readonly String qUpdateDevPing = @"UPDATE `device_tb` SET `status`=@p1, `last_uidtag`= IF((@p2 = NULL), `last_uidtag`, @p2),`uptime`= IF((@p1 = 2), NOW(), `uptime`) WHERE `id`=@p3;";
+        public static readonly String qUpdateDevPing = @"UPDATE `device_tb` SET `status`=@p1, `last_uidtag`= IF((@p2 = '-'), `last_uidtag`, @p2),`uptime`= IF((@p1 = 2), NOW(), `uptime`), `ip_addr`=IF((@p3=NULL),`ip_addr`,@p3) WHERE `id`=@p4;";
 
         public static readonly String qUpdateDevPing_IP = @"UPDATE LOW_PRIORITY `device_tb` SET `status` = IF(((@p1 < `status`) AND ( @p1 = 1 )), `status`, @p1) WHERE `ip_addr`=@p2;";
 
