@@ -33,6 +33,9 @@ namespace SMFGC {
             if (pVariables.AdminMode) {
                 this.Text = "Administrator - " + pVariables.Project_Name;
                 toplabel.Text = pVariables.Project_Name;
+
+                btnFaculty.Show();
+                btnReports.Show();
             }
             if (pVariables.DeptMode) {
                 this.Text = "Department Mode - " + pVariables.Project_Name;
@@ -48,8 +51,8 @@ namespace SMFGC {
         private void Main_Load(object sender, EventArgs e) {
             try {
                 if (pVariables.AdminMode) {
-                    server.startServer();
-                    client.startPing();
+                    //server.startServer();
+                    //client.startPing();
                 }
                 sysLog("sys", "Server started.", 64);
             }
@@ -123,7 +126,7 @@ namespace SMFGC {
         private void RefreshClassrooms() {
             try {
                 var rm_list = new List<ListViewItem>();
-                
+
 
                 cmd = conn.CreateCommand();
                 cmd.CommandText = pVariables.qRoom + ((pVariables.DeptMode) ? String.Format(" WHERE dept_id = {0} ORDER BY `number`;", pVariables.DeptID) : "ORDER BY `number`;");
@@ -169,7 +172,6 @@ namespace SMFGC {
             txtIP.Clear();
             txtMAC.Clear();
             txtPort.Clear();
-            lblStatus.Text = "";
             txtSubjDesc.Clear();
             txtFaculty.Clear();
             txtCourse.Clear();
@@ -177,13 +179,16 @@ namespace SMFGC {
             txtTStart.Clear();
             txtTEnd.Clear();
             lblUpTime.Text = "00H : 00M : 00S";
-            Volt.Text = "0.0";
-            Curr.Text = "0.0";
-            Power.Text = "0.0";
-            Energy.Text = "0.0";
-            Freq.Text = "0.0";
-            PF.Text = "0.0";
             lblStatus.Text = "...";
+
+            //value
+            Volt.Text = Curr.Text = Power.Text = Energy.Text = Freq.Text = PF.Text = "0.0";
+            //min
+            mVolt.Text = mCurr.Text = mPower.Text = mEnergy.Text = mFreq.Text = mPF.Text = "0.0";
+            //max
+            xVolt.Text = xCurr.Text = xPower.Text = xEnergy.Text = xFreq.Text = xPF.Text = "0.0";
+            // avarage
+            aVolt.Text = aCurr.Text = aPower.Text = aEnergy.Text = aFreq.Text = aPF.Text = "0.0";
         }
 
         private void RefreshFacultyDatagrid() {
@@ -191,11 +196,11 @@ namespace SMFGC {
                 conn.Open();
                 string query = "SELECT * FROM ";
 
-                if (tabFaculty.SelectedTab.Text == "Information") query += "users_view";
-                else if (tabFaculty.SelectedTab.Text == "Schedule") query += "class_sched_view";
-                else if (tabFaculty.SelectedTab.Text == "Classroom") query += "classroom_view";
-                else if (tabFaculty.SelectedTab.Text == "Subject") query += "subject_view";
-                else if (tabFaculty.SelectedTab.Text == "Department") query += "department_view";
+                if (tabFaculty.SelectedTab.Text == "Information") query += "faculty_v";
+                else if (tabFaculty.SelectedTab.Text == "Schedule") query += "schedule_v";
+                else if (tabFaculty.SelectedTab.Text == "Classroom") query += "classroom_v";
+                else if (tabFaculty.SelectedTab.Text == "Subject") query += "subject_v";
+                else if (tabFaculty.SelectedTab.Text == "Department") query += "department_v";
 
                 if (txtSearch.Text.Length > 0) query += " WHERE `" + cbSearch.Items[cbSearch.SelectedIndex].ToString() + "` LIKE @search";
 
@@ -215,14 +220,14 @@ namespace SMFGC {
                 else { dataGrid.ClearSelection(); }
 
                 if (tabFaculty.SelectedTab.Text == "Schedule") {
-                    FillComboBox(cbSHCourse, "course_view", "course_id", "cs_name");
-                    FillComboBox(cbSHSubj, "subject_tb", "subject_id", "code");
-                    FillComboBox(cbSHRoom, "classroom_tb", "room_id", "classroom");
-                    FillComboBox(cbSHFaculty, "users_view", "id", "fullname");
+                    FillComboBox(cbSHCourse, "course_tb", "id", "name");
+                    FillComboBox(cbSHSubj, "subject_tb", "id", "code");
+                    FillComboBox(cbSHRoom, "classroom_tb", "id", "number");
+                    FillComboBox(cbSHFaculty, "faculty_v", "id", "fullname");
                 }
                 else if (tabFaculty.SelectedTab.Text == "Classroom") {
-                    FillComboBox(cbRMDept, "department_tb", "dept_id", "dept_name");
-
+                    FillComboBox(cbRMDept, "department_tb", "id", "name");
+                    FillComboBox(cbRMDev, "device_tb", "id", "serial_no");
                 }
                 else if (tabFaculty.SelectedTab.Text == "Information") {
                     dgProfSched.DataSource = null;
@@ -231,6 +236,7 @@ namespace SMFGC {
                 btnDel.Enabled = false;
                 btnSave.Enabled = false;
                 btnCancel.Enabled = false;
+
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.Message, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -241,6 +247,8 @@ namespace SMFGC {
         }
 
         private void dataGrid_CellClick(object sender, DataGridViewCellEventArgs e) {
+            if (e.RowIndex == -1) return;
+
             try {
                 if (tabFaculty.SelectedIndex < 0) return;
 
@@ -251,16 +259,17 @@ namespace SMFGC {
 
                 switch (tabFaculty.SelectedTab.Text) {
                     case "Information":
-                        cmd.CommandText = @"SELECT * FROM users_tb WHERE users_id=@id";
+                        cmd.CommandText = @"SELECT * FROM `faculty_tb` WHERE `id`=@id";
                         cmd.Parameters.AddWithValue("@id", s_id);
                         reader = cmd.ExecuteReader();
                         if (reader.Read()) {
                             txtUid.Text = s_id;
-                            txtUTag.Text = reader["uid"].ToString();
+                            cbLevel.SelectedIndex = Convert.ToInt32(reader["level"]);
+                            txtUTag.Text = reader["uidtag"].ToString();
                             cbtitle.SelectedItem = reader["title"].ToString();
                             txtULN.Text = reader["last_name"].ToString();
                             txtUFN.Text = reader["first_name"].ToString();
-                            txtUMI.Text = reader["m_i"].ToString();
+                            txtUMI.Text = reader["mi"].ToString();
 
                             if (Convert.IsDBNull(reader["picture"])) {
                                 profpic.Image = new Bitmap(Properties.Resources.user);
@@ -274,90 +283,76 @@ namespace SMFGC {
                             btnImgBrowse.Enabled = true;
                             conn.Close();
 
-                            string query = @"SELECT
-                                              `ct`.`sched_id`     AS `ID`,
-                                              `cr`.`classroom`    AS `Room`,
-                                              `crt`.`course_name` AS `Course`,
-                                              `st`.`code`         AS `Subject`,
-                                              `ct`.`day`          AS `Day`,
-                                              TIME_FORMAT(`ct`.`start_time`, '%h:%i %p') AS `Start Time`,
-                                               TIME_FORMAT(`ct`.`end_time`, '%h:%i %p') AS `End Time`
-                                            FROM((((`class_sched_tb` `ct`
-                                                  JOIN `classroom_tb` `cr`
-                                                    ON((`cr`.`room_id` = `ct`.`room_id`)))
-                                                 JOIN `subject_tb` `st`
-                                                   ON((`st`.`subject_id` = `ct`.`subject_id`)))
-                                                JOIN `course_tb` `crt`
-                                                  ON((`crt`.`course_id` = `ct`.`course_id`)))
-                                               JOIN `users_tb` `ut`
-                                                 ON((`ut`.`users_id` = `ct`.`faculty`)))
-                                            WHERE `ut`.`users_id` = @p1;";
+                            string query = @"SELECT `Room`,`Course`,`Subject Code`,`Day`,`Start Time`,`End Time` FROM `schedule_v` WHERE `faculty` = @p1;";
 
                             conn.Open();
                             DataTable dt = new DataTable();
                             MySqlDataAdapter oda = new MySqlDataAdapter(query, conn);
-                            oda.SelectCommand.Parameters.AddWithValue("@p1", s_id);
+                            oda.SelectCommand.Parameters.AddWithValue("@p1", String.Format("{0} {1} {2} {3}", cbtitle.SelectedItem, txtULN.Text, txtUFN.Text, txtUMI.Text));
                             oda.Fill(dt);
                             dgProfSched.DataSource = dt;
                             conn.Close();
+
+                            //datagrid has calculated it's widths so we can store them
+                            for (int i = 0; i <= dgProfSched.Columns.Count - 1; i++) {
+                                //store autosized widths
+                                dgProfSched.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                            }
 
                             if (dgProfSched.Rows.Count > 0) dgProfSched.Show(); else dgProfSched.Hide();
                         }
                         break;
 
                     case "Schedule":
-                        cmd.CommandText = @"SELECT * FROM class_sched_tb WHERE sched_id=@id";
+                        cmd.CommandText = @"SELECT * FROM `schedule_tb` WHERE `id`=@id";
                         cmd.Parameters.AddWithValue("@id", s_id);
                         reader = cmd.ExecuteReader();
                         if (reader.Read()) {
                             txtSHid.Text = s_id;
                             cbSHCourse.SelectedValue = reader["course_id"];
                             cbSHSubj.SelectedValue = reader["subject_id"];
-                            setRBDay(reader["day"].ToString());
+                            setRBDay(FirstCharToUpper(reader["day"].ToString()));
                             dtTimeStart.Value = DateTime.Parse(reader["start_time"].ToString());
                             dtTimeEnd.Value = DateTime.Parse(reader["end_time"].ToString());
                             cbSHRoom.SelectedValue = reader["room_id"];
-                            cbSHFaculty.SelectedValue = reader["faculty"];
+                            cbSHFaculty.SelectedValue = reader["faculty_id"];
 
                         }
                         break;
 
                     case "Classroom":
-                        cmd.CommandText = @"SELECT * FROM classroom_tb WHERE room_id=@id";
+                        cmd.CommandText = @"SELECT * FROM `classroom_tb` WHERE `id`=@id";
                         cmd.Parameters.AddWithValue("@id", s_id);
                         reader = cmd.ExecuteReader();
                         if (reader.Read()) {
                             txtRMid.Text = s_id;
+                            txtRMname.Text = reader["name"].ToString();
                             txtRMno.Text = reader["number"].ToString();
-                            cbRMDept.SelectedValue = reader["dept"];
-                            txtRMdev.Text = reader["dev_id"].ToString();
-                            txtRMip.Text = reader["ip_add"].ToString();
-                            txtRMport.Text = reader["port"].ToString();
-                            txtRMmac.Text = reader["mac_add"].ToString();
-                            txtRMclass.Text = reader["classroom"].ToString();
-                            ckRelay1.Checked = Convert.ToBoolean((int)reader["relay1"]);
-                            ckRelay2.Checked = Convert.ToBoolean((int)reader["relay2"]);
+                            cbRMDept.SelectedValue = reader["dept_id"];
+                            cbRMDev.SelectedValue = reader["dev_id"].ToString();
+                            ckRelay1.Checked = Convert.ToBoolean((int)reader["relay_1"]);
+                            ckRelay2.Checked = Convert.ToBoolean((int)reader["relay_2"]);
                         }
                         break;
 
                     case "Subject":
-                        cmd.CommandText = @"SELECT * FROM subject_tb WHERE subject_id=@id";
+                        cmd.CommandText = @"SELECT * FROM `subject_tb` WHERE `id`=@id";
                         cmd.Parameters.AddWithValue("@id", s_id);
                         reader = cmd.ExecuteReader();
                         if (reader.Read()) {
                             txtSubid.Text = s_id;
                             txtSubcode.Text = reader["code"].ToString();
-                            txtSubDesc.Text = reader["descpt"].ToString();
+                            txtSubDesc.Text = reader["desc"].ToString();
                         }
                         break;
 
                     case "Department":
-                        cmd.CommandText = @"SELECT * FROM department_tb WHERE dept_id=@id";
+                        cmd.CommandText = @"SELECT * FROM `department_tb` WHERE `id`=@id";
                         cmd.Parameters.AddWithValue("@id", s_id);
                         reader = cmd.ExecuteReader();
                         if (reader.Read()) {
                             txtDeptid.Text = s_id;
-                            txtDeptname.Text = reader["dept_name"].ToString();
+                            txtDeptname.Text = reader["name"].ToString();
                             txtDeptflr.Text = reader["floor"].ToString();
                         }
                         break;
@@ -486,13 +481,10 @@ namespace SMFGC {
 
                 case "Classroom":
                     txtRMid.Clear();
+                    txtRMname.Clear();
                     txtRMno.Clear();
                     cbRMDept.SelectedIndex = 0;
-                    txtRMdev.Clear();
-                    txtRMip.Clear();
-                    txtRMport.Clear();
-                    txtRMmac.Clear();
-                    txtRMclass.Clear();
+                    cbRMDev.SelectedIndex = 0;
                     ckRelay1.Checked = false;
                     ckRelay2.Checked = false;
                     break;
@@ -557,31 +549,31 @@ namespace SMFGC {
                     case "Information":
                         dgProfSched.Hide();
 
-                        cmd = new MySqlCommand("DELETE FROM users_tb WHERE users_id = " + txtUid.Text, conn);
+                        cmd = new MySqlCommand("DELETE FROM `faculty_tb` WHERE `id` = " + txtUid.Text, conn);
                         tmp_res += txtUid.Text;
                         tmp_res += ", Name: " + cbtitle.SelectedItem + " " + txtULN.Text + ", " + txtUFN.Text + " " + txtUMI.Text;
                         break;
 
                     case "Schedule":
-                        cmd = new MySqlCommand("DELETE FROM class_sched_tb WHERE sched_id = " + txtSHid.Text, conn);
+                        cmd = new MySqlCommand("DELETE FROM `schedule_tb` WHERE `id` = " + txtSHid.Text, conn);
                         tmp_res += txtSHid.Text;
                         tmp_res += ", Course: " + cbSHCourse + ", Subject: " + cbSHSubj.Text;
                         break;
 
                     case "Classroom":
-                        cmd = new MySqlCommand("DELETE FROM classroom_tb WHERE room_id = " + txtRMid.Text, conn);
+                        cmd = new MySqlCommand("DELETE FROM `classroom_tb` WHERE `id` = " + txtRMid.Text, conn);
                         tmp_res += txtRMid.Text;
-                        tmp_res += ", Number: " + txtRMno.Text + ", Device ID: " + txtRMdev.Text;
+                        tmp_res += ", Number: " + txtRMno.Text + ", Device ID: " + cbRMDev.SelectedItem;
                         break;
 
                     case "Subject":
-                        cmd = new MySqlCommand("DELETE FROM subject_tb WHERE subject_id = " + txtSubid.Text, conn);
+                        cmd = new MySqlCommand("DELETE FROM `subject_tb` WHERE `id` = " + txtSubid.Text, conn);
                         tmp_res += txtSubid.Text;
                         tmp_res += ", Code: " + txtSubcode.Text + ", Description: " + txtSubDesc.Text;
                         break;
 
                     case "Department":
-                        cmd = new MySqlCommand("DELETE FROM department_tb WHERE dept_id = " + txtDeptid.Text, conn);
+                        cmd = new MySqlCommand("DELETE FROM `department_tb` WHERE `id` = " + txtDeptid.Text, conn);
                         tmp_res += txtDeptid.Text;
                         tmp_res += ", Name: " + txtDeptname.Text;
                         break;
@@ -613,19 +605,21 @@ namespace SMFGC {
                     case "Information":
                         byte[] ImageData = null;
 
-                        if (btnSave.Tag.ToString() == "new")
-                            cmd.CommandText = @"INSERT INTO users_tb(uid,title,last_name,first_name,m_i,picture) 
-                                VALUES(@tag, @title, UC_WORDS(@ln), UC_WORDS(@fn), UC_WORDS(@mi), @pic);";
-                        else if (btnSave.Tag.ToString() == "edit")
-                            cmd.CommandText = @"UPDATE users_tb SET uid=@tag, title=@title, last_name=UC_WORDS(@ln), 
-                                first_name=UC_WORDS(@fn), m_i=UC_WORDS(@mi), picture=@pic WHERE users_id=@id;";
-
+                        if (btnSave.Tag.ToString() == "new") {
+                            cmd.CommandText = @"INSERT INTO `faculty_tb` (`level`,`uidtag`,`title`,`last_name`,`first_name`,`mi`,`picture`) 
+                                VALUES(@lvl, @tag, @title, UC_WORDS(@ln), UC_WORDS(@fn), UC_WORDS(@mi), @pic);";
+                        }
+                        else if (btnSave.Tag.ToString() == "edit") {
+                            cmd.CommandText = @"UPDATE `faculty_tb` SET `level`@lvl, `uidtag`=@tag, `title`=@title, `last_name`=UC_WORDS(@ln), 
+                                `first_name`=UC_WORDS(@fn), `mi`=UC_WORDS(@mi), `picture`=@pic WHERE `id`=@id;";
+                            cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = txtUid.Text;
+                        }
                         if (profpic.Tag != null) {
                             Bitmap bm = ResizeImage(profpic.Image, 150, 150);
                             ImageData = imageToByteArray(bm);
                         }
 
-                        cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = txtUid.Text;
+                        cmd.Parameters.Add("@lvl", MySqlDbType.Int32).Value = cbLevel.SelectedIndex;
                         cmd.Parameters.Add("@tag", MySqlDbType.VarChar).Value = txtUTag.Text;
                         cmd.Parameters.Add("@title", MySqlDbType.VarChar).Value = cbtitle.Items[cbtitle.SelectedIndex].ToString();
                         cmd.Parameters.Add("@ln", MySqlDbType.VarChar).Value = txtULN.Text;
@@ -635,17 +629,18 @@ namespace SMFGC {
                         break;
 
                     case "Schedule":
-                        cmd.CommandText = @"SELECT `sched_id` FROM `class_sched_tb`
-                                WHERE `room_id` = @rmid AND `day` = @day 
+                        cmd.CommandText = @"SELECT `id` FROM `schedule_tb`
+                                WHERE `room_id` = @rmid AND `day` = @day AND `faculty_id` = @fac
                                 AND ((`start_time` BETWEEN @stime AND @etime) OR (`end_time` BETWEEN @stime AND @etime)) LIMIT 1;";
                         cmd.Parameters.Add("@rmid", MySqlDbType.Int32).Value = cbSHRoom.SelectedValue;
-                        cmd.Parameters.Add("@day", MySqlDbType.VarChar).Value = getRBDay();
+                        cmd.Parameters.Add("@fac", MySqlDbType.Int32).Value = cbSHFaculty.SelectedValue;
+                        cmd.Parameters.Add("@day", MySqlDbType.VarChar).Value = getRBDay().ToLower();
                         cmd.Parameters.Add("@stime", MySqlDbType.VarChar).Value = dtTimeStart.Value.ToString("HH:mm");
                         cmd.Parameters.Add("@etime", MySqlDbType.VarChar).Value = dtTimeEnd.Value.ToString("HH:mm");
                         conn.Open();
                         reader = cmd.ExecuteReader();
                         if (reader.Read()) {
-                            if (btnSave.Tag.ToString() == "new" || btnSave.Tag.ToString() == "edit" && reader["sched_id"].ToString() != txtSHid.Text) {
+                            if (btnSave.Tag.ToString() == "new" || btnSave.Tag.ToString() == "edit" && reader["id"].ToString() != txtSHid.Text) {
                                 MessageBox.Show("Data already exist!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 form = false;
                             }
@@ -654,14 +649,15 @@ namespace SMFGC {
 
                         if (form) {
                             cmd = conn.CreateCommand();
-                            if (btnSave.Tag.ToString() == "new")
-                                cmd.CommandText = @"INSERT INTO `class_sched_tb` (`course_id`,`subject_id`,`day`,`start_time`,`end_time`,`room_id`,`faculty`) 
+                            if (btnSave.Tag.ToString() == "new") {
+                                cmd.CommandText = @"INSERT INTO `schedule_tb` (`course_id`,`subject_id`,`day`,`start_time`,`end_time`,`room_id`,`faculty_id`) 
                                     VALUES(@courseid, @subjectid, @day, @stime, @etime, @rmid, @faculty);";
-                            else if (btnSave.Tag.ToString() == "edit")
-                                cmd.CommandText = @"UPDATE `class_sched_tb` SET `course_id`=@courseid, `subject_id`=@subjectid, `day`=@day, 
-                                    `start_time`=@stime, `end_time`=@etime, `room_id`=@rmid, `faculty`=@faculty WHERE `sched_id`=@id;";
-
-                            cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = txtSHid.Text;
+                            }
+                            else if (btnSave.Tag.ToString() == "edit") {
+                                cmd.CommandText = @"UPDATE `schedule_tb` SET `course_id`=@courseid, `subject_id`=@subjectid, `day`=@day, 
+                                    `start_time`=@stime, `end_time`=@etime, `room_id`=@rmid, `faculty_id`=@faculty WHERE `id`=@id;";
+                                cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = txtSHid.Text;
+                            }
                             cmd.Parameters.Add("@courseid", MySqlDbType.Int32).Value = cbSHCourse.SelectedValue;
                             cmd.Parameters.Add("@subjectid", MySqlDbType.Int32).Value = cbSHSubj.SelectedValue;
                             cmd.Parameters.Add("@day", MySqlDbType.VarChar).Value = getRBDay();
@@ -673,45 +669,45 @@ namespace SMFGC {
                         break;
 
                     case "Classroom":
-                        if (btnSave.Tag.ToString() == "new")
-                            cmd.CommandText = @"INSERT INTO `classroom_tb` (`number`, `dept`, `dev_id`, `ip_add`, `port`, `mac_add`, `classroom`, `relay1`, `relay2`)  
-                                VALUES(@num, @dept, @dev, @ip, @port, @mac, @class, @relay1, @relay2);";
-                        else if (btnSave.Tag.ToString() == "edit")
-                            cmd.CommandText = @"UPDATE `classroom_tb` SET `number`=@num, `dept`=@dept, `dev_id`=@dev, `ip_add`=@ip,
-                                `port`=@port, `mac_add`=@mac, `classroom`=@class, `relay1`=@relay1, `relay2`=@relay2 WHERE `room_id`=@id;";
-
-                        cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = txtRMid.Text;
+                        if (btnSave.Tag.ToString() == "new") {
+                            cmd.CommandText = @"INSERT INTO `classroom_tb` (`name`, `number`, `dept`, `dev_id`, `relay1`, `relay2`)  
+                                VALUES(@name, @num, @dept, @dev, @r1, @r2);";
+                        }
+                        else if (btnSave.Tag.ToString() == "edit") {
+                            cmd.CommandText = @"UPDATE `classroom_tb` SET `name`,=@name `number`=@num, `dept`=@dept, `dev_id`=@dev,
+                                `relay_1`=@r1, `relay_2`=@r2 WHERE `id`=@id;";
+                            cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = txtRMid.Text;
+                        }
+                        cmd.Parameters.Add("@name", MySqlDbType.VarChar).Value = txtRMname.Text;
                         cmd.Parameters.Add("@num", MySqlDbType.VarChar).Value = txtRMno.Text;
                         cmd.Parameters.Add("@dept", MySqlDbType.Int32).Value = cbRMDept.SelectedValue;
-                        cmd.Parameters.Add("@dev", MySqlDbType.Int32).Value = txtRMdev.Text;
-                        cmd.Parameters.Add("@ip", MySqlDbType.VarChar).Value = txtRMip.Text;
-                        cmd.Parameters.Add("@port", MySqlDbType.VarChar).Value = txtRMport.Text;
-                        cmd.Parameters.Add("@mac", MySqlDbType.VarChar).Value = txtRMmac.Text;
-                        cmd.Parameters.Add("@class", MySqlDbType.VarChar).Value = txtRMclass.Text;
-                        cmd.Parameters.Add("@relay1", MySqlDbType.Int32).Value = (int)ckRelay1.CheckState;
-                        cmd.Parameters.Add("@relay2", MySqlDbType.Int32).Value = (int)ckRelay2.CheckState;
+                        cmd.Parameters.Add("@dev", MySqlDbType.Int32).Value = cbRMDev.SelectedValue;
+                        cmd.Parameters.Add("@r1", MySqlDbType.Int32).Value = (int)ckRelay1.CheckState;
+                        cmd.Parameters.Add("@r2", MySqlDbType.Int32).Value = (int)ckRelay2.CheckState;
                         break;
 
                     case "Subject":
-                        if (btnSave.Tag.ToString() == "new")
-                            cmd.CommandText = @"INSERT INTO `subject_tb` (`code`,`descpt`) VALUES(@code, @desc);";
-                        else if (btnSave.Tag.ToString() == "edit")
-                            cmd.CommandText = @"UPDATE `subject_tb` SET `code`=@code, `descpt`=@desc WHERE `subject_id`=@id;";
-
-                        cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = txtSubid.Text;
+                        if (btnSave.Tag.ToString() == "new") {
+                            cmd.CommandText = @"INSERT INTO `subject_tb` (`code`,`desc`) VALUES(@code, @desc);";
+                        }
+                        else if (btnSave.Tag.ToString() == "edit") {
+                            cmd.CommandText = @"UPDATE `subject_tb` SET `code`=@code, `desc`=UC_WORDS(@desc) WHERE `id`=@id;";
+                            cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = txtSubid.Text;
+                        }
                         cmd.Parameters.Add("@code", MySqlDbType.VarChar).Value = txtSubcode.Text;
-                        cmd.Parameters.Add("@desc", MySqlDbType.VarChar).Value = txtSubjDesc.Text;
+                        cmd.Parameters.Add("@desc", MySqlDbType.VarChar).Value = txtSubDesc.Text;
                         break;
 
                     case "Department":
-                        if (btnSave.Tag.ToString() == "new")
-                            cmd.CommandText = @"INSERT INTO `department_tb` (`dept_name`,`floor`) VALUES(@name, @floor);";
-                        else if (btnSave.Tag.ToString() == "edit")
-                            cmd.CommandText = @"UPDATE `department_tb` SET `dept_name`=@name, `floor`=@floor WHERE `dept_id`=@id;";
-
-                        cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = txtSubid.Text;
-                        cmd.Parameters.Add("@name", MySqlDbType.VarChar).Value = txtSubcode.Text;
-                        cmd.Parameters.Add("@floor", MySqlDbType.VarChar).Value = txtSubjDesc.Text;
+                        if (btnSave.Tag.ToString() == "new") {
+                            cmd.CommandText = @"INSERT INTO `department_tb` (`name`,`floor`) VALUES(@name, @floor);";
+                        }
+                        else if (btnSave.Tag.ToString() == "edit") {
+                            cmd.CommandText = @"UPDATE `department_tb` SET `name`=@name, `floor`=@floor WHERE `id`=@id;";
+                            cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = txtSubid.Text;
+                        }
+                        cmd.Parameters.Add("@name", MySqlDbType.VarChar).Value = txtDeptname.Text;
+                        cmd.Parameters.Add("@floor", MySqlDbType.VarChar).Value = txtDeptflr.Text;
                         break;
                 }
 
@@ -762,11 +758,8 @@ namespace SMFGC {
         private void lvRooms_SelectedIndexChanged(object sender, EventArgs e) {
             try {
                 if (lvRooms.SelectedItems.Count > 0) {
-                    bool has_sched = false;
-                    string orig_start = "", orig_end = "";
 
                     room_index = lvRooms.SelectedIndices[0];
-
                     lblRmName.Text = lvRooms.Items[room_index].SubItems[3].Text + " " + lvRooms.Items[room_index].Text;
 
                     txtIP.Text = lvRooms.Items[room_index].SubItems[4].Text;
@@ -804,35 +797,53 @@ namespace SMFGC {
                         txtDay.Text = Program.FirstCharToUpper(reader["day"].ToString());
                         txtTStart.Text = reader["start"].ToString();
                         txtTEnd.Text = reader["end"].ToString();
-                        TimeSpan tdiff = DateTime.Parse(reader["end"].ToString()) - DateTime.Now;
+
+                        // Calculate time left
+                        DateTime end_time = DateTime.Parse(String.Format("{0} {1}", DateTime.Now.ToString("yyyy-MM-dd"), reader["o_end"].ToString()));
+                        TimeSpan tdiff = end_time - DateTime.Now;
                         lblUpTime.Text = tdiff.Hours.ToString() + "H : " + tdiff.Minutes.ToString() + "M : " + tdiff.Seconds.ToString() + "S";
-                        has_sched = true;
-                        orig_start = reader["o_start"].ToString();
-                        orig_end = reader["o_end"].ToString();
                     }
                     conn.Close();
 
-                    if (has_sched) {
-                        cmd = conn.CreateCommand();
-                        cmd.CommandText = @";";
+                    cmd = conn.CreateCommand();
+                    cmd.CommandText = @"SELECT * FROM pzem_v WHERE dev_id = @p1;";
+                    cmd.Parameters.AddWithValue("@p1", lvRooms.Items[room_index].SubItems[2].Text);
+                    conn.Open();
+                    reader = cmd.ExecuteReader();
+                    if (reader.Read()) {
+                        //value
+                        Volt.Text = reader["volt"].ToString();
+                        Curr.Text = reader["current"].ToString();
+                        Power.Text = reader["power"].ToString();
+                        Energy.Text = reader["energy"].ToString();
+                        Freq.Text = reader["frequency"].ToString();
+                        PF.Text = reader["pf"].ToString();
 
-                        cmd.Parameters.AddWithValue("@p1", lvRooms.Items[room_index].SubItems[6].Text);
-                        cmd.Parameters.AddWithValue("@p2", DateTime.Now.ToString("yyyy-MM-dd " + orig_start));
-                        cmd.Parameters.AddWithValue("@p3", DateTime.Now.ToString("yyyy-MM-dd " + orig_end));
+                        //min
+                        mVolt.Text = reader["volt_min"].ToString();
+                        mCurr.Text = reader["current_min"].ToString();
+                        mPower.Text = reader["power_min"].ToString();
+                        mEnergy.Text = reader["energy_min"].ToString();
+                        mFreq.Text = reader["frequency_min"].ToString();
+                        mPF.Text = reader["pf_min"].ToString();
 
-                        conn.Open();
-                        reader = cmd.ExecuteReader();
-                        if (reader.Read()) {
-                            Volt.Text = reader["volt"].ToString();
-                            Curr.Text = reader["current"].ToString();
-                            Power.Text = reader["power"].ToString();
-                            Energy.Text = reader["energy"].ToString();
-                            Freq.Text = reader["frequency"].ToString();
-                            PF.Text = reader["pf"].ToString();
-                            Console.WriteLine(lvRooms.Items[room_index].SubItems[6].Text);
-                        }
-                        conn.Close();
+                        //max
+                        xVolt.Text = reader["volt_max"].ToString();
+                        xCurr.Text = reader["current_max"].ToString();
+                        xPower.Text = reader["power_max"].ToString();
+                        xEnergy.Text = reader["energy_max"].ToString();
+                        xFreq.Text = reader["frequency_max"].ToString();
+                        xPF.Text = reader["pf_max"].ToString();
+
+                        // avarage
+                        aVolt.Text = reader["volt_avg"].ToString();
+                        aCurr.Text = reader["current_avg"].ToString();
+                        aPower.Text = reader["power_avg"].ToString();
+                        aEnergy.Text = reader["energy_avg"].ToString();
+                        aFreq.Text = reader["frequency_avg"].ToString();
+                        aPF.Text = reader["pf_avg"].ToString();
                     }
+                    conn.Close();
                 }
                 else {
                     clear_RMInfo();
@@ -917,9 +928,9 @@ namespace SMFGC {
                 MySqlDataAdapter oda = new MySqlDataAdapter(pVariables.qLogReport, conn);
 
                 if (tabReport.SelectedTab.Text == "Attendance / User-Auth") oda.SelectCommand.Parameters.AddWithValue("@p1", "userauth");
-                else if (tabReport.SelectedTab.Text == "Device") oda.SelectCommand.Parameters.AddWithValue("@p1", "devinfo");
-                else if (tabReport.SelectedTab.Text == "Information") oda.SelectCommand.Parameters.AddWithValue("@p1", "information");
-                else if (tabReport.SelectedTab.Text == "System") oda.SelectCommand.Parameters.AddWithValue("@p1", "system");
+                else if (tabReport.SelectedTab.Text == "Device") oda.SelectCommand.Parameters.AddWithValue("@p1", "dev");
+                else if (tabReport.SelectedTab.Text == "Information") oda.SelectCommand.Parameters.AddWithValue("@p1", "data");
+                else if (tabReport.SelectedTab.Text == "System") oda.SelectCommand.Parameters.AddWithValue("@p1", "sys");
 
                 oda.Fill(dt);
                 dgSysLogs.DataSource = dt;
@@ -943,14 +954,6 @@ namespace SMFGC {
         }
 
         private void btnAbout_Click(object sender, EventArgs e) {
-            Console.WriteLine("verify");
-            try {
-                server.exitThread();
-                client.exitThread();
-            }
-            catch (Exception ex) {
-                MessageBox.Show(ex.Message);
-            }
 
         }
 

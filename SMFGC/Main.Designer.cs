@@ -25,20 +25,15 @@
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("514", 0);
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("515", 1);
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("516", 2);
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("517", 3);
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("514", 0);
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("515", 1);
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("516", 2);
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("517", 3);
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toplabel = new System.Windows.Forms.Label();
             this.pnlTop = new System.Windows.Forms.Panel();
-            this.btnAbout = new System.Windows.Forms.Button();
             this.ilBtns = new System.Windows.Forms.ImageList(this.components);
-            this.btnLogout = new System.Windows.Forms.Button();
-            this.btnReports = new System.Windows.Forms.Button();
-            this.btnFaculty = new System.Windows.Forms.Button();
-            this.btnHome = new System.Windows.Forms.Button();
             this.lblDate = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
             this.pnlTime = new System.Windows.Forms.Panel();
@@ -111,7 +106,6 @@
             this.mEnergy = new System.Windows.Forms.TextBox();
             this.mFreq = new System.Windows.Forms.TextBox();
             this.groupBox14 = new System.Windows.Forms.GroupBox();
-            this.btnISmall = new System.Windows.Forms.Button();
             this.ilBtnsmall = new System.Windows.Forms.ImageList(this.components);
             this.lvRooms = new System.Windows.Forms.ListView();
             this.imgLarge = new System.Windows.Forms.ImageList(this.components);
@@ -131,7 +125,6 @@
             this.groupBox17 = new System.Windows.Forms.GroupBox();
             this.btnImgBrowse = new System.Windows.Forms.Button();
             this.btnImgRemove = new System.Windows.Forms.Button();
-            this.profpic = new System.Windows.Forms.PictureBox();
             this.label31 = new System.Windows.Forms.Label();
             this.txtUMI = new System.Windows.Forms.TextBox();
             this.txtULN = new System.Windows.Forms.TextBox();
@@ -143,20 +136,11 @@
             this.Classroom = new System.Windows.Forms.TabPage();
             this.ckRelay2 = new System.Windows.Forms.CheckBox();
             this.ckRelay1 = new System.Windows.Forms.CheckBox();
-            this.label96 = new System.Windows.Forms.Label();
-            this.txtRMport = new System.Windows.Forms.TextBox();
             this.cbRMDept = new System.Windows.Forms.ComboBox();
-            this.label22 = new System.Windows.Forms.Label();
-            this.txtRMclass = new System.Windows.Forms.TextBox();
-            this.label23 = new System.Windows.Forms.Label();
-            this.txtRMmac = new System.Windows.Forms.TextBox();
             this.label25 = new System.Windows.Forms.Label();
-            this.txtRMip = new System.Windows.Forms.TextBox();
             this.label26 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
-            this.txtRMdev = new System.Windows.Forms.TextBox();
             this.txtRMno = new System.Windows.Forms.TextBox();
             this.txtRMid = new System.Windows.Forms.TextBox();
             this.Schedule = new System.Windows.Forms.TabPage();
@@ -221,6 +205,18 @@
             this.Minimize = new System.Windows.Forms.Button();
             this.Exit = new System.Windows.Forms.Button();
             this.tmrRooms = new System.Windows.Forms.Timer(this.components);
+            this.btnISmall = new System.Windows.Forms.Button();
+            this.profpic = new System.Windows.Forms.PictureBox();
+            this.btnAbout = new System.Windows.Forms.Button();
+            this.btnLogout = new System.Windows.Forms.Button();
+            this.btnReports = new System.Windows.Forms.Button();
+            this.btnFaculty = new System.Windows.Forms.Button();
+            this.btnHome = new System.Windows.Forms.Button();
+            this.cbLevel = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtRMname = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cbRMDev = new System.Windows.Forms.ComboBox();
             this.pnlTop.SuspendLayout();
             this.pnlTime.SuspendLayout();
             this.tabMain.SuspendLayout();
@@ -241,7 +237,6 @@
             this.Information.SuspendLayout();
             this.groupBox16.SuspendLayout();
             this.groupBox17.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.profpic)).BeginInit();
             this.Classroom.SuspendLayout();
             this.Schedule.SuspendLayout();
             this.gbDay.SuspendLayout();
@@ -252,6 +247,7 @@
             this.tabReports.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgSysLogs)).BeginInit();
             this.tabReport.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.profpic)).BeginInit();
             this.SuspendLayout();
             // 
             // toplabel
@@ -281,25 +277,6 @@
             this.pnlTop.Size = new System.Drawing.Size(713, 100);
             this.pnlTop.TabIndex = 4;
             // 
-            // btnAbout
-            // 
-            this.btnAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAbout.FlatAppearance.BorderSize = 0;
-            this.btnAbout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAbout.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAbout.ForeColor = System.Drawing.Color.White;
-            this.btnAbout.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnAbout.ImageIndex = 0;
-            this.btnAbout.ImageList = this.ilBtns;
-            this.btnAbout.Location = new System.Drawing.Point(485, 1);
-            this.btnAbout.Name = "btnAbout";
-            this.btnAbout.Size = new System.Drawing.Size(96, 96);
-            this.btnAbout.TabIndex = 4;
-            this.btnAbout.Text = "About Us";
-            this.btnAbout.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnAbout.UseVisualStyleBackColor = true;
-            this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
-            // 
             // ilBtns
             // 
             this.ilBtns.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ilBtns.ImageStream")));
@@ -311,79 +288,6 @@
             this.ilBtns.Images.SetKeyName(4, "reports.png");
             this.ilBtns.Images.SetKeyName(5, "small_icons.png");
             this.ilBtns.Images.SetKeyName(6, "large_icons.png");
-            // 
-            // btnLogout
-            // 
-            this.btnLogout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLogout.FlatAppearance.BorderSize = 0;
-            this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLogout.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLogout.ForeColor = System.Drawing.Color.White;
-            this.btnLogout.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnLogout.ImageIndex = 3;
-            this.btnLogout.ImageList = this.ilBtns;
-            this.btnLogout.Location = new System.Drawing.Point(587, 1);
-            this.btnLogout.Name = "btnLogout";
-            this.btnLogout.Size = new System.Drawing.Size(96, 96);
-            this.btnLogout.TabIndex = 3;
-            this.btnLogout.Text = "Logout";
-            this.btnLogout.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnLogout.UseVisualStyleBackColor = true;
-            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
-            // 
-            // btnReports
-            // 
-            this.btnReports.FlatAppearance.BorderSize = 0;
-            this.btnReports.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnReports.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReports.ForeColor = System.Drawing.Color.White;
-            this.btnReports.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnReports.ImageIndex = 4;
-            this.btnReports.ImageList = this.ilBtns;
-            this.btnReports.Location = new System.Drawing.Point(227, 1);
-            this.btnReports.Name = "btnReports";
-            this.btnReports.Size = new System.Drawing.Size(96, 96);
-            this.btnReports.TabIndex = 2;
-            this.btnReports.Text = "Reports";
-            this.btnReports.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnReports.UseVisualStyleBackColor = true;
-            this.btnReports.Click += new System.EventHandler(this.btnReports_Click);
-            // 
-            // btnFaculty
-            // 
-            this.btnFaculty.FlatAppearance.BorderSize = 0;
-            this.btnFaculty.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFaculty.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFaculty.ForeColor = System.Drawing.Color.White;
-            this.btnFaculty.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnFaculty.ImageIndex = 1;
-            this.btnFaculty.ImageList = this.ilBtns;
-            this.btnFaculty.Location = new System.Drawing.Point(125, 1);
-            this.btnFaculty.Name = "btnFaculty";
-            this.btnFaculty.Size = new System.Drawing.Size(96, 96);
-            this.btnFaculty.TabIndex = 1;
-            this.btnFaculty.Text = "Faculty";
-            this.btnFaculty.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnFaculty.UseVisualStyleBackColor = true;
-            this.btnFaculty.Click += new System.EventHandler(this.btnFaculty_Click);
-            // 
-            // btnHome
-            // 
-            this.btnHome.FlatAppearance.BorderSize = 0;
-            this.btnHome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHome.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnHome.ForeColor = System.Drawing.Color.White;
-            this.btnHome.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnHome.ImageIndex = 2;
-            this.btnHome.ImageList = this.ilBtns;
-            this.btnHome.Location = new System.Drawing.Point(23, 1);
-            this.btnHome.Name = "btnHome";
-            this.btnHome.Size = new System.Drawing.Size(96, 96);
-            this.btnHome.TabIndex = 0;
-            this.btnHome.Text = "Classrooms";
-            this.btnHome.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnHome.UseVisualStyleBackColor = true;
-            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
             // 
             // lblDate
             // 
@@ -511,7 +415,7 @@
             // txtTEnd
             // 
             this.txtTEnd.BackColor = System.Drawing.Color.White;
-            this.txtTEnd.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.txtTEnd.ForeColor = System.Drawing.Color.Maroon;
             this.txtTEnd.Location = new System.Drawing.Point(280, 100);
             this.txtTEnd.Name = "txtTEnd";
             this.txtTEnd.ReadOnly = true;
@@ -530,7 +434,7 @@
             // txtTStart
             // 
             this.txtTStart.BackColor = System.Drawing.Color.White;
-            this.txtTStart.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.txtTStart.ForeColor = System.Drawing.Color.Maroon;
             this.txtTStart.Location = new System.Drawing.Point(280, 74);
             this.txtTStart.Name = "txtTStart";
             this.txtTStart.ReadOnly = true;
@@ -552,7 +456,7 @@
             // txtSubjDesc
             // 
             this.txtSubjDesc.BackColor = System.Drawing.Color.White;
-            this.txtSubjDesc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.txtSubjDesc.ForeColor = System.Drawing.Color.ForestGreen;
             this.txtSubjDesc.Location = new System.Drawing.Point(119, 21);
             this.txtSubjDesc.Name = "txtSubjDesc";
             this.txtSubjDesc.ReadOnly = true;
@@ -1222,21 +1126,6 @@
             this.groupBox14.TabIndex = 29;
             this.groupBox14.TabStop = false;
             // 
-            // btnISmall
-            // 
-            this.btnISmall.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnISmall.FlatAppearance.BorderSize = 0;
-            this.btnISmall.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnISmall.ForeColor = System.Drawing.Color.White;
-            this.btnISmall.ImageIndex = 1;
-            this.btnISmall.ImageList = this.ilBtnsmall;
-            this.btnISmall.Location = new System.Drawing.Point(535, 12);
-            this.btnISmall.Name = "btnISmall";
-            this.btnISmall.Size = new System.Drawing.Size(50, 45);
-            this.btnISmall.TabIndex = 17;
-            this.btnISmall.UseVisualStyleBackColor = true;
-            this.btnISmall.Click += new System.EventHandler(this.btnISmall_Click);
-            // 
             // ilBtnsmall
             // 
             this.ilBtnsmall.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ilBtnsmall.ImageStream")));
@@ -1254,10 +1143,10 @@
             this.lvRooms.ForeColor = System.Drawing.Color.White;
             this.lvRooms.HideSelection = false;
             this.lvRooms.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4});
+            listViewItem5,
+            listViewItem6,
+            listViewItem7,
+            listViewItem8});
             this.lvRooms.LabelWrap = false;
             this.lvRooms.LargeImageList = this.imgLarge;
             this.lvRooms.Location = new System.Drawing.Point(379, 66);
@@ -1315,22 +1204,21 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgProfSched.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
             this.dgProfSched.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            this.dgProfSched.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgProfSched.DefaultCellStyle = dataGridViewCellStyle5;
-            this.dgProfSched.Location = new System.Drawing.Point(906, 37);
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgProfSched.DefaultCellStyle = dataGridViewCellStyle3;
+            this.dgProfSched.Location = new System.Drawing.Point(340, 377);
             this.dgProfSched.MultiSelect = false;
             this.dgProfSched.Name = "dgProfSched";
             this.dgProfSched.ReadOnly = true;
             this.dgProfSched.RowHeadersVisible = false;
             this.dgProfSched.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgProfSched.Size = new System.Drawing.Size(60, 278);
+            this.dgProfSched.Size = new System.Drawing.Size(560, 151);
             this.dgProfSched.TabIndex = 21;
             this.dgProfSched.Visible = false;
             // 
@@ -1353,6 +1241,8 @@
             // Information
             // 
             this.Information.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.Information.Controls.Add(this.cbLevel);
+            this.Information.Controls.Add(this.label1);
             this.Information.Controls.Add(this.groupBox16);
             this.Information.Controls.Add(this.label5);
             this.Information.Controls.Add(this.txtUid);
@@ -1526,20 +1416,6 @@
             this.btnImgRemove.Visible = false;
             this.btnImgRemove.Click += new System.EventHandler(this.btnImgRemove_Click);
             // 
-            // profpic
-            // 
-            this.profpic.BackColor = System.Drawing.Color.Transparent;
-            this.profpic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.profpic.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.profpic.Image = global::SMFGC.Properties.Resources.user;
-            this.profpic.InitialImage = null;
-            this.profpic.Location = new System.Drawing.Point(11, 20);
-            this.profpic.Name = "profpic";
-            this.profpic.Size = new System.Drawing.Size(150, 140);
-            this.profpic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.profpic.TabIndex = 10;
-            this.profpic.TabStop = false;
-            // 
             // label31
             // 
             this.label31.AutoSize = true;
@@ -1631,22 +1507,16 @@
             // Classroom
             // 
             this.Classroom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.Classroom.Controls.Add(this.cbRMDev);
+            this.Classroom.Controls.Add(this.label2);
+            this.Classroom.Controls.Add(this.txtRMname);
             this.Classroom.Controls.Add(this.ckRelay2);
             this.Classroom.Controls.Add(this.ckRelay1);
-            this.Classroom.Controls.Add(this.label96);
-            this.Classroom.Controls.Add(this.txtRMport);
             this.Classroom.Controls.Add(this.cbRMDept);
-            this.Classroom.Controls.Add(this.label22);
-            this.Classroom.Controls.Add(this.txtRMclass);
-            this.Classroom.Controls.Add(this.label23);
-            this.Classroom.Controls.Add(this.txtRMmac);
             this.Classroom.Controls.Add(this.label25);
-            this.Classroom.Controls.Add(this.txtRMip);
             this.Classroom.Controls.Add(this.label26);
             this.Classroom.Controls.Add(this.label27);
-            this.Classroom.Controls.Add(this.label28);
             this.Classroom.Controls.Add(this.label29);
-            this.Classroom.Controls.Add(this.txtRMdev);
             this.Classroom.Controls.Add(this.txtRMno);
             this.Classroom.Controls.Add(this.txtRMid);
             this.Classroom.Location = new System.Drawing.Point(4, 22);
@@ -1659,46 +1529,23 @@
             // 
             this.ckRelay2.AutoSize = true;
             this.ckRelay2.ForeColor = System.Drawing.Color.White;
-            this.ckRelay2.Location = new System.Drawing.Point(199, 209);
+            this.ckRelay2.Location = new System.Drawing.Point(214, 131);
             this.ckRelay2.Name = "ckRelay2";
-            this.ckRelay2.Size = new System.Drawing.Size(62, 17);
+            this.ckRelay2.Size = new System.Drawing.Size(54, 17);
             this.ckRelay2.TabIndex = 55;
-            this.ckRelay2.Text = "Relay 2";
+            this.ckRelay2.Text = "Outlet";
             this.ckRelay2.UseVisualStyleBackColor = true;
             // 
             // ckRelay1
             // 
             this.ckRelay1.AutoSize = true;
             this.ckRelay1.ForeColor = System.Drawing.Color.White;
-            this.ckRelay1.Location = new System.Drawing.Point(131, 209);
+            this.ckRelay1.Location = new System.Drawing.Point(131, 131);
             this.ckRelay1.Name = "ckRelay1";
-            this.ckRelay1.Size = new System.Drawing.Size(62, 17);
+            this.ckRelay1.Size = new System.Drawing.Size(77, 17);
             this.ckRelay1.TabIndex = 54;
-            this.ckRelay1.Text = "Relay 1";
+            this.ckRelay1.Text = "Fan/Lights";
             this.ckRelay1.UseVisualStyleBackColor = true;
-            // 
-            // label96
-            // 
-            this.label96.AutoSize = true;
-            this.label96.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label96.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.label96.Location = new System.Drawing.Point(242, 131);
-            this.label96.Name = "label96";
-            this.label96.Size = new System.Drawing.Size(35, 15);
-            this.label96.TabIndex = 53;
-            this.label96.Text = "Port :";
-            // 
-            // txtRMport
-            // 
-            this.txtRMport.BackColor = System.Drawing.Color.Black;
-            this.txtRMport.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtRMport.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.txtRMport.Location = new System.Drawing.Point(284, 131);
-            this.txtRMport.MaxLength = 5;
-            this.txtRMport.Name = "txtRMport";
-            this.txtRMport.Size = new System.Drawing.Size(46, 20);
-            this.txtRMport.TabIndex = 52;
-            this.txtRMport.Text = "23";
             // 
             // cbRMDept
             // 
@@ -1716,71 +1563,16 @@
             this.cbRMDept.Size = new System.Drawing.Size(198, 21);
             this.cbRMDept.TabIndex = 51;
             // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label22.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.label22.Location = new System.Drawing.Point(53, 183);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(72, 15);
-            this.label22.TabIndex = 44;
-            this.label22.Text = "Classroom :";
-            // 
-            // txtRMclass
-            // 
-            this.txtRMclass.BackColor = System.Drawing.Color.Black;
-            this.txtRMclass.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtRMclass.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.txtRMclass.Location = new System.Drawing.Point(131, 183);
-            this.txtRMclass.MaxLength = 10;
-            this.txtRMclass.Name = "txtRMclass";
-            this.txtRMclass.Size = new System.Drawing.Size(199, 20);
-            this.txtRMclass.TabIndex = 43;
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label23.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.label23.Location = new System.Drawing.Point(39, 157);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(86, 15);
-            this.label23.TabIndex = 42;
-            this.label23.Text = "MAC Address :";
-            // 
-            // txtRMmac
-            // 
-            this.txtRMmac.BackColor = System.Drawing.Color.Black;
-            this.txtRMmac.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtRMmac.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.txtRMmac.Location = new System.Drawing.Point(131, 157);
-            this.txtRMmac.MaxLength = 14;
-            this.txtRMmac.Name = "txtRMmac";
-            this.txtRMmac.Size = new System.Drawing.Size(199, 20);
-            this.txtRMmac.TabIndex = 41;
-            // 
             // label25
             // 
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label25.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.label25.Location = new System.Drawing.Point(67, 52);
+            this.label25.Location = new System.Drawing.Point(202, 52);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(58, 15);
             this.label25.TabIndex = 38;
             this.label25.Text = "Number :";
-            // 
-            // txtRMip
-            // 
-            this.txtRMip.BackColor = System.Drawing.Color.Black;
-            this.txtRMip.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtRMip.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.txtRMip.Location = new System.Drawing.Point(131, 131);
-            this.txtRMip.MaxLength = 16;
-            this.txtRMip.Name = "txtRMip";
-            this.txtRMip.Size = new System.Drawing.Size(106, 20);
-            this.txtRMip.TabIndex = 37;
             // 
             // label26
             // 
@@ -1798,22 +1590,11 @@
             this.label27.AutoSize = true;
             this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label27.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.label27.Location = new System.Drawing.Point(60, 105);
+            this.label27.Location = new System.Drawing.Point(60, 106);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(65, 15);
             this.label27.TabIndex = 35;
             this.label27.Text = "Device ID :";
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label28.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.label28.Location = new System.Drawing.Point(54, 131);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(71, 15);
-            this.label28.TabIndex = 34;
-            this.label28.Text = "IP Address :";
             // 
             // label29
             // 
@@ -1826,25 +1607,15 @@
             this.label29.TabIndex = 33;
             this.label29.Text = "Room ID :";
             // 
-            // txtRMdev
-            // 
-            this.txtRMdev.BackColor = System.Drawing.Color.Black;
-            this.txtRMdev.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtRMdev.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.txtRMdev.Location = new System.Drawing.Point(131, 105);
-            this.txtRMdev.Name = "txtRMdev";
-            this.txtRMdev.Size = new System.Drawing.Size(199, 20);
-            this.txtRMdev.TabIndex = 32;
-            // 
             // txtRMno
             // 
             this.txtRMno.BackColor = System.Drawing.Color.Black;
             this.txtRMno.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtRMno.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.txtRMno.Location = new System.Drawing.Point(131, 52);
+            this.txtRMno.Location = new System.Drawing.Point(266, 52);
             this.txtRMno.MaxLength = 25;
             this.txtRMno.Name = "txtRMno";
-            this.txtRMno.Size = new System.Drawing.Size(199, 20);
+            this.txtRMno.Size = new System.Drawing.Size(64, 20);
             this.txtRMno.TabIndex = 30;
             // 
             // txtRMid
@@ -2425,14 +2196,14 @@
             this.dataGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
             this.dataGrid.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGrid.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGrid.DefaultCellStyle = dataGridViewCellStyle4;
             this.dataGrid.Location = new System.Drawing.Point(22, 59);
             this.dataGrid.MultiSelect = false;
             this.dataGrid.Name = "dataGrid";
@@ -2558,7 +2329,7 @@
             this.dgSysLogs.RowHeadersVisible = false;
             this.dgSysLogs.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.dgSysLogs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgSysLogs.Size = new System.Drawing.Size(936, 466);
+            this.dgSysLogs.Size = new System.Drawing.Size(970, 515);
             this.dgSysLogs.TabIndex = 0;
             // 
             // tabReport
@@ -2660,6 +2431,192 @@
             this.tmrRooms.Interval = 5000;
             this.tmrRooms.Tick += new System.EventHandler(this.tmrRooms_Tick);
             // 
+            // btnISmall
+            // 
+            this.btnISmall.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnISmall.FlatAppearance.BorderSize = 0;
+            this.btnISmall.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnISmall.ForeColor = System.Drawing.Color.White;
+            this.btnISmall.ImageIndex = 1;
+            this.btnISmall.ImageList = this.ilBtnsmall;
+            this.btnISmall.Location = new System.Drawing.Point(535, 12);
+            this.btnISmall.Name = "btnISmall";
+            this.btnISmall.Size = new System.Drawing.Size(50, 45);
+            this.btnISmall.TabIndex = 17;
+            this.btnISmall.UseVisualStyleBackColor = true;
+            this.btnISmall.Click += new System.EventHandler(this.btnISmall_Click);
+            // 
+            // profpic
+            // 
+            this.profpic.BackColor = System.Drawing.Color.Transparent;
+            this.profpic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.profpic.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.profpic.Image = global::SMFGC.Properties.Resources.user;
+            this.profpic.InitialImage = null;
+            this.profpic.Location = new System.Drawing.Point(11, 20);
+            this.profpic.Name = "profpic";
+            this.profpic.Size = new System.Drawing.Size(150, 140);
+            this.profpic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.profpic.TabIndex = 10;
+            this.profpic.TabStop = false;
+            // 
+            // btnAbout
+            // 
+            this.btnAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAbout.FlatAppearance.BorderSize = 0;
+            this.btnAbout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAbout.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAbout.ForeColor = System.Drawing.Color.White;
+            this.btnAbout.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnAbout.ImageIndex = 0;
+            this.btnAbout.ImageList = this.ilBtns;
+            this.btnAbout.Location = new System.Drawing.Point(485, 1);
+            this.btnAbout.Name = "btnAbout";
+            this.btnAbout.Size = new System.Drawing.Size(96, 96);
+            this.btnAbout.TabIndex = 4;
+            this.btnAbout.Text = "About Us";
+            this.btnAbout.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnAbout.UseVisualStyleBackColor = true;
+            this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
+            // 
+            // btnLogout
+            // 
+            this.btnLogout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLogout.FlatAppearance.BorderSize = 0;
+            this.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLogout.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLogout.ForeColor = System.Drawing.Color.White;
+            this.btnLogout.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnLogout.ImageIndex = 3;
+            this.btnLogout.ImageList = this.ilBtns;
+            this.btnLogout.Location = new System.Drawing.Point(587, 1);
+            this.btnLogout.Name = "btnLogout";
+            this.btnLogout.Size = new System.Drawing.Size(96, 96);
+            this.btnLogout.TabIndex = 3;
+            this.btnLogout.Text = "Logout";
+            this.btnLogout.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnLogout.UseVisualStyleBackColor = true;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
+            // 
+            // btnReports
+            // 
+            this.btnReports.FlatAppearance.BorderSize = 0;
+            this.btnReports.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReports.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReports.ForeColor = System.Drawing.Color.White;
+            this.btnReports.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnReports.ImageIndex = 4;
+            this.btnReports.ImageList = this.ilBtns;
+            this.btnReports.Location = new System.Drawing.Point(227, 1);
+            this.btnReports.Name = "btnReports";
+            this.btnReports.Size = new System.Drawing.Size(96, 96);
+            this.btnReports.TabIndex = 2;
+            this.btnReports.Text = "Reports";
+            this.btnReports.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnReports.UseVisualStyleBackColor = true;
+            this.btnReports.Click += new System.EventHandler(this.btnReports_Click);
+            // 
+            // btnFaculty
+            // 
+            this.btnFaculty.FlatAppearance.BorderSize = 0;
+            this.btnFaculty.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFaculty.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFaculty.ForeColor = System.Drawing.Color.White;
+            this.btnFaculty.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnFaculty.ImageIndex = 1;
+            this.btnFaculty.ImageList = this.ilBtns;
+            this.btnFaculty.Location = new System.Drawing.Point(125, 1);
+            this.btnFaculty.Name = "btnFaculty";
+            this.btnFaculty.Size = new System.Drawing.Size(96, 96);
+            this.btnFaculty.TabIndex = 1;
+            this.btnFaculty.Text = "Faculty";
+            this.btnFaculty.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnFaculty.UseVisualStyleBackColor = true;
+            this.btnFaculty.Click += new System.EventHandler(this.btnFaculty_Click);
+            // 
+            // btnHome
+            // 
+            this.btnHome.FlatAppearance.BorderSize = 0;
+            this.btnHome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnHome.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHome.ForeColor = System.Drawing.Color.White;
+            this.btnHome.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnHome.ImageIndex = 2;
+            this.btnHome.ImageList = this.ilBtns;
+            this.btnHome.Location = new System.Drawing.Point(23, 1);
+            this.btnHome.Name = "btnHome";
+            this.btnHome.Size = new System.Drawing.Size(96, 96);
+            this.btnHome.TabIndex = 0;
+            this.btnHome.Text = "Classrooms";
+            this.btnHome.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnHome.UseVisualStyleBackColor = true;
+            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
+            // 
+            // cbLevel
+            // 
+            this.cbLevel.BackColor = System.Drawing.Color.Black;
+            this.cbLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbLevel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbLevel.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.cbLevel.FormattingEnabled = true;
+            this.cbLevel.Items.AddRange(new object[] {
+            "Guard",
+            "Professor",
+            "Administrator"});
+            this.cbLevel.Location = new System.Drawing.Point(225, 156);
+            this.cbLevel.Name = "cbLevel";
+            this.cbLevel.Size = new System.Drawing.Size(111, 21);
+            this.cbLevel.TabIndex = 27;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.label1.Location = new System.Drawing.Point(177, 158);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(42, 15);
+            this.label1.TabIndex = 28;
+            this.label1.Text = "Level :";
+            // 
+            // txtRMname
+            // 
+            this.txtRMname.BackColor = System.Drawing.Color.Black;
+            this.txtRMname.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtRMname.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.txtRMname.Location = new System.Drawing.Point(131, 52);
+            this.txtRMname.MaxLength = 25;
+            this.txtRMname.Name = "txtRMname";
+            this.txtRMname.Size = new System.Drawing.Size(64, 20);
+            this.txtRMname.TabIndex = 56;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.label2.Location = new System.Drawing.Point(78, 52);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(47, 15);
+            this.label2.TabIndex = 57;
+            this.label2.Text = "Name :";
+            // 
+            // cbRMDev
+            // 
+            this.cbRMDev.BackColor = System.Drawing.Color.Black;
+            this.cbRMDev.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbRMDev.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbRMDev.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.cbRMDev.FormattingEnabled = true;
+            this.cbRMDev.Items.AddRange(new object[] {
+            "BSCpE",
+            "BLIS\t",
+            "BSP"});
+            this.cbRMDev.Location = new System.Drawing.Point(131, 105);
+            this.cbRMDev.Name = "cbRMDev";
+            this.cbRMDev.Size = new System.Drawing.Size(198, 21);
+            this.cbRMDev.TabIndex = 58;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2711,7 +2668,6 @@
             this.Information.PerformLayout();
             this.groupBox16.ResumeLayout(false);
             this.groupBox17.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.profpic)).EndInit();
             this.Classroom.ResumeLayout(false);
             this.Classroom.PerformLayout();
             this.Schedule.ResumeLayout(false);
@@ -2727,6 +2683,7 @@
             this.tabReports.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgSysLogs)).EndInit();
             this.tabReport.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.profpic)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2799,20 +2756,11 @@
         private System.Windows.Forms.TabPage Classroom;
         private System.Windows.Forms.CheckBox ckRelay2;
         private System.Windows.Forms.CheckBox ckRelay1;
-        private System.Windows.Forms.Label label96;
-        private System.Windows.Forms.TextBox txtRMport;
         private System.Windows.Forms.ComboBox cbRMDept;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.TextBox txtRMclass;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.TextBox txtRMmac;
         private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.TextBox txtRMip;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.TextBox txtRMdev;
         private System.Windows.Forms.TextBox txtRMno;
         private System.Windows.Forms.TextBox txtRMid;
         private System.Windows.Forms.TabPage Information;
@@ -2924,5 +2872,10 @@
         private System.Windows.Forms.TextBox mPower;
         private System.Windows.Forms.TextBox mEnergy;
         private System.Windows.Forms.TextBox mFreq;
+        private System.Windows.Forms.ComboBox cbLevel;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtRMname;
+        private System.Windows.Forms.ComboBox cbRMDev;
     }
 }
