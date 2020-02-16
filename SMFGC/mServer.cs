@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace SMFGC {
     class mServer {
         TcpListener serverSocket = new TcpListener(IPAddress.Any, pVariables.server_port);
-        TcpClient cl = default(TcpClient);
+        TcpClient client = default(TcpClient);
 
         Thread t;
         public void startServer() {
@@ -23,7 +23,7 @@ namespace SMFGC {
                 throw new ArgumentException(ex.Message);
             }
             finally {
-                // Stop listening for new clients.
+                // Stop listening 
                 serverSocket.Stop();
             }
         }
@@ -38,12 +38,12 @@ namespace SMFGC {
             serverSocket.Start();
 
             while (true) {
-                this.cl = serverSocket.AcceptTcpClient();
+                client = serverSocket.AcceptTcpClient();
 
                 handleClient hc = new handleClient();
-                hc.startClient(this.cl);
+                hc.startClient(client);
 
-                Console.WriteLine("Client IP: {0} - Listened by the server!", ((IPEndPoint)this.cl.Client.RemoteEndPoint).Address.ToString());
+                //Debug.WriteLine("Client IP: {0} - Listened by the server!", ((IPEndPoint)this.cl.Client.RemoteEndPoint).Address.ToString());
 
                 Thread.Sleep(1000);
             }

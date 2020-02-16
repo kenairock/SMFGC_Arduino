@@ -13,15 +13,17 @@ using static SMFGC.Program;
 
 namespace SMFGC {
     class handleClient {
-        TcpClient clientSocket;
         readonly MySqlConnection conn = new MySqlConnection(pVariables.sConn);
         MySqlCommand cmd;
         MySqlDataReader reader;
 
+        TcpClient arduino_client;
+        Byte[] buffer = new Byte[64];
+
         Thread t;
 
-        public void startClient(TcpClient inClient) {
-            this.clientSocket = inClient;
+        public void startClient(TcpClient cl) {
+            arduino_client = cl;
             t = new Thread(doTasks);
             t.Start();
         }
@@ -31,23 +33,22 @@ namespace SMFGC {
         }
 
         private void doTasks() {
-            Byte[] buffer = new Byte[1024];
             byte[] msg;
 
-            bool dev_verified = false, session_resume = false, relay1 = false, relay2 = false, sfv_enable = false;
-            int dev_id = 0, room_id = 0, faculty_id = 0, faculty_level = 0, sched_id = 0;
-            int dev_status = 0, dev_check_delay = 10, tleft_led_delay = 2, alarm_led_delay = 3; // <-- TL_LED Delay before send another command
+            bool dev_verified = false, session_resume = false, relay1 = false, relay2 = false, sfv_enabled = false;
+            int dev_id = 0, dev_status = 0, room_id = 0, faculty_id = 0, faculty_level = 0, sched_id = 0;
+            int dev_check_delay = 10, tleft_led_delay = 2, alarm_led_delay = 3; // <-- TL_LED Delay before send another command
             int pzem_err_rpt = 60; // In seconds
 
             String data, room_name = "", faculty = "", last_uid = "", log_msg = "";
-            String dev_ip = ((IPEndPoint)clientSocket.Client.RemoteEndPoint).Address.ToString();
+            String dev_ip = ((IPEndPoint)arduino_client.Client.RemoteEndPoint).Address.ToString();
 
             DateTime session_start = DateTime.Now;
             DateTime end_time = DateTime.Parse(String.Format("{0} {1}", DateTime.Now.ToString("yyyy-MM-dd"), "23:59:59"));
             TimeSpan sfv_time = TimeSpan.Parse("00:30:00");
 
             try {
-                NetworkStream stream = clientSocket.GetStream();
+                NetworkStream stream = arduino_client.GetStream();
 
                 int i;
                 while ((i = stream.Read(buffer, 0, buffer.Length)) != 0) {
@@ -141,11 +142,11 @@ namespace SMFGC {
                                     // Professor Monitoring/Verification
                                     if (Convert.ToInt32(reader["sfv_count"]) >= Convert.ToInt32(reader["sfv_limit"])) {
                                         sfv_time = TimeSpan.Parse(reader["sfv_time"].ToString());
-                                        sfv_enable = true;
+                                        sfv_enabled = true;
                                     }
 
                                     TimeSpan talarm = DateTime.Now - session_start;
-                                    if (last_uid == uidtag && sfv_enable && sfv_time.TotalMinutes < talarm.TotalMinutes) {
+                                    if (last_uid == uidtag && sfv_enabled && sfv_time.TotalMinutes < talarm.TotalMinutes) {
                                         session_start = DateTime.Now;
                                         log_msg = "Presence Verified.";
                                         break;
@@ -331,7 +332,7 @@ namespace SMFGC {
                     }
 
                     // Professor Verification
-                    if (dev_verified && sfv_enable && dev_status == 3 && !data.Contains("UID:")) {
+                    if (dev_verified && sfv_enabled && dev_status == 3 && !data.Contains("UID:")) {
                         TimeSpan talarm = DateTime.Now - session_start;
                         if (sfv_time.TotalMinutes < talarm.TotalMinutes) {
 
@@ -397,8 +398,8 @@ namespace SMFGC {
 
                 if (dev_verified) UpdateDevStatus(dev_id, dev_ip, 1, "-");
 
-                if (clientSocket != null) {
-                    clientSocket.Close();
+                if (arduino_client != null) {
+                    arduino_client.Close();
 
                     Console.WriteLine("Client Connection Closed.");
                     sysLog("sys", "Client connection closed by the server.", 16);

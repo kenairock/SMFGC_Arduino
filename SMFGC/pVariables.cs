@@ -43,7 +43,7 @@ namespace SMFGC {
 
         public static readonly String qUpdateDevPing_IP = @"UPDATE LOW_PRIORITY `device_tb` SET `status` = IF(((@p1 < `status`) AND ( @p1 = 1 )), `status`, @p1) WHERE `ip_addr`=@p2;";
 
-        public static readonly String qDevices = @"SELECT `ip_addr` FROM `device_tb`;";
+        public static readonly String qDevicesIPs = @"SELECT `ip_addr` FROM `device_tb`;";
 
         public static readonly String qLogger = @"INSERT INTO `syslog_tb` (`process`, `alert`, `message`) VALUES (@p1, @p2, @p3);";
 

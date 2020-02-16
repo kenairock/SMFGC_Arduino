@@ -22,7 +22,7 @@ namespace SMFGC {
         static void Main() {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Main());
+            Application.Run(new Login());
         }
 
         public static void sysLog(string process, string message, int alert) {

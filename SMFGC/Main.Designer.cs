@@ -71,38 +71,45 @@
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.lblUpTime = new System.Windows.Forms.Label();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.aVolt = new System.Windows.Forms.TextBox();
+            this.aCurr = new System.Windows.Forms.TextBox();
+            this.aPF = new System.Windows.Forms.TextBox();
+            this.aPower = new System.Windows.Forms.TextBox();
+            this.aEnergy = new System.Windows.Forms.TextBox();
+            this.aFreq = new System.Windows.Forms.TextBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.xVolt = new System.Windows.Forms.TextBox();
+            this.xCurr = new System.Windows.Forms.TextBox();
+            this.xPF = new System.Windows.Forms.TextBox();
+            this.xPower = new System.Windows.Forms.TextBox();
+            this.xEnergy = new System.Windows.Forms.TextBox();
+            this.xFreq = new System.Windows.Forms.TextBox();
             this.label98 = new System.Windows.Forms.Label();
             this.label99 = new System.Windows.Forms.Label();
-            this.txtPF = new System.Windows.Forms.TextBox();
             this.label100 = new System.Windows.Forms.Label();
-            this.txtFreq = new System.Windows.Forms.TextBox();
-            this.label101 = new System.Windows.Forms.Label();
             this.label102 = new System.Windows.Forms.Label();
-            this.txtEnergy = new System.Windows.Forms.TextBox();
             this.label103 = new System.Windows.Forms.Label();
-            this.txtPower = new System.Windows.Forms.TextBox();
             this.label104 = new System.Windows.Forms.Label();
-            this.txtCurr = new System.Windows.Forms.TextBox();
             this.label105 = new System.Windows.Forms.Label();
-            this.txtVolt = new System.Windows.Forms.TextBox();
             this.label106 = new System.Windows.Forms.Label();
             this.label107 = new System.Windows.Forms.Label();
             this.label108 = new System.Windows.Forms.Label();
             this.label109 = new System.Windows.Forms.Label();
-            this.groupBox12 = new System.Windows.Forms.GroupBox();
-            this.button18 = new System.Windows.Forms.Button();
-            this.label110 = new System.Windows.Forms.Label();
-            this.label111 = new System.Windows.Forms.Label();
-            this.label112 = new System.Windows.Forms.Label();
-            this.label113 = new System.Windows.Forms.Label();
-            this.label114 = new System.Windows.Forms.Label();
-            this.label115 = new System.Windows.Forms.Label();
-            this.txtExpense = new System.Windows.Forms.TextBox();
-            this.label116 = new System.Windows.Forms.Label();
-            this.txtVat = new System.Windows.Forms.TextBox();
-            this.label117 = new System.Windows.Forms.Label();
-            this.txtMS = new System.Windows.Forms.TextBox();
-            this.txtFT = new System.Windows.Forms.TextBox();
+            this.gbValue = new System.Windows.Forms.GroupBox();
+            this.Volt = new System.Windows.Forms.TextBox();
+            this.Curr = new System.Windows.Forms.TextBox();
+            this.PF = new System.Windows.Forms.TextBox();
+            this.Power = new System.Windows.Forms.TextBox();
+            this.Energy = new System.Windows.Forms.TextBox();
+            this.Freq = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.mVolt = new System.Windows.Forms.TextBox();
+            this.mCurr = new System.Windows.Forms.TextBox();
+            this.mPF = new System.Windows.Forms.TextBox();
+            this.mPower = new System.Windows.Forms.TextBox();
+            this.mEnergy = new System.Windows.Forms.TextBox();
+            this.mFreq = new System.Windows.Forms.TextBox();
             this.groupBox14 = new System.Windows.Forms.GroupBox();
             this.btnISmall = new System.Windows.Forms.Button();
             this.ilBtnsmall = new System.Windows.Forms.ImageList(this.components);
@@ -213,7 +220,6 @@
             this.tmrClock = new System.Windows.Forms.Timer(this.components);
             this.Minimize = new System.Windows.Forms.Button();
             this.Exit = new System.Windows.Forms.Button();
-            this.spRFID = new System.IO.Ports.SerialPort(this.components);
             this.tmrRooms = new System.Windows.Forms.Timer(this.components);
             this.pnlTop.SuspendLayout();
             this.pnlTime.SuspendLayout();
@@ -224,7 +230,10 @@
             this.groupBox9.SuspendLayout();
             this.groupBox10.SuspendLayout();
             this.groupBox11.SuspendLayout();
-            this.groupBox12.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.gbValue.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.groupBox14.SuspendLayout();
             this.tabMFaculty.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgProfSched)).BeginInit();
@@ -423,7 +432,7 @@
             this.tabMain.Location = new System.Drawing.Point(12, 136);
             this.tabMain.Name = "tabMain";
             this.tabMain.SelectedIndex = 0;
-            this.tabMain.Size = new System.Drawing.Size(984, 525);
+            this.tabMain.Size = new System.Drawing.Size(984, 574);
             this.tabMain.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabMain.TabIndex = 16;
             // 
@@ -436,7 +445,7 @@
             this.tabHome.Location = new System.Drawing.Point(4, 24);
             this.tabHome.Name = "tabHome";
             this.tabHome.Padding = new System.Windows.Forms.Padding(3);
-            this.tabHome.Size = new System.Drawing.Size(976, 497);
+            this.tabHome.Size = new System.Drawing.Size(976, 546);
             this.tabHome.TabIndex = 0;
             this.tabHome.Text = "HOME";
             // 
@@ -451,11 +460,10 @@
             this.panel3.Controls.Add(this.groupBox9);
             this.panel3.Controls.Add(this.groupBox10);
             this.panel3.Controls.Add(this.groupBox11);
-            this.panel3.Controls.Add(this.groupBox12);
             this.panel3.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.panel3.Location = new System.Drawing.Point(3, 4);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(370, 487);
+            this.panel3.Size = new System.Drawing.Size(370, 536);
             this.panel3.TabIndex = 6;
             // 
             // groupBox13
@@ -602,7 +610,7 @@
             // label129
             // 
             this.label129.AutoSize = true;
-            this.label129.Location = new System.Drawing.Point(219, 103);
+            this.label129.Location = new System.Drawing.Point(216, 103);
             this.label129.Name = "label129";
             this.label129.Size = new System.Drawing.Size(55, 13);
             this.label129.TabIndex = 1;
@@ -708,9 +716,9 @@
             // 
             this.groupBox10.Controls.Add(this.lblUpTime);
             this.groupBox10.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.groupBox10.Location = new System.Drawing.Point(7, 441);
+            this.groupBox10.Location = new System.Drawing.Point(7, 470);
             this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(349, 58);
+            this.groupBox10.Size = new System.Drawing.Size(349, 51);
             this.groupBox10.TabIndex = 27;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Time Left";
@@ -718,45 +726,218 @@
             // lblUpTime
             // 
             this.lblUpTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUpTime.Location = new System.Drawing.Point(9, 16);
+            this.lblUpTime.Location = new System.Drawing.Point(8, 17);
             this.lblUpTime.Name = "lblUpTime";
-            this.lblUpTime.Size = new System.Drawing.Size(332, 33);
+            this.lblUpTime.Size = new System.Drawing.Size(332, 23);
             this.lblUpTime.TabIndex = 6;
             this.lblUpTime.Text = "00H : 00M : 00S";
             this.lblUpTime.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // groupBox11
             // 
+            this.groupBox11.Controls.Add(this.groupBox3);
+            this.groupBox11.Controls.Add(this.groupBox2);
             this.groupBox11.Controls.Add(this.label98);
             this.groupBox11.Controls.Add(this.label99);
-            this.groupBox11.Controls.Add(this.txtPF);
             this.groupBox11.Controls.Add(this.label100);
-            this.groupBox11.Controls.Add(this.txtFreq);
-            this.groupBox11.Controls.Add(this.label101);
             this.groupBox11.Controls.Add(this.label102);
-            this.groupBox11.Controls.Add(this.txtEnergy);
             this.groupBox11.Controls.Add(this.label103);
-            this.groupBox11.Controls.Add(this.txtPower);
             this.groupBox11.Controls.Add(this.label104);
-            this.groupBox11.Controls.Add(this.txtCurr);
             this.groupBox11.Controls.Add(this.label105);
-            this.groupBox11.Controls.Add(this.txtVolt);
             this.groupBox11.Controls.Add(this.label106);
             this.groupBox11.Controls.Add(this.label107);
             this.groupBox11.Controls.Add(this.label108);
             this.groupBox11.Controls.Add(this.label109);
+            this.groupBox11.Controls.Add(this.gbValue);
+            this.groupBox11.Controls.Add(this.groupBox1);
             this.groupBox11.ForeColor = System.Drawing.SystemColors.HighlightText;
             this.groupBox11.Location = new System.Drawing.Point(7, 254);
             this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(158, 181);
+            this.groupBox11.Size = new System.Drawing.Size(349, 210);
             this.groupBox11.TabIndex = 26;
             this.groupBox11.TabStop = false;
-            this.groupBox11.Text = "RealTime Value";
+            this.groupBox11.Text = "RealTime Values";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.aVolt);
+            this.groupBox3.Controls.Add(this.aCurr);
+            this.groupBox3.Controls.Add(this.aPF);
+            this.groupBox3.Controls.Add(this.aPower);
+            this.groupBox3.Controls.Add(this.aEnergy);
+            this.groupBox3.Controls.Add(this.aFreq);
+            this.groupBox3.ForeColor = System.Drawing.Color.White;
+            this.groupBox3.Location = new System.Drawing.Point(251, 17);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(65, 185);
+            this.groupBox3.TabIndex = 6;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Average";
+            // 
+            // aVolt
+            // 
+            this.aVolt.BackColor = System.Drawing.Color.White;
+            this.aVolt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.aVolt.Location = new System.Drawing.Point(5, 21);
+            this.aVolt.Name = "aVolt";
+            this.aVolt.ReadOnly = true;
+            this.aVolt.Size = new System.Drawing.Size(55, 20);
+            this.aVolt.TabIndex = 2;
+            this.aVolt.Tag = "";
+            this.aVolt.Text = "0.0";
+            this.aVolt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // aCurr
+            // 
+            this.aCurr.BackColor = System.Drawing.Color.White;
+            this.aCurr.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.aCurr.Location = new System.Drawing.Point(5, 47);
+            this.aCurr.Name = "aCurr";
+            this.aCurr.ReadOnly = true;
+            this.aCurr.Size = new System.Drawing.Size(55, 20);
+            this.aCurr.TabIndex = 2;
+            this.aCurr.Text = "0.0";
+            this.aCurr.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // aPF
+            // 
+            this.aPF.BackColor = System.Drawing.Color.White;
+            this.aPF.Location = new System.Drawing.Point(5, 151);
+            this.aPF.Name = "aPF";
+            this.aPF.ReadOnly = true;
+            this.aPF.Size = new System.Drawing.Size(55, 20);
+            this.aPF.TabIndex = 2;
+            this.aPF.Text = "0.0";
+            this.aPF.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // aPower
+            // 
+            this.aPower.BackColor = System.Drawing.Color.White;
+            this.aPower.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.aPower.Location = new System.Drawing.Point(5, 73);
+            this.aPower.Name = "aPower";
+            this.aPower.ReadOnly = true;
+            this.aPower.Size = new System.Drawing.Size(55, 20);
+            this.aPower.TabIndex = 2;
+            this.aPower.Text = "0.0";
+            this.aPower.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // aEnergy
+            // 
+            this.aEnergy.BackColor = System.Drawing.Color.White;
+            this.aEnergy.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.aEnergy.Location = new System.Drawing.Point(5, 99);
+            this.aEnergy.Name = "aEnergy";
+            this.aEnergy.ReadOnly = true;
+            this.aEnergy.Size = new System.Drawing.Size(55, 20);
+            this.aEnergy.TabIndex = 2;
+            this.aEnergy.Text = "0.0";
+            this.aEnergy.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // aFreq
+            // 
+            this.aFreq.BackColor = System.Drawing.Color.White;
+            this.aFreq.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.aFreq.Location = new System.Drawing.Point(5, 125);
+            this.aFreq.Name = "aFreq";
+            this.aFreq.ReadOnly = true;
+            this.aFreq.Size = new System.Drawing.Size(55, 20);
+            this.aFreq.TabIndex = 2;
+            this.aFreq.Text = "0.0";
+            this.aFreq.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.xVolt);
+            this.groupBox2.Controls.Add(this.xCurr);
+            this.groupBox2.Controls.Add(this.xPF);
+            this.groupBox2.Controls.Add(this.xPower);
+            this.groupBox2.Controls.Add(this.xEnergy);
+            this.groupBox2.Controls.Add(this.xFreq);
+            this.groupBox2.ForeColor = System.Drawing.Color.White;
+            this.groupBox2.Location = new System.Drawing.Point(192, 17);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(55, 185);
+            this.groupBox2.TabIndex = 5;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Max";
+            // 
+            // xVolt
+            // 
+            this.xVolt.BackColor = System.Drawing.Color.White;
+            this.xVolt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.xVolt.Location = new System.Drawing.Point(5, 21);
+            this.xVolt.Name = "xVolt";
+            this.xVolt.ReadOnly = true;
+            this.xVolt.Size = new System.Drawing.Size(45, 20);
+            this.xVolt.TabIndex = 2;
+            this.xVolt.Tag = "";
+            this.xVolt.Text = "0.0";
+            this.xVolt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // xCurr
+            // 
+            this.xCurr.BackColor = System.Drawing.Color.White;
+            this.xCurr.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.xCurr.Location = new System.Drawing.Point(5, 47);
+            this.xCurr.Name = "xCurr";
+            this.xCurr.ReadOnly = true;
+            this.xCurr.Size = new System.Drawing.Size(45, 20);
+            this.xCurr.TabIndex = 2;
+            this.xCurr.Text = "0.0";
+            this.xCurr.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // xPF
+            // 
+            this.xPF.BackColor = System.Drawing.Color.White;
+            this.xPF.Location = new System.Drawing.Point(5, 151);
+            this.xPF.Name = "xPF";
+            this.xPF.ReadOnly = true;
+            this.xPF.Size = new System.Drawing.Size(45, 20);
+            this.xPF.TabIndex = 2;
+            this.xPF.Text = "0.0";
+            this.xPF.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // xPower
+            // 
+            this.xPower.BackColor = System.Drawing.Color.White;
+            this.xPower.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.xPower.Location = new System.Drawing.Point(5, 73);
+            this.xPower.Name = "xPower";
+            this.xPower.ReadOnly = true;
+            this.xPower.Size = new System.Drawing.Size(45, 20);
+            this.xPower.TabIndex = 2;
+            this.xPower.Text = "0.0";
+            this.xPower.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // xEnergy
+            // 
+            this.xEnergy.BackColor = System.Drawing.Color.White;
+            this.xEnergy.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.xEnergy.Location = new System.Drawing.Point(5, 99);
+            this.xEnergy.Name = "xEnergy";
+            this.xEnergy.ReadOnly = true;
+            this.xEnergy.Size = new System.Drawing.Size(45, 20);
+            this.xEnergy.TabIndex = 2;
+            this.xEnergy.Text = "0.0";
+            this.xEnergy.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // xFreq
+            // 
+            this.xFreq.BackColor = System.Drawing.Color.White;
+            this.xFreq.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.xFreq.Location = new System.Drawing.Point(5, 125);
+            this.xFreq.Name = "xFreq";
+            this.xFreq.ReadOnly = true;
+            this.xFreq.Size = new System.Drawing.Size(45, 20);
+            this.xFreq.TabIndex = 2;
+            this.xFreq.Text = "0.0";
+            this.xFreq.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label98
             // 
             this.label98.AutoSize = true;
-            this.label98.Location = new System.Drawing.Point(10, 22);
+            this.label98.Location = new System.Drawing.Point(10, 43);
             this.label98.Name = "label98";
             this.label98.Size = new System.Drawing.Size(46, 13);
             this.label98.TabIndex = 1;
@@ -765,141 +946,61 @@
             // label99
             // 
             this.label99.AutoSize = true;
-            this.label99.Location = new System.Drawing.Point(120, 22);
+            this.label99.Location = new System.Drawing.Point(320, 43);
             this.label99.Name = "label99";
             this.label99.Size = new System.Drawing.Size(14, 13);
             this.label99.TabIndex = 1;
             this.label99.Text = "V";
             // 
-            // txtPF
-            // 
-            this.txtPF.BackColor = System.Drawing.Color.White;
-            this.txtPF.Location = new System.Drawing.Point(70, 149);
-            this.txtPF.Name = "txtPF";
-            this.txtPF.ReadOnly = true;
-            this.txtPF.Size = new System.Drawing.Size(47, 20);
-            this.txtPF.TabIndex = 2;
-            this.txtPF.Text = "0.0";
-            this.txtPF.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
             // label100
             // 
             this.label100.AutoSize = true;
-            this.label100.Location = new System.Drawing.Point(120, 74);
+            this.label100.Location = new System.Drawing.Point(320, 95);
             this.label100.Name = "label100";
             this.label100.Size = new System.Drawing.Size(18, 13);
             this.label100.TabIndex = 1;
             this.label100.Text = "W";
             // 
-            // txtFreq
-            // 
-            this.txtFreq.BackColor = System.Drawing.Color.White;
-            this.txtFreq.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.txtFreq.Location = new System.Drawing.Point(70, 123);
-            this.txtFreq.Name = "txtFreq";
-            this.txtFreq.ReadOnly = true;
-            this.txtFreq.Size = new System.Drawing.Size(47, 20);
-            this.txtFreq.TabIndex = 2;
-            this.txtFreq.Text = "0.0";
-            this.txtFreq.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label101
-            // 
-            this.label101.AutoSize = true;
-            this.label101.Location = new System.Drawing.Point(123, 156);
-            this.label101.Name = "label101";
-            this.label101.Size = new System.Drawing.Size(0, 13);
-            this.label101.TabIndex = 1;
-            // 
             // label102
             // 
             this.label102.AutoSize = true;
-            this.label102.Location = new System.Drawing.Point(120, 126);
+            this.label102.Location = new System.Drawing.Point(320, 147);
             this.label102.Name = "label102";
             this.label102.Size = new System.Drawing.Size(20, 13);
             this.label102.TabIndex = 1;
             this.label102.Text = "Hz";
             // 
-            // txtEnergy
-            // 
-            this.txtEnergy.BackColor = System.Drawing.Color.White;
-            this.txtEnergy.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.txtEnergy.Location = new System.Drawing.Point(70, 97);
-            this.txtEnergy.Name = "txtEnergy";
-            this.txtEnergy.ReadOnly = true;
-            this.txtEnergy.Size = new System.Drawing.Size(47, 20);
-            this.txtEnergy.TabIndex = 2;
-            this.txtEnergy.Text = "0.0";
-            this.txtEnergy.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
             // label103
             // 
             this.label103.AutoSize = true;
-            this.label103.Location = new System.Drawing.Point(120, 48);
+            this.label103.Location = new System.Drawing.Point(320, 69);
             this.label103.Name = "label103";
             this.label103.Size = new System.Drawing.Size(14, 13);
             this.label103.TabIndex = 1;
             this.label103.Text = "A";
             // 
-            // txtPower
-            // 
-            this.txtPower.BackColor = System.Drawing.Color.White;
-            this.txtPower.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.txtPower.Location = new System.Drawing.Point(70, 71);
-            this.txtPower.Name = "txtPower";
-            this.txtPower.ReadOnly = true;
-            this.txtPower.Size = new System.Drawing.Size(47, 20);
-            this.txtPower.TabIndex = 2;
-            this.txtPower.Text = "0.0";
-            this.txtPower.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
             // label104
             // 
             this.label104.AutoSize = true;
-            this.label104.Location = new System.Drawing.Point(120, 100);
+            this.label104.Location = new System.Drawing.Point(320, 121);
             this.label104.Name = "label104";
             this.label104.Size = new System.Drawing.Size(24, 13);
             this.label104.TabIndex = 1;
             this.label104.Text = "Wh";
             // 
-            // txtCurr
-            // 
-            this.txtCurr.BackColor = System.Drawing.Color.White;
-            this.txtCurr.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.txtCurr.Location = new System.Drawing.Point(70, 45);
-            this.txtCurr.Name = "txtCurr";
-            this.txtCurr.ReadOnly = true;
-            this.txtCurr.Size = new System.Drawing.Size(47, 20);
-            this.txtCurr.TabIndex = 2;
-            this.txtCurr.Text = "0.0";
-            this.txtCurr.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
             // label105
             // 
             this.label105.AutoSize = true;
-            this.label105.Location = new System.Drawing.Point(10, 74);
+            this.label105.Location = new System.Drawing.Point(10, 95);
             this.label105.Name = "label105";
             this.label105.Size = new System.Drawing.Size(40, 13);
             this.label105.TabIndex = 1;
             this.label105.Text = "Power:";
             // 
-            // txtVolt
-            // 
-            this.txtVolt.BackColor = System.Drawing.Color.White;
-            this.txtVolt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.txtVolt.Location = new System.Drawing.Point(70, 19);
-            this.txtVolt.Name = "txtVolt";
-            this.txtVolt.ReadOnly = true;
-            this.txtVolt.Size = new System.Drawing.Size(47, 20);
-            this.txtVolt.TabIndex = 2;
-            this.txtVolt.Tag = "";
-            this.txtVolt.Text = "0.0";
-            this.txtVolt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
             // label106
             // 
             this.label106.AutoSize = true;
-            this.label106.Location = new System.Drawing.Point(10, 48);
+            this.label106.Location = new System.Drawing.Point(10, 69);
             this.label106.Name = "label106";
             this.label106.Size = new System.Drawing.Size(44, 13);
             this.label106.TabIndex = 1;
@@ -908,7 +1009,7 @@
             // label107
             // 
             this.label107.AutoSize = true;
-            this.label107.Location = new System.Drawing.Point(10, 152);
+            this.label107.Location = new System.Drawing.Point(10, 173);
             this.label107.Name = "label107";
             this.label107.Size = new System.Drawing.Size(23, 13);
             this.label107.TabIndex = 1;
@@ -917,7 +1018,7 @@
             // label108
             // 
             this.label108.AutoSize = true;
-            this.label108.Location = new System.Drawing.Point(10, 100);
+            this.label108.Location = new System.Drawing.Point(10, 121);
             this.label108.Name = "label108";
             this.label108.Size = new System.Drawing.Size(43, 13);
             this.label108.TabIndex = 1;
@@ -926,166 +1027,187 @@
             // label109
             // 
             this.label109.AutoSize = true;
-            this.label109.Location = new System.Drawing.Point(10, 126);
+            this.label109.Location = new System.Drawing.Point(10, 147);
             this.label109.Name = "label109";
             this.label109.Size = new System.Drawing.Size(60, 13);
             this.label109.TabIndex = 1;
             this.label109.Text = "Frequency:";
             // 
-            // groupBox12
+            // gbValue
             // 
-            this.groupBox12.Controls.Add(this.button18);
-            this.groupBox12.Controls.Add(this.label110);
-            this.groupBox12.Controls.Add(this.label111);
-            this.groupBox12.Controls.Add(this.label112);
-            this.groupBox12.Controls.Add(this.label113);
-            this.groupBox12.Controls.Add(this.label114);
-            this.groupBox12.Controls.Add(this.label115);
-            this.groupBox12.Controls.Add(this.txtExpense);
-            this.groupBox12.Controls.Add(this.label116);
-            this.groupBox12.Controls.Add(this.txtVat);
-            this.groupBox12.Controls.Add(this.label117);
-            this.groupBox12.Controls.Add(this.txtMS);
-            this.groupBox12.Controls.Add(this.txtFT);
-            this.groupBox12.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.groupBox12.Location = new System.Drawing.Point(171, 254);
-            this.groupBox12.Name = "groupBox12";
-            this.groupBox12.Size = new System.Drawing.Size(185, 181);
-            this.groupBox12.TabIndex = 25;
-            this.groupBox12.TabStop = false;
-            this.groupBox12.Text = "Energy Control";
+            this.gbValue.Controls.Add(this.Volt);
+            this.gbValue.Controls.Add(this.Curr);
+            this.gbValue.Controls.Add(this.PF);
+            this.gbValue.Controls.Add(this.Power);
+            this.gbValue.Controls.Add(this.Energy);
+            this.gbValue.Controls.Add(this.Freq);
+            this.gbValue.ForeColor = System.Drawing.Color.White;
+            this.gbValue.Location = new System.Drawing.Point(74, 17);
+            this.gbValue.Name = "gbValue";
+            this.gbValue.Size = new System.Drawing.Size(55, 185);
+            this.gbValue.TabIndex = 3;
+            this.gbValue.TabStop = false;
+            this.gbValue.Text = "Value";
             // 
-            // button18
+            // Volt
             // 
-            this.button18.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button18.Location = new System.Drawing.Point(7, 131);
-            this.button18.Name = "button18";
-            this.button18.Size = new System.Drawing.Size(171, 39);
-            this.button18.TabIndex = 3;
-            this.button18.Text = "Clear";
-            this.button18.UseVisualStyleBackColor = true;
-            this.button18.Visible = false;
+            this.Volt.BackColor = System.Drawing.Color.White;
+            this.Volt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.Volt.Location = new System.Drawing.Point(5, 21);
+            this.Volt.Name = "Volt";
+            this.Volt.ReadOnly = true;
+            this.Volt.Size = new System.Drawing.Size(45, 20);
+            this.Volt.TabIndex = 2;
+            this.Volt.Tag = "";
+            this.Volt.Text = "0.0";
+            this.Volt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // label110
+            // Curr
             // 
-            this.label110.AutoSize = true;
-            this.label110.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label110.Location = new System.Drawing.Point(161, 99);
-            this.label110.Name = "label110";
-            this.label110.Size = new System.Drawing.Size(16, 18);
-            this.label110.TabIndex = 0;
-            this.label110.Text = "₱";
+            this.Curr.BackColor = System.Drawing.Color.White;
+            this.Curr.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.Curr.Location = new System.Drawing.Point(5, 47);
+            this.Curr.Name = "Curr";
+            this.Curr.ReadOnly = true;
+            this.Curr.Size = new System.Drawing.Size(45, 20);
+            this.Curr.TabIndex = 2;
+            this.Curr.Text = "0.0";
+            this.Curr.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // label111
+            // PF
             // 
-            this.label111.AutoSize = true;
-            this.label111.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label111.Location = new System.Drawing.Point(161, 73);
-            this.label111.Name = "label111";
-            this.label111.Size = new System.Drawing.Size(16, 18);
-            this.label111.TabIndex = 0;
-            this.label111.Text = "₱";
+            this.PF.BackColor = System.Drawing.Color.White;
+            this.PF.Location = new System.Drawing.Point(5, 151);
+            this.PF.Name = "PF";
+            this.PF.ReadOnly = true;
+            this.PF.Size = new System.Drawing.Size(45, 20);
+            this.PF.TabIndex = 2;
+            this.PF.Text = "0.0";
+            this.PF.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // label112
+            // Power
             // 
-            this.label112.AutoSize = true;
-            this.label112.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label112.Location = new System.Drawing.Point(161, 47);
-            this.label112.Name = "label112";
-            this.label112.Size = new System.Drawing.Size(16, 18);
-            this.label112.TabIndex = 0;
-            this.label112.Text = "₱";
+            this.Power.BackColor = System.Drawing.Color.White;
+            this.Power.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.Power.Location = new System.Drawing.Point(5, 73);
+            this.Power.Name = "Power";
+            this.Power.ReadOnly = true;
+            this.Power.Size = new System.Drawing.Size(45, 20);
+            this.Power.TabIndex = 2;
+            this.Power.Text = "0.0";
+            this.Power.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // label113
+            // Energy
             // 
-            this.label113.AutoSize = true;
-            this.label113.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label113.Location = new System.Drawing.Point(161, 19);
-            this.label113.Name = "label113";
-            this.label113.Size = new System.Drawing.Size(16, 18);
-            this.label113.TabIndex = 0;
-            this.label113.Text = "₱";
+            this.Energy.BackColor = System.Drawing.Color.White;
+            this.Energy.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.Energy.Location = new System.Drawing.Point(5, 99);
+            this.Energy.Name = "Energy";
+            this.Energy.ReadOnly = true;
+            this.Energy.Size = new System.Drawing.Size(45, 20);
+            this.Energy.TabIndex = 2;
+            this.Energy.Text = "0.0";
+            this.Energy.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // label114
+            // Freq
             // 
-            this.label114.AutoSize = true;
-            this.label114.Location = new System.Drawing.Point(6, 100);
-            this.label114.Name = "label114";
-            this.label114.Size = new System.Drawing.Size(83, 13);
-            this.label114.TabIndex = 0;
-            this.label114.Text = "Total Expenses:";
+            this.Freq.BackColor = System.Drawing.Color.White;
+            this.Freq.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.Freq.Location = new System.Drawing.Point(5, 125);
+            this.Freq.Name = "Freq";
+            this.Freq.ReadOnly = true;
+            this.Freq.Size = new System.Drawing.Size(45, 20);
+            this.Freq.TabIndex = 2;
+            this.Freq.Text = "0.0";
+            this.Freq.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // label115
+            // groupBox1
             // 
-            this.label115.AutoSize = true;
-            this.label115.Location = new System.Drawing.Point(6, 74);
-            this.label115.Name = "label115";
-            this.label115.Size = new System.Drawing.Size(60, 13);
-            this.label115.TabIndex = 0;
-            this.label115.Text = "VAT (12%):";
+            this.groupBox1.Controls.Add(this.mVolt);
+            this.groupBox1.Controls.Add(this.mCurr);
+            this.groupBox1.Controls.Add(this.mPF);
+            this.groupBox1.Controls.Add(this.mPower);
+            this.groupBox1.Controls.Add(this.mEnergy);
+            this.groupBox1.Controls.Add(this.mFreq);
+            this.groupBox1.ForeColor = System.Drawing.Color.White;
+            this.groupBox1.Location = new System.Drawing.Point(133, 17);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(55, 185);
+            this.groupBox1.TabIndex = 4;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Min";
             // 
-            // txtExpense
+            // mVolt
             // 
-            this.txtExpense.BackColor = System.Drawing.Color.White;
-            this.txtExpense.ForeColor = System.Drawing.Color.Red;
-            this.txtExpense.Location = new System.Drawing.Point(98, 97);
-            this.txtExpense.Name = "txtExpense";
-            this.txtExpense.ReadOnly = true;
-            this.txtExpense.Size = new System.Drawing.Size(60, 20);
-            this.txtExpense.TabIndex = 2;
-            this.txtExpense.Text = "0.0";
-            this.txtExpense.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.mVolt.BackColor = System.Drawing.Color.White;
+            this.mVolt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.mVolt.Location = new System.Drawing.Point(5, 21);
+            this.mVolt.Name = "mVolt";
+            this.mVolt.ReadOnly = true;
+            this.mVolt.Size = new System.Drawing.Size(45, 20);
+            this.mVolt.TabIndex = 2;
+            this.mVolt.Tag = "";
+            this.mVolt.Text = "0.0";
+            this.mVolt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // label116
+            // mCurr
             // 
-            this.label116.AutoSize = true;
-            this.label116.Location = new System.Drawing.Point(6, 48);
-            this.label116.Name = "label116";
-            this.label116.Size = new System.Drawing.Size(86, 13);
-            this.label116.TabIndex = 0;
-            this.label116.Text = "Monthly Service:";
+            this.mCurr.BackColor = System.Drawing.Color.White;
+            this.mCurr.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.mCurr.Location = new System.Drawing.Point(5, 47);
+            this.mCurr.Name = "mCurr";
+            this.mCurr.ReadOnly = true;
+            this.mCurr.Size = new System.Drawing.Size(45, 20);
+            this.mCurr.TabIndex = 2;
+            this.mCurr.Text = "0.0";
+            this.mCurr.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // txtVat
+            // mPF
             // 
-            this.txtVat.BackColor = System.Drawing.Color.White;
-            this.txtVat.Location = new System.Drawing.Point(98, 71);
-            this.txtVat.Name = "txtVat";
-            this.txtVat.ReadOnly = true;
-            this.txtVat.Size = new System.Drawing.Size(60, 20);
-            this.txtVat.TabIndex = 2;
-            this.txtVat.Text = "0.0";
-            this.txtVat.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.mPF.BackColor = System.Drawing.Color.White;
+            this.mPF.Location = new System.Drawing.Point(5, 151);
+            this.mPF.Name = "mPF";
+            this.mPF.ReadOnly = true;
+            this.mPF.Size = new System.Drawing.Size(45, 20);
+            this.mPF.TabIndex = 2;
+            this.mPF.Text = "0.0";
+            this.mPF.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // label117
+            // mPower
             // 
-            this.label117.AutoSize = true;
-            this.label117.Location = new System.Drawing.Point(6, 22);
-            this.label117.Name = "label117";
-            this.label117.Size = new System.Drawing.Size(68, 13);
-            this.label117.TabIndex = 0;
-            this.label117.Text = "FT (KWh/₱):";
+            this.mPower.BackColor = System.Drawing.Color.White;
+            this.mPower.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.mPower.Location = new System.Drawing.Point(5, 73);
+            this.mPower.Name = "mPower";
+            this.mPower.ReadOnly = true;
+            this.mPower.Size = new System.Drawing.Size(45, 20);
+            this.mPower.TabIndex = 2;
+            this.mPower.Text = "0.0";
+            this.mPower.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // txtMS
+            // mEnergy
             // 
-            this.txtMS.BackColor = System.Drawing.Color.White;
-            this.txtMS.Location = new System.Drawing.Point(98, 45);
-            this.txtMS.Name = "txtMS";
-            this.txtMS.Size = new System.Drawing.Size(60, 20);
-            this.txtMS.TabIndex = 2;
-            this.txtMS.Text = "9.0";
-            this.txtMS.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtMS.TextChanged += new System.EventHandler(this.txtMS_TextChanged);
+            this.mEnergy.BackColor = System.Drawing.Color.White;
+            this.mEnergy.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.mEnergy.Location = new System.Drawing.Point(5, 99);
+            this.mEnergy.Name = "mEnergy";
+            this.mEnergy.ReadOnly = true;
+            this.mEnergy.Size = new System.Drawing.Size(45, 20);
+            this.mEnergy.TabIndex = 2;
+            this.mEnergy.Text = "0.0";
+            this.mEnergy.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // txtFT
+            // mFreq
             // 
-            this.txtFT.BackColor = System.Drawing.Color.White;
-            this.txtFT.Location = new System.Drawing.Point(98, 19);
-            this.txtFT.Name = "txtFT";
-            this.txtFT.Size = new System.Drawing.Size(60, 20);
-            this.txtFT.TabIndex = 2;
-            this.txtFT.Text = "10.39";
-            this.txtFT.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtFT.TextChanged += new System.EventHandler(this.txtFT_TextChanged);
+            this.mFreq.BackColor = System.Drawing.Color.White;
+            this.mFreq.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.mFreq.Location = new System.Drawing.Point(5, 125);
+            this.mFreq.Name = "mFreq";
+            this.mFreq.ReadOnly = true;
+            this.mFreq.Size = new System.Drawing.Size(45, 20);
+            this.mFreq.TabIndex = 2;
+            this.mFreq.Text = "0.0";
+            this.mFreq.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // groupBox14
             // 
@@ -1096,7 +1218,7 @@
             this.groupBox14.ForeColor = System.Drawing.SystemColors.HighlightText;
             this.groupBox14.Location = new System.Drawing.Point(379, -2);
             this.groupBox14.Name = "groupBox14";
-            this.groupBox14.Size = new System.Drawing.Size(557, 65);
+            this.groupBox14.Size = new System.Drawing.Size(591, 65);
             this.groupBox14.TabIndex = 29;
             this.groupBox14.TabStop = false;
             // 
@@ -1108,7 +1230,7 @@
             this.btnISmall.ForeColor = System.Drawing.Color.White;
             this.btnISmall.ImageIndex = 1;
             this.btnISmall.ImageList = this.ilBtnsmall;
-            this.btnISmall.Location = new System.Drawing.Point(501, 12);
+            this.btnISmall.Location = new System.Drawing.Point(535, 12);
             this.btnISmall.Name = "btnISmall";
             this.btnISmall.Size = new System.Drawing.Size(50, 45);
             this.btnISmall.TabIndex = 17;
@@ -1141,7 +1263,7 @@
             this.lvRooms.Location = new System.Drawing.Point(379, 66);
             this.lvRooms.MultiSelect = false;
             this.lvRooms.Name = "lvRooms";
-            this.lvRooms.Size = new System.Drawing.Size(557, 428);
+            this.lvRooms.Size = new System.Drawing.Size(591, 477);
             this.lvRooms.SmallImageList = this.imgSmall;
             this.lvRooms.TabIndex = 13;
             this.lvRooms.UseCompatibleStateImageBehavior = false;
@@ -1180,7 +1302,7 @@
             this.tabMFaculty.Controls.Add(this.label12);
             this.tabMFaculty.Location = new System.Drawing.Point(4, 24);
             this.tabMFaculty.Name = "tabMFaculty";
-            this.tabMFaculty.Size = new System.Drawing.Size(976, 497);
+            this.tabMFaculty.Size = new System.Drawing.Size(976, 546);
             this.tabMFaculty.TabIndex = 2;
             this.tabMFaculty.Text = "FACULTY";
             // 
@@ -2386,7 +2508,7 @@
             this.tabReports.Controls.Add(this.tabReport);
             this.tabReports.Location = new System.Drawing.Point(4, 24);
             this.tabReports.Name = "tabReports";
-            this.tabReports.Size = new System.Drawing.Size(976, 497);
+            this.tabReports.Size = new System.Drawing.Size(976, 546);
             this.tabReports.TabIndex = 3;
             this.tabReports.Text = "REPORTS";
             // 
@@ -2532,11 +2654,6 @@
             this.Exit.UseVisualStyleBackColor = false;
             this.Exit.Click += new System.EventHandler(this.Exit_Click);
             // 
-            // spRFID
-            // 
-            this.spRFID.ReadTimeout = 200;
-            this.spRFID.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.spRFID_DataReceived);
-            // 
             // tmrRooms
             // 
             this.tmrRooms.Interval = 5000;
@@ -2547,7 +2664,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(1008, 671);
+            this.ClientSize = new System.Drawing.Size(1008, 720);
             this.Controls.Add(this.Minimize);
             this.Controls.Add(this.Exit);
             this.Controls.Add(this.tabMain);
@@ -2576,8 +2693,14 @@
             this.groupBox10.ResumeLayout(false);
             this.groupBox11.ResumeLayout(false);
             this.groupBox11.PerformLayout();
-            this.groupBox12.ResumeLayout(false);
-            this.groupBox12.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.gbValue.ResumeLayout(false);
+            this.gbValue.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.groupBox14.ResumeLayout(false);
             this.tabMFaculty.ResumeLayout(false);
             this.tabMFaculty.PerformLayout();
@@ -2652,36 +2775,21 @@
         private System.Windows.Forms.GroupBox groupBox11;
         private System.Windows.Forms.Label label98;
         private System.Windows.Forms.Label label99;
-        private System.Windows.Forms.TextBox txtPF;
+        private System.Windows.Forms.TextBox PF;
         private System.Windows.Forms.Label label100;
-        private System.Windows.Forms.TextBox txtFreq;
-        private System.Windows.Forms.Label label101;
+        private System.Windows.Forms.TextBox Freq;
         private System.Windows.Forms.Label label102;
-        private System.Windows.Forms.TextBox txtEnergy;
+        private System.Windows.Forms.TextBox Energy;
         private System.Windows.Forms.Label label103;
-        private System.Windows.Forms.TextBox txtPower;
+        private System.Windows.Forms.TextBox Power;
         private System.Windows.Forms.Label label104;
-        private System.Windows.Forms.TextBox txtCurr;
+        private System.Windows.Forms.TextBox Curr;
         private System.Windows.Forms.Label label105;
-        private System.Windows.Forms.TextBox txtVolt;
+        private System.Windows.Forms.TextBox Volt;
         private System.Windows.Forms.Label label106;
         private System.Windows.Forms.Label label107;
         private System.Windows.Forms.Label label108;
         private System.Windows.Forms.Label label109;
-        private System.Windows.Forms.GroupBox groupBox12;
-        private System.Windows.Forms.Button button18;
-        private System.Windows.Forms.Label label110;
-        private System.Windows.Forms.Label label111;
-        private System.Windows.Forms.Label label112;
-        private System.Windows.Forms.Label label113;
-        private System.Windows.Forms.Label label114;
-        private System.Windows.Forms.Label label115;
-        private System.Windows.Forms.TextBox txtExpense;
-        private System.Windows.Forms.Label label116;
-        private System.Windows.Forms.TextBox txtVat;
-        private System.Windows.Forms.Label label117;
-        private System.Windows.Forms.TextBox txtMS;
-        private System.Windows.Forms.TextBox txtFT;
         private System.Windows.Forms.GroupBox groupBox14;
         private System.Windows.Forms.Button btnISmall;
         private System.Windows.Forms.ListView lvRooms;
@@ -2786,7 +2894,6 @@
         private System.Windows.Forms.ImageList ilBtnsmall;
         private System.Windows.Forms.Button Minimize;
         private System.Windows.Forms.Button Exit;
-        private System.IO.Ports.SerialPort spRFID;
         private System.Windows.Forms.Timer tmrRooms;
         private System.Windows.Forms.DataGridView dgSysLogs;
         private System.Windows.Forms.TabPage tabLogInfo;
@@ -2794,5 +2901,27 @@
         private System.Windows.Forms.Label lblLogCount;
         private System.Windows.Forms.Button bExport;
         private System.Windows.Forms.DataGridView dgProfSched;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.TextBox aVolt;
+        private System.Windows.Forms.TextBox aCurr;
+        private System.Windows.Forms.TextBox aPF;
+        private System.Windows.Forms.TextBox aPower;
+        private System.Windows.Forms.TextBox aEnergy;
+        private System.Windows.Forms.TextBox aFreq;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.TextBox xVolt;
+        private System.Windows.Forms.TextBox xCurr;
+        private System.Windows.Forms.TextBox xPF;
+        private System.Windows.Forms.TextBox xPower;
+        private System.Windows.Forms.TextBox xEnergy;
+        private System.Windows.Forms.TextBox xFreq;
+        private System.Windows.Forms.GroupBox gbValue;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TextBox mVolt;
+        private System.Windows.Forms.TextBox mCurr;
+        private System.Windows.Forms.TextBox mPF;
+        private System.Windows.Forms.TextBox mPower;
+        private System.Windows.Forms.TextBox mEnergy;
+        private System.Windows.Forms.TextBox mFreq;
     }
 }

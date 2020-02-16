@@ -73,8 +73,8 @@ namespace SMFGC {
             try {
                 conn.Open();
                 if (conn.State == ConnectionState.Open) {
-                    checkConnection.Text = "Connected!";
                     frm_main.Activate();
+                    checkConnection.Text = "Connected!";
                     conn.Close();
                 }
             }

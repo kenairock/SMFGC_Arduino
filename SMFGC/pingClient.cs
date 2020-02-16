@@ -19,13 +19,15 @@ namespace SMFGC {
         Thread t;
 
         Ping pingSender = new Ping();
-        PingOptions options = new PingOptions();
+        PingOptions options = new PingOptions(64, true);
+        PingReply reply;
+
+        int timeout = 500;
+        byte[] buffer = new Byte[32];
 
         List<string> ips = new List<string>();
 
         public void startPing() {
-            this.options.DontFragment = true;
-
             try {
                 t = new Thread(doTask);
                 t.Priority = ThreadPriority.BelowNormal;
@@ -41,30 +43,27 @@ namespace SMFGC {
         }
 
         public void exitThread() {
+            if (conn.State == ConnectionState.Open) conn.Close();
             t.Abort();
         }
 
         private void doTask() {
-            PingReply reply;
-
             while (true) {
 
-                // Clear all previous ipaddresses
+                // Clear all previous ipaddress
                 ips.Clear();
 
-                // Query List of ipaddress
+                // Query new list of ipaddress
                 cmd = conn.CreateCommand();
-                cmd.CommandText = pVariables.qDevices;
+                cmd.CommandText = pVariables.qDevicesIPs;
                 conn.Open();
                 reader = cmd.ExecuteReader();
                 while (reader.Read()) ips.Add(reader["ip_addr"].ToString());
                 conn.Close();
 
                 foreach (string ip_addr in ips) {
-                    //Console.Write("Pinging Client: {0} -> ", ip_addr);
-
-                    reply = pingSender.Send(ip_addr, 100, Encoding.ASCII.GetBytes("1"), options);
-                    //Console.WriteLine(reply.Status);
+                   
+                    reply = pingSender.Send(ip_addr, timeout, buffer, options);
 
                     cmd = conn.CreateCommand();
                     cmd.CommandText = pVariables.qUpdateDevPing_IP;
@@ -81,8 +80,11 @@ namespace SMFGC {
                     cmd.ExecuteNonQuery();
                     conn.Close();
 
+                    Console.WriteLine("Pinging Client: {0} -> {1}", ip_addr, reply.Status);
+
                     Thread.Sleep(1000); // Delay between client pings
                 }
+
                 Thread.Sleep(15000); // Task Delay
             }
 

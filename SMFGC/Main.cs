@@ -1,17 +1,9 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 using System.IO.Ports;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using static SMFGC.Program;
@@ -24,11 +16,11 @@ namespace SMFGC {
         MySqlDataReader reader;
         SerialPort RFID;
 
-        mServer server = new mServer();
-        pingClient clientPinger = new pingClient();
-
         int room_index = -1;
         string RFIDTag = "";
+
+        mServer server = new mServer();
+        pingClient client = new pingClient();
 
         public Main() {
             InitializeComponent();
@@ -55,7 +47,7 @@ namespace SMFGC {
         private void Main_Load(object sender, EventArgs e) {
             try {
                 server.startServer();
-                clientPinger.startPing();
+                client.startPing();
 
                 sysLog("sys", "Server started.", 64);
             }
@@ -184,14 +176,12 @@ namespace SMFGC {
             txtTStart.Clear();
             txtTEnd.Clear();
             lblUpTime.Text = "00H : 00M : 00S";
-            txtVolt.Text = "0.0";
-            txtCurr.Text = "0.0";
-            txtPower.Text = "0.0";
-            txtEnergy.Text = "0.0";
-            txtFreq.Text = "0.0";
-            txtPF.Text = "0.0";
-            txtVat.Text = "0.0";
-            txtExpense.Text = "0.0";
+            Volt.Text = "0.0";
+            Curr.Text = "0.0";
+            Power.Text = "0.0";
+            Energy.Text = "0.0";
+            Freq.Text = "0.0";
+            PF.Text = "0.0";
             lblStatus.Text = "...";
         }
 
@@ -451,16 +441,6 @@ namespace SMFGC {
 
         private void btnReloadPort_Click(object sender, EventArgs e) {
             cboPort.DataSource = SerialPort.GetPortNames();
-        }
-
-        private void spRFID_DataReceived(object sender, SerialDataReceivedEventArgs e) {
-            if (txtUTag.Text.Length >= 12) {
-                spRFID.Close();
-            }
-            else {
-                RFIDTag = spRFID.ReadExisting();
-                this.Invoke(new EventHandler(DisplayText));
-            }
         }
 
         private void DisplayText(object sender, EventArgs e) {
@@ -870,14 +850,13 @@ namespace SMFGC {
                         conn.Open();
                         reader = cmd.ExecuteReader();
                         if (reader.Read()) {
-                            txtVolt.Text = reader["volt"].ToString();
-                            txtCurr.Text = reader["current"].ToString();
-                            txtPower.Text = reader["power"].ToString();
-                            txtEnergy.Text = reader["energy"].ToString();
-                            txtFreq.Text = reader["frequency"].ToString();
-                            txtPF.Text = reader["pf"].ToString();
+                            Volt.Text = reader["volt"].ToString();
+                            Curr.Text = reader["current"].ToString();
+                            Power.Text = reader["power"].ToString();
+                            Energy.Text = reader["energy"].ToString();
+                            Freq.Text = reader["frequency"].ToString();
+                            PF.Text = reader["pf"].ToString();
                             Console.WriteLine(lvRooms.Items[room_index].SubItems[6].Text);
-                            calcEnergy();
                         }
                         conn.Close();
                     }
@@ -895,17 +874,17 @@ namespace SMFGC {
             }
         }
 
-        private void calcEnergy() {
-            if (!txtFT.Text.Equals("") && !txtMS.Text.Equals("")) {
-                float ft = 0, ms = 0, energy = 0;
+        //private void calcEnergy() {
+        //    if (!txtFT.Text.Equals("") && !txtMS.Text.Equals("")) {
+        //        float ft = 0, ms = 0, energy = 0;
 
-                if (float.TryParse(txtFT.Text, out ft) && float.TryParse(txtMS.Text, out ms) && float.TryParse(txtEnergy.Text, out energy)) {
-                    float fVat = (energy * ft + ms) * 12 / 100;
-                    txtVat.Text = fVat.ToString("#0.##");
-                    txtExpense.Text = ((energy * ft + ms) + fVat).ToString("#,##0.00");
-                }
-            }
-        }
+        //        if (float.TryParse(txtFT.Text, out ft) && float.TryParse(txtMS.Text, out ms) && float.TryParse(Energy.Text, out energy)) {
+        //            float fVat = (energy * ft + ms) * 12 / 100;
+        //            txtVat.Text = fVat.ToString("#0.##");
+        //            txtExpense.Text = ((energy * ft + ms) + fVat).ToString("#,##0.00");
+        //        }
+        //    }
+        //}
 
         private void tabFaculty_SelectedIndexChanged(object sender, EventArgs e) {
             RefreshFacultyDatagrid();
@@ -923,7 +902,7 @@ namespace SMFGC {
                 // open file dialog   
                 OpenFileDialog open = new OpenFileDialog();
                 // image filters  
-                open.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
+                open.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp; *.png)|*.jpg; *.jpeg; *.gif; *.bmp; *.png";
                 if (open.ShowDialog() == DialogResult.OK) {
                     // display image in picture box  
                     profpic.Image = new Bitmap(open.FileName);
@@ -975,7 +954,7 @@ namespace SMFGC {
 
                 lblLogCount.Text = string.Format("Last: {0}, {1} Log Entries. (Maximum 100)", dt.Rows.Count, tabReport.SelectedTab.Text);
 
-                dgSysLogs.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dgSysLogs.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.Message, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -994,7 +973,7 @@ namespace SMFGC {
             Console.WriteLine("verify");
             try {
                 server.exitThread();
-                clientPinger.exitThread();
+                client.exitThread();
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.Message);
@@ -1037,14 +1016,6 @@ namespace SMFGC {
                 MessageBox.Show(ex.Message, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-        }
-
-        private void txtFT_TextChanged(object sender, EventArgs e) {
-            calcEnergy();
-        }
-
-        private void txtMS_TextChanged(object sender, EventArgs e) {
-            calcEnergy();
         }
 
         private void cboPort_SelectedIndexChanged(object sender, EventArgs e) {

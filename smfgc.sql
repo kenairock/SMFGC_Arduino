@@ -36,10 +36,6 @@ CREATE TABLE `classroom_tb` (
   CONSTRAINT `CR_Device` FOREIGN KEY (`dev_id`) REFERENCES `device_tb` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
-/*Data for the table `classroom_tb` */
-
-insert  into `classroom_tb`(`id`,`name`,`number`,`dept_id`,`dev_id`,`relay_1`,`relay_2`) values (5,'ROOM','514',1,514,1,1),(10,'ROOM','515',1,515,1,0);
-
 /*Table structure for table `course_tb` */
 
 DROP TABLE IF EXISTS `course_tb`;
@@ -52,10 +48,6 @@ CREATE TABLE `course_tb` (
   UNIQUE KEY `Name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
-/*Data for the table `course_tb` */
-
-insert  into `course_tb`(`id`,`name`,`year`) values (1,'BSCpE',2020),(2,'BSIT',2020),(3,'BSBA',2020),(4,'BSCrim',2020),(5,'BLIS',2020);
-
 /*Table structure for table `department_tb` */
 
 DROP TABLE IF EXISTS `department_tb`;
@@ -67,10 +59,6 @@ CREATE TABLE `department_tb` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `Name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
-
-/*Data for the table `department_tb` */
-
-insert  into `department_tb`(`id`,`name`,`floor`) values (1,'CASE','2'),(6,'IT','3'),(7,'HRM','G'),(8,'CPE','4');
 
 /*Table structure for table `device_tb` */
 
@@ -91,11 +79,7 @@ CREATE TABLE `device_tb` (
   UNIQUE KEY `IP Address` (`ip_addr`),
   UNIQUE KEY `MAC Address` (`mac_addr`),
   UNIQUE KEY `Serial Number` (`serial_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=519 DEFAULT CHARSET=utf8;
-
-/*Data for the table `device_tb` */
-
-insert  into `device_tb`(`id`,`serial_no`,`ip_addr`,`mac_addr`,`port`,`rfid`,`pzem`,`status`,`last_uidtag`,`uptime`) values (514,415051,'192.168.1.51','DE-AD-BE-EF-FE-E0',2316,1,1,0,NULL,NULL),(515,515052,'192.168.1.52','DE-AD-BE-EF-FE-E1',2316,1,1,0,NULL,NULL),(518,556895,'10.0.1.100','DE-AD-BE-EF-FE-E2',2316,1,1,1,NULL,NULL);
+) ENGINE=InnoDB AUTO_INCREMENT=522 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `faculty_tb` */
 
@@ -117,10 +101,6 @@ CREATE TABLE `faculty_tb` (
   UNIQUE KEY `UIDTAG` (`uidtag`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
-/*Data for the table `faculty_tb` */
-
-insert  into `faculty_tb`(`id`,`level`,`uidtag`,`title`,`last_name`,`first_name`,`mi`,`picture`,`sfv_count`,`sfv_time`,`sfv_limit`) values (1,1,'e563c223','Doc.','Miguel','Jolly','A.',NULL,1,'01:00:00',10);
-
 /*Table structure for table `pzem_tb` */
 
 DROP TABLE IF EXISTS `pzem_tb`;
@@ -137,8 +117,6 @@ CREATE TABLE `pzem_tb` (
   KEY `PZEM_DeviceID` (`dev_id`),
   CONSTRAINT `PZ_Device` FOREIGN KEY (`dev_id`) REFERENCES `device_tb` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*Data for the table `pzem_tb` */
 
 /*Table structure for table `schedule_tb` */
 
@@ -164,10 +142,6 @@ CREATE TABLE `schedule_tb` (
   CONSTRAINT `CS_SubjectID` FOREIGN KEY (`subject_id`) REFERENCES `subject_tb` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
-/*Data for the table `schedule_tb` */
-
-insert  into `schedule_tb`(`id`,`course_id`,`subject_id`,`room_id`,`faculty_id`,`day`,`start_time`,`end_time`) values (11,1,10,5,1,'Saturday','12:00:00','15:00:00');
-
 /*Table structure for table `subject_tb` */
 
 DROP TABLE IF EXISTS `subject_tb`;
@@ -180,10 +154,6 @@ CREATE TABLE `subject_tb` (
   UNIQUE KEY `Code` (`code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
-/*Data for the table `subject_tb` */
-
-insert  into `subject_tb`(`id`,`code`,`desc`) values (5,'ELEC 1','IT Productivity Tools'),(6,'MT 100','College Algebra'),(7,'PE 1','Physical Fitness and Gymnastics'),(8,'NS 100','Ecology'),(9,'EN 120','Speech Communication'),(10,'CPE 440','Software Engineering'),(11,'HU 120','Introduction to Humanities'),(12,'IT 202','Operating Systems'),(13,'PE 4','Team Sports'),(14,'NSTP 1','Civic Welfare Training Service 1'),(15,'PE 2','Rhythmic Activities'),(16,'PE 3','Individual & Dual Sports'),(17,'ST 100','Statistics and Probability');
-
 /*Table structure for table `syslog_tb` */
 
 DROP TABLE IF EXISTS `syslog_tb`;
@@ -194,10 +164,6 @@ CREATE TABLE `syslog_tb` (
   `alert` int(3) NOT NULL,
   `message` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*Data for the table `syslog_tb` */
-
-insert  into `syslog_tb`(`ts`,`process`,`alert`,`message`) values ('2020-02-14 22:57:15.812','sys',64,'Server started.'),('2020-02-14 23:00:21.242','sys',64,'Server started.'),('2020-02-14 23:30:16.585','sys',64,'Server started.'),('2020-02-15 15:11:29.649','sys',64,'Server started.'),('2020-02-15 15:12:02.105','sys',64,'Server closed.'),('2020-02-15 15:13:47.119','sys',64,'Server started.'),('2020-02-15 15:13:49.244','sys',64,'Server closed.'),('2020-02-15 15:13:54.076','sys',64,'Server started.'),('2020-02-15 15:14:47.159','sys',64,'Server started.'),('2020-02-15 15:14:49.481','sys',64,'Server closed.'),('2020-02-15 15:15:28.207','sys',64,'Server started.'),('2020-02-15 15:15:33.927','sys',64,'Server closed.'),('2020-02-15 15:19:27.640','sys',64,'Server started.'),('2020-02-15 15:20:12.713','sys',64,'Server started.'),('2020-02-15 15:24:46.338','sys',64,'Server started.'),('2020-02-15 15:26:20.982','sys',64,'Server started.'),('2020-02-15 15:26:45.061','sys',64,'Server started.'),('2020-02-15 15:27:11.475','sys',64,'Server started.'),('2020-02-15 15:29:34.685','sys',64,'Server started.'),('2020-02-15 15:30:01.436','sys',64,'Server started.'),('2020-02-15 15:31:18.924','sys',64,'Server started.'),('2020-02-15 15:32:57.683','sys',64,'Server started.'),('2020-02-15 15:34:20.246','sys',64,'Server started.'),('2020-02-15 15:34:49.270','sys',64,'Server started.'),('2020-02-15 15:35:13.169','sys',64,'Server started.'),('2020-02-15 15:35:43.684','sys',64,'Server started.'),('2020-02-15 17:55:03.283','sys',64,'Server started.'),('2020-02-15 18:00:59.351','sys',64,'Server started.'),('2020-02-15 18:01:49.455','sys',64,'Server started.'),('2020-02-15 18:02:15.189','sys',64,'Server started.'),('2020-02-15 18:04:02.194','sys',64,'Server started.'),('2020-02-15 18:05:05.733','sys',64,'Server started.'),('2020-02-15 18:06:00.487','sys',64,'Server started.');
 
 /*Table structure for table `user_tb` */
 
@@ -213,10 +179,6 @@ CREATE TABLE `user_tb` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `Username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
-
-/*Data for the table `user_tb` */
-
-insert  into `user_tb`(`id`,`username`,`password`,`fullname`,`dept_id`,`role`) values (5,'francis','admin','Francis Galvez',0,'Admin'),(6,'james','123','James Bond',1,'Dean');
 
 /* Function  structure for function  `UC_Words` */
 
@@ -278,6 +240,41 @@ DROP TABLE IF EXISTS `classroom_v`;
  `Outlet` varchar(3) 
 )*/;
 
+/*Table structure for table `pzem_v` */
+
+DROP TABLE IF EXISTS `pzem_v`;
+
+/*!50001 DROP VIEW IF EXISTS `pzem_v` */;
+/*!50001 DROP TABLE IF EXISTS `pzem_v` */;
+
+/*!50001 CREATE TABLE  `pzem_v`(
+ `dev_id` int(8) ,
+ `volt_min` double(18,1) ,
+ `volt_max` double(18,1) ,
+ `volt_avg` varchar(43) ,
+ `volt` double(4,1) ,
+ `current_min` double(19,2) ,
+ `current_max` double(19,2) ,
+ `current_avg` varchar(43) ,
+ `current` double(4,2) ,
+ `power_min` double(18,1) ,
+ `power_max` double(18,1) ,
+ `power_avg` varchar(43) ,
+ `power` double(4,1) ,
+ `energy_min` double(21,4) ,
+ `energy_max` double(21,4) ,
+ `energy_avg` varchar(49) ,
+ `energy` double(8,4) ,
+ `frequency_min` double(19,2) ,
+ `frequency_max` double(19,2) ,
+ `frequency_avg` varchar(43) ,
+ `frequency` double(4,2) ,
+ `pf_min` double(19,2) ,
+ `pf_max` double(19,2) ,
+ `pf_avg` varchar(43) ,
+ `pf` double(4,2) 
+)*/;
+
 /*Table structure for table `schedule_v` */
 
 DROP TABLE IF EXISTS `schedule_v`;
@@ -302,6 +299,13 @@ DROP TABLE IF EXISTS `schedule_v`;
 /*!50001 DROP VIEW IF EXISTS `classroom_v` */;
 
 /*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `classroom_v` AS (select `ct`.`id` AS `ID`,`ct`.`name` AS `Name`,`ct`.`number` AS `Number`,`dt`.`name` AS `Deptparment`,`dv`.`serial_no` AS `Device S/N`,if((`ct`.`relay_1` = 1),'Yes','NO') AS `Fan/Lights`,if((`ct`.`relay_2` = 1),'Yes','NO') AS `Outlet` from ((`classroom_tb` `ct` join `department_tb` `dt` on((`dt`.`id` = `ct`.`dept_id`))) join `device_tb` `dv` on((`dv`.`id` = `ct`.`dev_id`))) limit 100) */;
+
+/*View structure for view pzem_v */
+
+/*!50001 DROP TABLE IF EXISTS `pzem_v` */;
+/*!50001 DROP VIEW IF EXISTS `pzem_v` */;
+
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `pzem_v` AS (select `pzem_tb`.`dev_id` AS `dev_id`,min(nullif(`pzem_tb`.`volt`,0)) AS `volt_min`,max(nullif(`pzem_tb`.`volt`,0)) AS `volt_max`,format(avg(`pzem_tb`.`volt`),2) AS `volt_avg`,`pzem_tb`.`volt` AS `volt`,min(nullif(`pzem_tb`.`current`,0)) AS `current_min`,max(nullif(`pzem_tb`.`current`,0)) AS `current_max`,format(avg(`pzem_tb`.`current`),2) AS `current_avg`,`pzem_tb`.`current` AS `current`,min(nullif(`pzem_tb`.`power`,0)) AS `power_min`,max(nullif(`pzem_tb`.`power`,0)) AS `power_max`,format(avg(`pzem_tb`.`power`),1) AS `power_avg`,`pzem_tb`.`power` AS `power`,min(nullif(`pzem_tb`.`energy`,0)) AS `energy_min`,max(nullif(`pzem_tb`.`energy`,0)) AS `energy_max`,format(avg(`pzem_tb`.`energy`),4) AS `energy_avg`,`pzem_tb`.`energy` AS `energy`,min(nullif(`pzem_tb`.`frequency`,0)) AS `frequency_min`,max(nullif(`pzem_tb`.`frequency`,0)) AS `frequency_max`,format(avg(`pzem_tb`.`frequency`),2) AS `frequency_avg`,`pzem_tb`.`frequency` AS `frequency`,min(nullif(`pzem_tb`.`pf`,0)) AS `pf_min`,max(nullif(`pzem_tb`.`pf`,0)) AS `pf_max`,format(avg(`pzem_tb`.`pf`),2) AS `pf_avg`,`pzem_tb`.`pf` AS `pf` from `pzem_tb` group by `pzem_tb`.`dev_id` desc) */;
 
 /*View structure for view schedule_v */
 
