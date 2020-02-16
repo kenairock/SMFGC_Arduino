@@ -24,28 +24,38 @@ namespace SMFGC {
                 conn.Open();
                 cmd = conn.CreateCommand();
                 cmd.CommandText = pVariables.qLogin;
-                cmd.Parameters.Add("@user", MySqlDbType.VarChar).Value = txt_username.Text;
-                cmd.Parameters.Add("@pass", MySqlDbType.VarChar).Value = txt_password.Text;
+                cmd.Parameters.Add("@user", MySqlDbType.VarChar).Value = txt_username.Text.Trim();
+                cmd.Parameters.Add("@pass", MySqlDbType.VarChar).Value = txt_password.Text.Trim();
                 reader = cmd.ExecuteReader();
                 if (reader.Read()) {
-                    switch (reader["Role"].ToString()) {
-                        case "Admin": {
+                    switch (reader["role"].ToString()) {
+                        case "admin": {
                                 pVariables.AdminMode = true;
                                 pVariables.DeptMode = false;
+                                pVariables.AcctMode = false;
                                 break;
                             }
-                        case "Dean": {
+                        case "depthead": {
                                 pVariables.AdminMode = false;
                                 pVariables.DeptMode = true;
+                                pVariables.AcctMode = false;
+
+                                pVariables.DeptID = Convert.ToInt32(reader["dept_id"]);
+                                break;
+                            }
+                        case "acct": {
+                                pVariables.AdminMode = false;
+                                pVariables.DeptMode = false;
+                                pVariables.AcctMode = true;
                                 break;
                             }
                         default: {
-                                MessageBox.Show("You have entered wrong username and password!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("You don't have permission!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 break;
                             }
                     }
 
-                    if (pVariables.AdminMode || pVariables.DeptMode) {
+                    if (pVariables.AdminMode || pVariables.DeptMode || pVariables.AcctMode) {
                         pVariables.confirmExit = true;
                         txt_username.Text = "Username";
                         txt_password.Text = "Password";

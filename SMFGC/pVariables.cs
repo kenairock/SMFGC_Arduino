@@ -9,7 +9,9 @@ namespace SMFGC {
 
         public static int server_port = 2316;
 
-        public static bool AdminMode = false, DeptMode = false;
+        public static bool AdminMode = false, DeptMode = false, AcctMode = false;
+
+        public static int DeptID = 0;
 
         public static bool confirmExit = false;
 
@@ -17,9 +19,25 @@ namespace SMFGC {
 
         public static readonly String sConn = "datasource=localhost;port=3306;database=smfgc_db;username=smfgc;password=P@ssw0rd;";
 
-        public static readonly String qLogin = @"SELECT `fullname`,`role` FROM `user_tb` WHERE `username` = @user AND `password` = @pass LIMIT 1;";
+        public static readonly String qLogin = @"SELECT `fullname`,`role`,`dept_id` FROM `user_tb` WHERE `username` = @user AND `password` = @pass LIMIT 1;";
 
-        public static String qRooms = @"SELECT `id`,`name`,`number` FROM `classroom_tb`";
+        public static readonly String qRoom = @"SELECT `ct`.`id`,`ct`.`name`,`ct`.`number`,`ct`.`dev_id`,`dt`.`status`,`dt`.`ip_addr`,`dt`.`mac_addr`,`dt`.`port`
+                                        FROM  `classroom_tb` `ct` JOIN `device_tb` `dt` ON `dt`.`id` = `ct`.`dev_id`";
+
+        public static readonly String qRoomSel = @"SELECT `st`.`day`,
+                                          TIME_FORMAT(`st`.`start_time`, '%h:%i %p') AS `start`,
+                                          TIME_FORMAT(`st`.`end_time`, '%h:%i %p') AS `end`,
+                                          `st`.`start_time` AS `o_start`,
+                                          `st`.`end_time` AS `o_end`,
+                                          CONCAT(`sj`.`code`,' - ',`sj`.`desc`) AS `subject`,
+                                          ct.`name`, CONCAT(`ft`.`title`,' ',`ft`.`last_name`, ' ',`ft`.`first_name`) AS `faculty` 
+                                        FROM `schedule_tb` `st` 
+                                          JOIN subject_tb `sj` ON `sj`.`id` = `st`.`subject_id` 
+                                          JOIN `course_tb` `ct` ON `ct`.`id` = `st`.`course_id` 
+                                          JOIN `faculty_tb` `ft` ON `ft`.`id` = `st`.`faculty_id` 
+                                        WHERE `st`.`room_id` = @p1
+                                          AND `st`.`day` = DAYNAME(NOW()) 
+                                          AND (`st`.`start_time` < NOW() AND `st`.`end_time` > NOW()) LIMIT 1;";
 
         public static readonly String qDeviceCheck = @"SELECT `dt`.`last_uidtag`,
                                                             `ct`.`id`,
@@ -43,7 +61,7 @@ namespace SMFGC {
 
         public static readonly String qUpdateDevPing_IP = @"UPDATE LOW_PRIORITY `device_tb` SET `status` = IF(((@p1 < `status`) AND ( @p1 = 1 )), `status`, @p1) WHERE `ip_addr`=@p2;";
 
-        public static readonly String qDevicesIPs = @"SELECT `ip_addr` FROM `device_tb`;";
+        public static readonly String qDeviceIPs = @"SELECT `ip_addr` FROM `device_tb`;";
 
         public static readonly String qLogger = @"INSERT INTO `syslog_tb` (`process`, `alert`, `message`) VALUES (@p1, @p2, @p3);";
 

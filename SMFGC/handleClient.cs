@@ -18,7 +18,7 @@ namespace SMFGC {
         MySqlDataReader reader;
 
         TcpClient arduino_client;
-        Byte[] buffer = new Byte[64];
+        byte[] buffer = new byte[64];
 
         Thread t;
 
@@ -35,17 +35,18 @@ namespace SMFGC {
         private void doTasks() {
             byte[] msg;
 
+            String dev_ip = ((IPEndPoint)arduino_client.Client.RemoteEndPoint).Address.ToString();
+
             bool dev_verified = false, session_resume = false, relay1 = false, relay2 = false, sfv_enabled = false;
             int dev_id = 0, dev_status = 0, room_id = 0, faculty_id = 0, faculty_level = 0, sched_id = 0;
             int dev_check_delay = 10, tleft_led_delay = 2, alarm_led_delay = 3; // <-- TL_LED Delay before send another command
             int pzem_err_rpt = 60; // In seconds
 
-            String data, room_name = "", faculty = "", last_uid = "", log_msg = "";
-            String dev_ip = ((IPEndPoint)arduino_client.Client.RemoteEndPoint).Address.ToString();
+            String data, room_name = "", faculty = "", last_uid = "", log_msg = "";            
 
             DateTime session_start = DateTime.Now;
             DateTime end_time = DateTime.Parse(String.Format("{0} {1}", DateTime.Now.ToString("yyyy-MM-dd"), "23:59:59"));
-            TimeSpan sfv_time = TimeSpan.Parse("00:30:00");
+            TimeSpan sfv_time = TimeSpan.Parse("00:30:00"); //default 30mins
 
             try {
                 NetworkStream stream = arduino_client.GetStream();

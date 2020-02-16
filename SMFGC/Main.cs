@@ -42,13 +42,15 @@ namespace SMFGC {
                 btnReports.Hide();
             }
             tabMain.SelectedIndex = 0;
+            RefreshClassrooms();
         }
 
         private void Main_Load(object sender, EventArgs e) {
             try {
-                server.startServer();
-                client.startPing();
-
+                if (pVariables.AdminMode) {
+                    server.startServer();
+                    client.startPing();
+                }
                 sysLog("sys", "Server started.", 64);
             }
             catch (Exception ex) {
@@ -120,11 +122,11 @@ namespace SMFGC {
 
         private void RefreshClassrooms() {
             try {
-                var listOfItems = new List<ListViewItem>();
+                var rm_list = new List<ListViewItem>();
+                
 
                 cmd = conn.CreateCommand();
-                cmd.CommandText = @"SELECT `room_id`, `classroom`, `dev_id`, 
-                    `ip_add`, `mac_add` , `port`, `uptime`,`status` FROM `classroom_tb`";
+                cmd.CommandText = pVariables.qRoom + ((pVariables.DeptMode) ? String.Format(" WHERE dept_id = {0} ORDER BY `number`;", pVariables.DeptID) : "ORDER BY `number`;");
 
                 conn.Open();
                 reader = cmd.ExecuteReader();
@@ -132,28 +134,27 @@ namespace SMFGC {
                     ListViewItem lvI = new ListViewItem();
 
                     lvI.ImageIndex = Convert.ToInt32(reader["status"]);
-                    lvI.Text = reader["classroom"].ToString();
-                    lvI.SubItems.Add(reader["room_id"].ToString());
-                    lvI.SubItems.Add(reader["ip_add"].ToString());
-                    lvI.SubItems.Add(reader["mac_add"].ToString());
-                    lvI.SubItems.Add(reader["port"].ToString());
-                    lvI.SubItems.Add(reader["uptime"].ToString());
+                    lvI.Text = reader["number"].ToString();
+                    lvI.SubItems.Add(reader["id"].ToString());
                     lvI.SubItems.Add(reader["dev_id"].ToString());
-                    listOfItems.Add(lvI);
+                    lvI.SubItems.Add(reader["name"].ToString());
+                    lvI.SubItems.Add(reader["ip_addr"].ToString());
+                    lvI.SubItems.Add(reader["mac_addr"].ToString());
+                    lvI.SubItems.Add(reader["port"].ToString());
+                    rm_list.Add(lvI);
                 }
                 conn.Close();
                 lvRooms.BeginUpdate();
                 lvRooms.Items.Clear();
-                lvRooms.Items.AddRange(listOfItems.ToArray());
+                lvRooms.Items.AddRange(rm_list.ToArray());
                 lvRooms.EndUpdate();
 
-                if (room_index > -1 && lvRooms.Items.Count > 0) {
+                if (room_index > -1 && lvRooms.Items.Count > 0 && room_index < lvRooms.Items.Count) {
                     lvRooms.Items[room_index].Selected = true;
                 }
                 else {
                     lblRmName.Text = "SELECT ROOM";
                 }
-
             }
             catch (Exception e) {
                 Console.WriteLine(e.ToString());
@@ -766,10 +767,11 @@ namespace SMFGC {
 
                     room_index = lvRooms.SelectedIndices[0];
 
-                    lblRmName.Text = "ROOM " + lvRooms.Items[room_index].Text;
-                    txtIP.Text = lvRooms.Items[room_index].SubItems[2].Text;
-                    txtMAC.Text = lvRooms.Items[room_index].SubItems[3].Text;
-                    txtPort.Text = lvRooms.Items[room_index].SubItems[4].Text;
+                    lblRmName.Text = lvRooms.Items[room_index].SubItems[3].Text + " " + lvRooms.Items[room_index].Text;
+
+                    txtIP.Text = lvRooms.Items[room_index].SubItems[4].Text;
+                    txtMAC.Text = lvRooms.Items[room_index].SubItems[5].Text;
+                    txtPort.Text = lvRooms.Items[room_index].SubItems[6].Text;
 
                     switch (lvRooms.Items[room_index].ImageIndex) {
                         case 0:
@@ -791,34 +793,15 @@ namespace SMFGC {
                     }
 
                     cmd = conn.CreateCommand();
-                    cmd.CommandText = @"SELECT `day`,
-                            TIME_FORMAT(`start_time`, '%h:%i %p') AS `start`,
-                            TIME_FORMAT(`end_time`, '%h:%i %p') AS `end`,
-                            `start_time` AS `o_start`,
-                            `end_time` AS `o_end`,
-                            st.`code`, st.`descpt`, crt.`course_name`, 
-                            CONCAT(ut.`title`, ' ', ut.`last_name`, ' ', ut.`first_name`) AS faculty
-                        FROM
-                            class_sched_tb ct
-                            INNER JOIN subject_tb st
-                                ON st.`subject_id` = ct.`subject_id` 
-                            INNER JOIN course_tb crt
-                                ON crt.`course_id` = ct.`course_id` 
-                            INNER JOIN users_tb ut
-                                ON ut.`users_id` = ct.`faculty`
-                        WHERE `room_id`=@p1 AND `day`=@p2 AND (`start_time` < NOW() AND `end_time` > NOW());";
-
-                    string rm_id = lvRooms.Items[room_index].SubItems[1].Text;
-                    cmd.Parameters.AddWithValue("@p1", rm_id);
-                    cmd.Parameters.AddWithValue("@p2", DateTime.Now.DayOfWeek.ToString());
-
+                    cmd.CommandText = pVariables.qRoomSel;
+                    cmd.Parameters.AddWithValue("@p1", lvRooms.Items[room_index].SubItems[1].Text);
                     conn.Open();
                     reader = cmd.ExecuteReader();
                     if (reader.Read()) {
-                        txtSubjDesc.Text = reader["code"].ToString() + " - " + reader["descpt"].ToString();
+                        txtSubjDesc.Text = reader["subject"].ToString();
                         txtFaculty.Text = reader["faculty"].ToString();
-                        txtCourse.Text = reader["course_name"].ToString();
-                        txtDay.Text = reader["day"].ToString();
+                        txtCourse.Text = reader["name"].ToString();
+                        txtDay.Text = Program.FirstCharToUpper(reader["day"].ToString());
                         txtTStart.Text = reader["start"].ToString();
                         txtTEnd.Text = reader["end"].ToString();
                         TimeSpan tdiff = DateTime.Parse(reader["end"].ToString()) - DateTime.Now;
@@ -831,17 +814,7 @@ namespace SMFGC {
 
                     if (has_sched) {
                         cmd = conn.CreateCommand();
-                        cmd.CommandText = @"SELECT
-                                              FORMAT(AVG(`pzem_tb`.`volt`),2) AS `volt`,
-                                              FORMAT(AVG(`pzem_tb`.`current`),3) AS `current`,
-                                              FORMAT(AVG(`pzem_tb`.`power`),2) AS `power`,
-                                              MAX(`pzem_tb`.`energy`) AS `energy`,
-                                              FORMAT(AVG(`pzem_tb`.`frequency`),2) AS `frequency`,
-                                              FORMAT(AVG(`pzem_tb`.`pf`),2) AS `pf`
-                                            FROM `pzem_tb`
-                                            WHERE `dev_id` = @p1 AND 
-                                                (`pzem_tb`.`t_stamp` BETWEEN CAST(@p2 AS DATETIME) 
-                                                AND CAST(@p3 AS DATETIME));";
+                        cmd.CommandText = @";";
 
                         cmd.Parameters.AddWithValue("@p1", lvRooms.Items[room_index].SubItems[6].Text);
                         cmd.Parameters.AddWithValue("@p2", DateTime.Now.ToString("yyyy-MM-dd " + orig_start));

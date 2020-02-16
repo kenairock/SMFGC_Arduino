@@ -23,7 +23,7 @@ namespace SMFGC {
         PingReply reply;
 
         int timeout = 500;
-        byte[] buffer = new Byte[32];
+        byte[] buffer = new byte[32];
 
         List<string> ips = new List<string>();
 
@@ -55,7 +55,7 @@ namespace SMFGC {
 
                 // Query new list of ipaddress
                 cmd = conn.CreateCommand();
-                cmd.CommandText = pVariables.qDevicesIPs;
+                cmd.CommandText = pVariables.qDeviceIPs;
                 conn.Open();
                 reader = cmd.ExecuteReader();
                 while (reader.Read()) ips.Add(reader["ip_addr"].ToString());
