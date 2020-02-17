@@ -14,6 +14,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace SMFGC_Server {
     class Program {
@@ -68,24 +69,13 @@ namespace SMFGC_Server {
             Output.WriteLine(string.Format("[{0}] [main/{1}]: Loading settings", DateTime.Now.ToString(tformat), "INFO"));
 
             XmlDocument doc = new XmlDocument();
-            doc.Load("c:\\temp.xml");
+            doc.Load(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "app.config"));
 
-            ConfigurationFileMap fileMap = new ConfigurationFileMap(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "app.config")); //Path to your config file
-            Configuration configuration = ConfigurationManager.OpenMappedMachineConfiguration(fileMap);
+            XmlNode node = doc.DocumentElement.SelectSingleNode("/configuration/appSettings");
+            string attr = node.Attributes["theattributename"]?.InnerText;
 
-            var applicationSettings = configuration.GetSection("appSettings");
-            if (applicationSettings.Count == 0) {
-                Console.WriteLine("Application Settings are not defined");
-            }
-            else {
-                foreach (var key in applicationSettings.ElementInformation) {
-                    Console.WriteLine(key + " = " + applicationSettings[key]);
-                }
-            }
-
-            Output.WriteLine(string.Format("[{0}] [main/{1}]: {2}", DateTime.Now.ToString(tformat), "INFO", configuration.AppSettings.Settings["db_host"]));
-
-
+            Output.WriteLine(string.Format("[{0}] [main/{1}]: {2}", DateTime.Now.ToString(tformat), "INFO", attr));
+            
             Output.WriteLine(string.Format("[{0}] [main/{1}]: Client ping result info: {2}", DateTime.Now.ToString(tformat), "INFO", ((ping_output) ? "ENABLED" : "DISABLED")));
 
             Output.WriteLine(string.Format("[{0}] [main/{1}]: Starting server on ip/port [*:{2}]", DateTime.Now.ToString(tformat), "INFO", port));

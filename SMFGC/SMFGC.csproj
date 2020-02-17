@@ -87,9 +87,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app_icon.ico" />
-    <None Include="..\app.config">
-      <Link>app.config</Link>
-    </None>
     <None Include="Resources\user.png" />
   </ItemGroup>
   <ItemGroup>
