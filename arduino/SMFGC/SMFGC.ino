@@ -6,7 +6,7 @@
 #include <Ethernet.h>
 #include <PZEM004Tv30.h>
 
-String dev_id = "DEV:515052";
+String dev_id = "DEV:415051";
 String m_uid = "79eb5a59";
 String tmp_res = "";
 
@@ -18,17 +18,15 @@ bool login = true;
 PN532_I2C pn532i2c(Wire);
 PN532 nfc(pn532i2c);
 
-byte server[] = { 192, 168, 0, 5 }; // SMFGC
-IPAddress ip(192, 168, 0, 52);
-byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
-int port = 2316;
+byte server[] = { 192, 168, 0, 5 }; // SMFGC Server
+byte mac[] = { 0xDE, 0xAD, 0xBE, 0x06, 0x55, 0x4B };
 EthernetClient client;
 
 PZEM004Tv30 pzem(3, 2); // Software Serial pin 2 (RX) & 3 (TX)
 int r1pin = 5;
 int r2pin = 6;
 int nfcledpin = 8;
-int connpin = 7;
+int connledpin = 7;
 int reset = 9;
 
 float tmp_val; // pzem value storage
@@ -40,15 +38,14 @@ void setup() {
   pinMode(r1pin, OUTPUT); //pin control relay1
   pinMode(r2pin, OUTPUT); //pin control relay2
   pinMode(nfcledpin, OUTPUT); //nfc led status
-  pinMode(connpin, OUTPUT); //server connection led status
+  pinMode(connledpin, OUTPUT); //server connection led status
   pinMode(reset, OUTPUT); //pin control reset system
 
-  digitalWrite(connpin, LOW);
+  digitalWrite(connledpin, LOW);
   
   Serial.begin(115200);
   Serial.println(dev_id);
   
-  Ethernet.begin(mac, ip);
   // Check for Ethernet hardware present
   if (Ethernet.hardwareStatus() == EthernetNoHardware) {
     Serial.println(F("Ethernet shield was not found. :("));
@@ -56,6 +53,7 @@ void setup() {
       delay(1000); // do nothing, no point running without Ethernet hardware
     }
   }
+  Ethernet.begin(mac);
   
   Serial.println(F("Initializing NDEF Reader..."));
   nfc.begin();
@@ -89,7 +87,7 @@ void loop() {
   if (conn) {
     if (!client.connected()) {
       conn = false;      
-      digitalWrite(connpin, LOW);
+      digitalWrite(connledpin, LOW);
       Serial.println(F("Server closed."));
       client.stop();
       delay(500);
@@ -98,9 +96,10 @@ void loop() {
     } 
   } 
   else {
-    if (client.connect(server, port)) {
+    Serial.println(Ethernet.linkStatus());
+    if (client.connect(server, 2316)) {
       conn = true;
-      digitalWrite(connpin, HIGH);
+      digitalWrite(connledpin, HIGH);
       Serial.println(F("-> Connected!"));
       client.println(dev_id);      
       
@@ -241,9 +240,9 @@ void cmd(char data) {
       break;
 
     case (char)'f':
-      digitalWrite(connpin, LOW); //ON
+      digitalWrite(connledpin, LOW); //ON
       delay(1000);
-      digitalWrite(connpin, HIGH); //OFF
+      digitalWrite(connledpin, HIGH); //OFF
       break;
 
     case (char)'g':
@@ -265,9 +264,9 @@ void cmd(char data) {
   
     default:
       for (int i = 0; i < 10; i++) {
-        digitalWrite(connpin, LOW); //ON
+        digitalWrite(connledpin, LOW); //ON
         delay(100);
-        digitalWrite(connpin, HIGH); //OFF
+        digitalWrite(connledpin, HIGH); //OFF
         delay(100);
       }
       break;
