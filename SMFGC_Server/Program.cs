@@ -10,6 +10,7 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -50,7 +51,7 @@ namespace SMFGC_Server {
                 string fdate = File.GetLastWriteTime(lfile).ToString("yyyy-MM-dd-HH-mm-ss");
                 string newname = lfile.Replace("latest", fdate);
                 File.Move(lfile, newname);
-                string zip = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs") + @"\"+ fdate + ".zip";
+                string zip = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs") + @"\" + fdate + ".zip";
                 using (ZipArchive zipArchive = ZipFile.Open(zip, ZipArchiveMode.Create)) {
                     zipArchive.CreateEntryFromFile(newname, fdate + ".log");
                 }
@@ -65,8 +66,27 @@ namespace SMFGC_Server {
             DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_CLOSE, MF_BYCOMMAND);
 
             Output.WriteLine(string.Format("[{0}] [main/{1}]: Loading settings", DateTime.Now.ToString(tformat), "INFO"));
-            Output.WriteLine(string.Format("[{0}] [main/{1}]: Client ping result info: {2}", DateTime.Now.ToString(tformat), "INFO", ((ping_output) ? "ENABLED" : "DISABLED")));
 
+            XmlDocument doc = new XmlDocument();
+            doc.Load("c:\\temp.xml");
+
+            ConfigurationFileMap fileMap = new ConfigurationFileMap(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "app.config")); //Path to your config file
+            Configuration configuration = ConfigurationManager.OpenMappedMachineConfiguration(fileMap);
+
+            var applicationSettings = configuration.GetSection("appSettings");
+            if (applicationSettings.Count == 0) {
+                Console.WriteLine("Application Settings are not defined");
+            }
+            else {
+                foreach (var key in applicationSettings.ElementInformation) {
+                    Console.WriteLine(key + " = " + applicationSettings[key]);
+                }
+            }
+
+            Output.WriteLine(string.Format("[{0}] [main/{1}]: {2}", DateTime.Now.ToString(tformat), "INFO", configuration.AppSettings.Settings["db_host"]));
+
+
+            Output.WriteLine(string.Format("[{0}] [main/{1}]: Client ping result info: {2}", DateTime.Now.ToString(tformat), "INFO", ((ping_output) ? "ENABLED" : "DISABLED")));
 
             Output.WriteLine(string.Format("[{0}] [main/{1}]: Starting server on ip/port [*:{2}]", DateTime.Now.ToString(tformat), "INFO", port));
             // Evaluate current system tcp connections. This is the same information provided
@@ -311,6 +331,30 @@ namespace SMFGC_Server {
             }
             catch (Exception ex) {
                 Output.WriteLine(string.Format("[{0}] [Logger Thread/{1}]: ", DateTime.Now.ToString(tformat), "ERROR", ex.Message));
+            }
+        }
+
+        string Encrypt(string source, string key) {
+            using (TripleDESCryptoServiceProvider tripleDESCryptoService = new TripleDESCryptoServiceProvider()) {
+                using (MD5CryptoServiceProvider hashMD5Provider = new MD5CryptoServiceProvider()) {
+                    byte[] byteHash = hashMD5Provider.ComputeHash(Encoding.UTF8.GetBytes(key));
+                    tripleDESCryptoService.Key = byteHash;
+                    tripleDESCryptoService.Mode = CipherMode.ECB;
+                    byte[] data = Encoding.UTF8.GetBytes(source);
+                    return Convert.ToBase64String(tripleDESCryptoService.CreateEncryptor().TransformFinalBlock(data, 0, data.Length));
+                }
+            }
+        }
+
+        string Decrypt(string encrypt, string key) {
+            using (TripleDESCryptoServiceProvider tripleDESCryptoService = new TripleDESCryptoServiceProvider()) {
+                using (MD5CryptoServiceProvider hashMD5Provider = new MD5CryptoServiceProvider()) {
+                    byte[] byteHash = hashMD5Provider.ComputeHash(Encoding.UTF8.GetBytes(key));
+                    tripleDESCryptoService.Key = byteHash;
+                    tripleDESCryptoService.Mode = CipherMode.ECB;
+                    byte[] data = Convert.FromBase64String(encrypt);
+                    return Encoding.UTF8.GetString(tripleDESCryptoService.CreateDecryptor().TransformFinalBlock(data, 0, data.Length));
+                }
             }
         }
     }
