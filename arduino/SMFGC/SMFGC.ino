@@ -96,6 +96,7 @@ void loop() {
     } 
   } 
   else {
+    Ethernet.maintain();
     Serial.println(Ethernet.linkStatus());
     if (client.connect(server, 2316)) {
       conn = true;

@@ -13,7 +13,7 @@ using static SMFGC_Server.Program;
 
 namespace SMFGC_Server {
     class handleClient {
-        readonly MySqlConnection conn = new MySqlConnection(pVariables.sConn);
+        readonly MySqlConnection conn = new MySqlConnection(SMFGC.pVariables.sConn);
         MySqlCommand cmd;
         MySqlDataReader reader;
 
@@ -45,10 +45,10 @@ namespace SMFGC_Server {
             int dev_check_delay = 10, tleft_led_delay = 2, alarm_led_delay = 3; // <-- TL_LED Delay before send another command
             int pzem_err_rpt = 60; // In seconds
 
-            String data, room_name = "", faculty = "", last_uid = "", log_msg = "";
+            String data, room_name = "", faculty = "", last_uid = "", log_msg = "", log = "";
 
             DateTime session_start = DateTime.Now;
-            DateTime end_time = DateTime.Parse(String.Format("{0} {1}", DateTime.Now.ToString("yyyy-MM-dd"), "23:59:59"));
+            DateTime end_time = DateTime.Parse(string.Format("{0} {1}", DateTime.Now.ToString("yyyy-MM-dd"), "23:59:59"));
             TimeSpan sfv_time = TimeSpan.Parse("00:30:00"); //default 30mins
 
             try {
@@ -62,8 +62,9 @@ namespace SMFGC_Server {
 
                     // Checking data headers
                     if (!data.Contains("DEV:")) {
-                        Console.WriteLine("[{0}] [Handle Client #{1}/{2}]: Unknown Message \"{3}\" (Connection Closed).", DateTime.Now.ToString(tformat), cl_no, "ERROR", data);
-                        sysLog(conn, "dev", String.Format("IP Address: {0}; The device is unknown.", dev_ip), 16);
+                        log = string.Format("IP Address: {0}; The device is unknown (Connection Closed).", dev_ip);
+                        sysLog(conn, "dev", log, 16);
+                        Output.WriteLine(string.Format("[{0}] [Handle Client #{1}/{2}]: {3}", DateTime.Now.ToString(tformat), cl_no, "ERROR", log));
                         break;
                     }
 
@@ -72,7 +73,7 @@ namespace SMFGC_Server {
                         dev_id = Convert.ToInt32(data.Split(',')[0].Replace("DEV:", ""));
 
                         cmd = conn.CreateCommand();
-                        cmd.CommandText = pVariables.qDeviceCheck;
+                        cmd.CommandText = SMFGC.pVariables.qDeviceCheck;
                         cmd.Parameters.Add("@p1", MySqlDbType.Int32).Value = dev_id;
                         conn.Open();
                         reader = cmd.ExecuteReader();
@@ -86,8 +87,9 @@ namespace SMFGC_Server {
                             relay1 = Convert.ToBoolean((int)reader["relay_1"]);
                             relay2 = Convert.ToBoolean((int)reader["relay_2"]);
 
-                            sysLog(conn, "dev", String.Format("Device ID/IP: {0}:{1} on Room ID/Name: {2}:{3}; Accepted.", dev_id, dev_ip, room_id, room_name), 64);
-                            Console.WriteLine("[{0}] [Handle Client #{1}/{2}]: Device Accepted {3}:{4}, on Room: ID/Name: {5}:{6}; Accepted.", DateTime.Now.ToString(tformat), cl_no, "INFO", dev_id, dev_ip, room_id, room_name);
+                            log = string.Format("Device ID/IP: {0}:{1} on Room ID/Name: {2}:{3}; Accepted.", dev_id, dev_ip, room_id, room_name);
+                            sysLog(conn, "dev", log, 64);
+                            Output.WriteLine(string.Format("[{0}] [Handle Client #{1}/{2}]: {3}", DateTime.Now.ToString(tformat), cl_no, "INFO", log));
                         }
                         conn.Close();
 
@@ -98,9 +100,9 @@ namespace SMFGC_Server {
                             if (!last_uid.Equals("")) session_resume = true;
                         }
                         else {
-
-                            sysLog(conn, "dev", String.Format("Device ID/IP: {0}:{1}; Not registered.", dev_id, dev_ip), 16);
-                            Console.WriteLine("[{0}] [Handle Client #{1}/{2}]: Device ID/IP: {3}:{4}; Not registered. (Server Connection Closed)", DateTime.Now.ToString(tformat), cl_no, "ERROR", dev_id, dev_ip);
+                            log = string.Format("Device ID/IP: {0}:{1}; Not registered.", dev_id, dev_ip);
+                            sysLog(conn, "dev", log, 16);
+                            Output.WriteLine(string.Format("[{0}] [Handle Client #{1}/{2}]: {3}", DateTime.Now.ToString(tformat), cl_no, "ERROR", log));
                             break;
                         }
                     }
@@ -111,7 +113,7 @@ namespace SMFGC_Server {
                         string uidtag = (session_resume) ? last_uid : data.Split(',')[1].Split(' ')[1];
 
                         cmd = conn.CreateCommand();
-                        cmd.CommandText = pVariables.qUidTagCheck;
+                        cmd.CommandText = SMFGC.pVariables.qUidTagCheck;
                         cmd.Parameters.Add("@p1", MySqlDbType.VarChar).Value = uidtag;
 
                         conn.Open();
@@ -122,7 +124,7 @@ namespace SMFGC_Server {
                                 msg = Encoding.ASCII.GetBytes("g");
                                 stream.Write(msg, 0, msg.Length);
                                 if (conn != null && conn.State == ConnectionState.Open) conn.Close();
-                                Console.WriteLine("[{0}] [Handle Client #{1}/{2}]: Login tag is not same to logout tag.", DateTime.Now.ToString(tformat), cl_no, "WARN");
+                                Output.WriteLine(string.Format("[{0}] [Handle Client #{1}/{2}]: Login tag is not same to logout tag.", DateTime.Now.ToString(tformat), cl_no, "WARN"));
                                 continue;
                             }
                             faculty_id = Convert.ToInt32(reader["id"]);
@@ -177,7 +179,7 @@ namespace SMFGC_Server {
 
                                         // check schedule
                                         cmd = conn.CreateCommand();
-                                        cmd.CommandText = pVariables.qCheckSched;
+                                        cmd.CommandText = SMFGC.pVariables.qCheckSched;
                                         cmd.Parameters.Add("@p1", MySqlDbType.Int32).Value = room_id;
                                         cmd.Parameters.Add("@p2", MySqlDbType.Int32).Value = faculty_id;
                                         conn.Open();
@@ -186,7 +188,7 @@ namespace SMFGC_Server {
                                         if (reader.Read()) {
 
                                             sched_id = Convert.ToInt32(reader["id"]);
-                                            end_time = DateTime.Parse(String.Format("{0} {1}", DateTime.Now.ToString("yyyy-MM-dd"), reader["end_time"].ToString()));
+                                            end_time = DateTime.Parse(string.Format("{0} {1}", DateTime.Now.ToString("yyyy-MM-dd"), reader["end_time"].ToString()));
                                             session_start = DateTime.Now;
 
                                             if (relay1 && relay2) {
@@ -244,7 +246,7 @@ namespace SMFGC_Server {
                                         // Turn on all relay
                                         msg = Encoding.ASCII.GetBytes("c");
                                         stream.Write(msg, 0, msg.Length);
-                                        end_time = DateTime.Parse(String.Format("{0} {1}", DateTime.Now.ToString("yyyy-MM-dd"), "23:59:59"));
+                                        end_time = DateTime.Parse(string.Format("{0} {1}", DateTime.Now.ToString("yyyy-MM-dd"), "23:59:59"));
 
                                         last_uid = uidtag;
                                         dev_status = 3;
@@ -253,17 +255,17 @@ namespace SMFGC_Server {
                                     }
                                     break;
                             }
-                            sysLog(conn, "userauth", String.Format("Faculty ID/Name: {0}:{1}, with Level: {2} tag; Used on Room ID/Name: {3}:{4}; {5}", faculty_id, faculty, faculty_level, room_id, room_name, log_msg), 64);
-                            Console.WriteLine("[{0}] [Handle Client #{1}/{2}]: Faculty ID/Name: {3}:{4}, with Level: {5} tag; Used on Room ID/Name: {6}:{7}; {8}"
-                                , DateTime.Now.ToString(tformat), cl_no, "INFO", faculty_id, faculty, faculty_level, room_id, room_name, log_msg);
+                            log = string.Format("Faculty ID/Name: {0}:{1}, with Level: {2} tag; Used on Room ID/Name: {3}:{4}; {5}", faculty_id, faculty, faculty_level, room_id, room_name, log_msg);
+                            sysLog(conn, "userauth", log, 64);
+                            Output.WriteLine(string.Format("[{0}] [Handle Client #{1}/{2}]: {3}", DateTime.Now.ToString(tformat), cl_no, "INFO", log));
                         }
                         else {
                             // Send command to blink LEDs
                             msg = Encoding.ASCII.GetBytes("x");
                             stream.Write(msg, 0, msg.Length);
-
-                            sysLog(conn, "userauth", String.Format("Faculty UIDTag: {0}; not found.", uidtag), 48);
-                            Console.WriteLine("[{0}] [Handle Client #{1}/{2}]: Faculty UIDTag: {3}; not found.", DateTime.Now.ToString(tformat), cl_no, "WARN", uidtag);
+                            log = string.Format("Faculty UIDTag: {0} not found.", uidtag);
+                            sysLog(conn, "userauth", log, 48);
+                            Output.WriteLine(string.Format("[{0}] [Handle Client #{1}/{2}]: {3}", DateTime.Now.ToString(tformat), cl_no, "WARN", log));
                         }
                         if (conn != null && conn.State == ConnectionState.Open) conn.Close();
                     }
@@ -271,16 +273,17 @@ namespace SMFGC_Server {
 
                         if (data.Contains("NaN") && pzem_err_rpt <= 0) {
                             pzem_err_rpt = 60; //reset
-                            sysLog(conn, "dev", String.Format("Device ID/IP: {0}:{1}; Part Zone Expansion Module (PZEM) error on reading data.", dev_id, dev_ip), 16);
-                            Console.WriteLine("[{0}] [Handle Client #{1}/{2}]: Error Reading PZEM Data.", DateTime.Now.ToString(tformat), cl_no, "ERROR");
+                            log = string.Format("Device ID/IP: {0}:{1}; Part Zone Expansion Module (PZEM) error on reading data.", dev_id, dev_ip);
+                            sysLog(conn, "dev", log, 16);
+                            Output.WriteLine(string.Format("[{0}] [Handle Client #{1}/{2}]: {3}", DateTime.Now.ToString(tformat), cl_no, "ERROR", log));
                         }
-                        if (!data.Contains("NaN") && pzem_err_rpt <= 0) {
+                        else if (!data.Contains("NaN") && pzem_err_rpt <= 0) {
                             pzem_err_rpt = 60; //reset
                             data = data.Split(',')[1].Replace("PZM:", "").Trim();
 
                             String[] pzem = data.Split('-');
                             cmd = conn.CreateCommand();
-                            cmd.CommandText = pVariables.qPZEMLog;
+                            cmd.CommandText = SMFGC.pVariables.qPZEMLog;
                             cmd.Parameters.Add("@p1", MySqlDbType.Int32).Value = dev_id;
                             cmd.Parameters.Add("@p2", MySqlDbType.Double).Value = Convert.ToDouble(pzem[0]);
                             cmd.Parameters.Add("@p3", MySqlDbType.Double).Value = Convert.ToDouble(pzem[1]);
@@ -292,12 +295,12 @@ namespace SMFGC_Server {
                             cmd.ExecuteNonQuery();
                             conn.Close();
 
-                            Console.WriteLine("[{0}] [Handle Client #{1}/{2}]: PZEM Data recorded to database.", DateTime.Now.ToString(tformat), cl_no, "INFO");
+                            Output.WriteLine(string.Format("[{0}] [Handle Client #{1}/{2}]: PZEM Data recorded to database.", DateTime.Now.ToString(tformat), cl_no, "INFO"));
                         }
                         pzem_err_rpt -= 1;
                     }
                     else if (dev_verified && data.Contains("RLY:")) {
-                        Console.WriteLine("[{0}] [Handle Client #{1}/{2}]: Device acknowledge the command.", DateTime.Now.ToString(tformat), cl_no, "INFO");
+                        Output.WriteLine(string.Format("[{0}] [Handle Client #{1}/{2}]: Device acknowledge the command.", DateTime.Now.ToString(tformat), cl_no, "INFO"));
                     }
 
                     // CONTINUES BLINKING RED 	- 10 MINUTES LEFT WARNING
@@ -313,10 +316,9 @@ namespace SMFGC_Server {
                             msg = Encoding.ASCII.GetBytes("d");
                             stream.Write(msg, 0, msg.Length);
 
-                            log_msg = "Schedule Ended.";
-                            sysLog(conn, "userauth", String.Format("Faculty ID/Name: {0}:{1}, on Room ID/Name: {2}:{3}; {4}", faculty_id, faculty, room_id, room_name, log_msg), 64);
-                            Console.WriteLine("[{0}] [Handle Client #{1}/{2}]: Faculty ID/Name: {3}:{4}, on Room ID/Name: {5}:{6}; {7}",
-                                DateTime.Now.ToString(tformat), cl_no, "INFO", faculty_id, faculty, room_id, room_name, log_msg);
+                            log = string.Format("Faculty ID/Name: {0}:{1}, on Room ID/Name: {2}:{3}; Schedule Ended.", faculty_id, faculty, room_id, room_name);
+                            sysLog(conn, "userauth", log, 64);
+                            Output.WriteLine(string.Format("[{0}] [Handle Client #{1}/{2}]: {3}", DateTime.Now.ToString(tformat), cl_no, "INFO", log));
                             tleft_led_delay = 3; //reset
 
                             // add sfv points
@@ -328,7 +330,6 @@ namespace SMFGC_Server {
                                 stream.Write(msg, 0, msg.Length);
 
                                 tleft_led_delay = 2; //reset
-                                log_msg = String.Format("Schedule is ending in -> {0} Minutes and {1} Seconds Left.", tleft.Minutes, tleft.Seconds);
                             }
                             else {
                                 tleft_led_delay -= 1;
@@ -350,7 +351,7 @@ namespace SMFGC_Server {
                             else {
                                 alarm_led_delay -= 1;
                             }
-                            Console.WriteLine("[{0}] [Handle Client #{1}/{2}]: Verification Alarm: {3} Mins", DateTime.Now.ToString(tformat), cl_no, "INFO", talarm.TotalMinutes);
+                            Output.WriteLine(string.Format("[{0}] [Handle Client #{1}/{2}]: Verification Alarm: {3} Mins", DateTime.Now.ToString(tformat), cl_no, "WARN", talarm.TotalMinutes));
 
                             if (talarm.TotalMinutes > (sfv_time.TotalMinutes + 5)) {
                                 last_uid = "";
@@ -358,10 +359,10 @@ namespace SMFGC_Server {
                                 UpdateDevStatus(dev_id, dev_ip, dev_status, last_uid);
                                 msg = Encoding.ASCII.GetBytes("d");
                                 stream.Write(msg, 0, msg.Length);
-                                log_msg = "Classroom closed by the system.";
-                                sysLog(conn, "userauth", String.Format("Faculty ID/Name: {0}:{1}, on Room ID/Name: {2}:{3}; {4}", faculty_id, faculty, room_id, room_name, log_msg), 64);
-                                Console.WriteLine("[{0}] [Handle Client #{1}/{2}]: Faculty ID/Name: {3}:{4}, on Room ID/Name: {5}:{6}; {7}",
-                                    DateTime.Now.ToString(tformat), cl_no, "INFO", faculty_id, faculty, room_id, room_name, log_msg);
+
+                                log = string.Format("Faculty ID/Name: {0}:{1}, on Room ID/Name: {2}:{3}; Classroom closed by the system.", faculty_id, faculty, room_id, room_name);
+                                sysLog(conn, "userauth", log, 64);
+                                Output.WriteLine(string.Format("[{0}] [Handle Client #{1}/{2}]: {3}",DateTime.Now.ToString(tformat), cl_no, "INFO", log));
                                 // add sfv points
                                 FacultySFVPoints(faculty_id, 1);
                             }
@@ -372,19 +373,19 @@ namespace SMFGC_Server {
                     if (dev_verified && dev_check_delay <= 0) {
 
                         cmd = conn.CreateCommand();
-                        cmd.CommandText = pVariables.qDevPingCheck;
+                        cmd.CommandText = SMFGC.pVariables.qDevPingCheck;
                         cmd.Parameters.Add("@p1", MySqlDbType.Int32).Value = dev_id;
                         conn.Open();
                         reader = cmd.ExecuteReader();
 
                         if (reader.Read()) {
-                            Console.WriteLine("[{0}] [Handle Client #{1}/{2}]: TCP Link check on Device: {3}, IP: {4} - OK.", DateTime.Now.ToString(tformat), cl_no, "INFO", dev_id, dev_ip);
+                            Output.WriteLine(string.Format("[{0}] [Handle Client #{1}/{2}]: TCP Link check on Device: {3}, IP: {4} - OK.", DateTime.Now.ToString(tformat), cl_no, "INFO", dev_id, dev_ip));
                             dev_check_delay = 10;
                         }
                         else {
-                            sysLog(conn, "dev", String.Format("Device ID/IP: {0}:{1}; Connection to the client has been lost.", dev_id, dev_ip), 16);
-                            Console.WriteLine("[{0}] [Handle Client #{1}/{2}]: System detected Broken TCP Link on Device ID: {3}, IP: {4} - Connection Lost.",
-                                DateTime.Now.ToString(tformat), cl_no, "INFO", dev_id, dev_ip);
+                            log = string.Format("Device ID/IP: {0}:{1}; Connection to the client has been lost.", dev_id, dev_ip);
+                            sysLog(conn, "dev", log, 16);
+                            Output.WriteLine(string.Format("[{0}] [Handle Client #{1}/{2}]: {3} - Connection Lost.", DateTime.Now.ToString(tformat), cl_no, "ERROR", log));
                             break;
                         }
                         conn.Close();
@@ -397,7 +398,7 @@ namespace SMFGC_Server {
                 }
             }
             catch (Exception ex) {
-                Console.WriteLine("[{0}] [Handle Client #{1}/{2}]: Error: {3}", DateTime.Now.ToString(tformat), cl_no, "INFO", ex.Message);
+                Output.WriteLine(string.Format("[{0}] [Handle Client #{1}/{2}]: Error: {3}", DateTime.Now.ToString(tformat), cl_no, "ERROR", ex.Message));
                 sysLog(conn, "sys", ex.Message, 16);
             }
             finally {
@@ -409,7 +410,7 @@ namespace SMFGC_Server {
                 if (arduino_client != null) {
                     arduino_client.Close();
 
-                    Console.WriteLine("[{0}] [Handle Client #{1}/{2}]: Client Connection Closed.", DateTime.Now.ToString(tformat), cl_no, "INFO");
+                    Output.WriteLine(string.Format("[{0}] [Handle Client #{1}/{2}]: Client Connection Closed.", DateTime.Now.ToString(tformat), cl_no, "INFO"));
                     sysLog(conn, "sys", "Client connection closed by the server.", 16);
                 }
             }
@@ -420,7 +421,7 @@ namespace SMFGC_Server {
 
             // Update the status and uptime
             cmd = conn.CreateCommand();
-            cmd.CommandText = pVariables.qUpdateDevPing;
+            cmd.CommandText = SMFGC.pVariables.qUpdateDevPing;
             cmd.Parameters.Add("@p1", MySqlDbType.Int32).Value = status;
             cmd.Parameters.Add("@p2", MySqlDbType.VarChar).Value = lastuid;
             cmd.Parameters.Add("@p3", MySqlDbType.VarChar).Value = ip;
@@ -434,7 +435,7 @@ namespace SMFGC_Server {
             if (conn.State == ConnectionState.Open) conn.Close();
 
             cmd = conn.CreateCommand();
-            cmd.CommandText = pVariables.qFacultSFV;
+            cmd.CommandText = SMFGC.pVariables.qFacultSFV;
             cmd.Parameters.Add("@p1", MySqlDbType.Int32).Value = val;
             cmd.Parameters.Add("@p2", MySqlDbType.Int32).Value = fid;
             conn.Open();

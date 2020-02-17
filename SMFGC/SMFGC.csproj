@@ -53,9 +53,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="mServer.cs" />
-    <Compile Include="pingClient.cs" />
-    <Compile Include="handleClient.cs" />
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -2,7 +2,7 @@
 using System;
 
 namespace SMFGC {
-    class pVariables {
+    public class pVariables {
 
         // If you change the row names you also need to 
         // change the code by going to definition

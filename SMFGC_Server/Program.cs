@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -44,18 +45,30 @@ namespace SMFGC_Server {
 
             Console.Title = assemblyTitleAttribute?.Title + " - " + Environment.Version;
 
-            Console.WriteLine("[{0}] [main/{1}]: Running on OS Ver.: {2} {3}", DateTime.Now.ToString(tformat), "INFO", Environment.OSVersion, (Environment.Is64BitOperatingSystem ? "64bit" : "32bit"));
-            Console.WriteLine("[{0}] [main/{1}]: User/Machine Name: {2}/{3}", DateTime.Now.ToString(tformat), "INFO", Environment.UserName, Environment.MachineName);
-            Console.WriteLine("[{0}] [main/{1}]: Starting server", DateTime.Now.ToString(tformat), "INFO");
+            string lfile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs") + @"\latest.log";
+            if (File.Exists(lfile)) {
+                string fdate = File.GetLastWriteTime(lfile).ToString("yyyy-MM-dd-HH-mm-ss");
+                string newname = lfile.Replace("latest", fdate);
+                File.Move(lfile, newname);
+                string zip = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "logs") + @"\"+ fdate + ".zip";
+                using (ZipArchive zipArchive = ZipFile.Open(zip, ZipArchiveMode.Create)) {
+                    zipArchive.CreateEntryFromFile(newname, fdate + ".log");
+                }
+                File.Delete(newname);
+            }
+
+            Output.WriteLine(string.Format("[{0}] [main/{1}]: Running on OS Ver.: {2} {3}", DateTime.Now.ToString(tformat), "INFO", Environment.OSVersion, (Environment.Is64BitOperatingSystem ? "64bit" : "32bit")));
+            Output.WriteLine(string.Format("[{0}] [main/{1}]: User/Machine Name: {2}/{3}", DateTime.Now.ToString(tformat), "INFO", Environment.UserName, Environment.MachineName));
+            Output.WriteLine(string.Format("[{0}] [main/{1}]: Starting server", DateTime.Now.ToString(tformat), "INFO"));
             Thread.Sleep(1000);
 
             DeleteMenu(GetSystemMenu(GetConsoleWindow(), false), SC_CLOSE, MF_BYCOMMAND);
 
-            Console.WriteLine("[{0}] [main/{1}]: Loading settings", DateTime.Now.ToString(tformat), "INFO");
-            Console.WriteLine("[{0}] [main/{1}]: Client ping result info: {2}", DateTime.Now.ToString(tformat), "INFO", (ping_output ? "ENABLED" : "DISABLED"));
+            Output.WriteLine(string.Format("[{0}] [main/{1}]: Loading settings", DateTime.Now.ToString(tformat), "INFO"));
+            Output.WriteLine(string.Format("[{0}] [main/{1}]: Client ping result info: {2}", DateTime.Now.ToString(tformat), "INFO", ((ping_output) ? "ENABLED" : "DISABLED")));
 
 
-            Console.WriteLine("[{0}] [main/{1}]: Starting server on ip/port [*:{2}]", DateTime.Now.ToString(tformat), "INFO", port);
+            Output.WriteLine(string.Format("[{0}] [main/{1}]: Starting server on ip/port [*:{2}]", DateTime.Now.ToString(tformat), "INFO", port));
             // Evaluate current system tcp connections. This is the same information provided
             // by the netstat command line application, just in .Net strongly-typed object
             // form.  We will look through the list, and if our port we would like to use
@@ -68,9 +81,8 @@ namespace SMFGC_Server {
                     //not available
                     exitApp = true;
 
-                    Console.WriteLine("[{0}] [main/{1}]: Failed to bind to Port: {2}", DateTime.Now.ToString(tformat), "ERROR", port);
-                    Console.WriteLine("[{0}] [main/{1}]: **** FAILED TO BIND TO PORT! : {2}", DateTime.Now.ToString(tformat), "ERROR", port);
-                    Console.WriteLine("[{0}] [main/{1}]: Perhaps a server is already running on that port?", DateTime.Now.ToString(tformat), "ERROR");
+                    Output.WriteLine(string.Format("[{0}] [main/{1}]: **** FAILED TO BIND TO PORT! : {2}", DateTime.Now.ToString(tformat), "ERROR", port));
+                    Output.WriteLine(string.Format("[{0}] [main/{1}]: Perhaps a server is already running on that port?", DateTime.Now.ToString(tformat), "ERROR"));
                     Thread.Sleep(1000);
                     break;
                 }
@@ -88,24 +100,23 @@ namespace SMFGC_Server {
                     th_server.Start();
                 }
                 catch (Exception ex) {
-                    Console.WriteLine("[{0}] [Listener Thread/{1}]: {2}", DateTime.Now.ToString(tformat), "ERROR", ex.Message);
+                    Output.WriteLine(string.Format("[{0}] [Listener Thread/{1}]: {2}", DateTime.Now.ToString(tformat), "ERROR", ex.Message));
                     exitApp = true;
                 }
             }
 
             if (!exitApp) {
                 // check database connection
-                MySqlConnection conn = new MySqlConnection(pVariables.sConn);
+                MySqlConnection conn = new MySqlConnection(SMFGC.pVariables.sConn);
                 try {
-                    Console.WriteLine("[{0}] [Database/{1}]: Checking...", DateTime.Now.ToString(tformat), "INFO");
+                    Output.WriteLine(string.Format("[{0}] [Database/{1}]: Checking...", DateTime.Now.ToString(tformat), "INFO"));
                     conn.Open();
-                    if (conn.State == ConnectionState.Open) {
-                        Console.WriteLine("[{0}] [Database/{1}]: connection sucessfull.", DateTime.Now.ToString(tformat), "INFO");
-                        conn.Close();
-                    }
+                    if (conn.State == ConnectionState.Open) Output.WriteLine(string.Format("[{0}] [Database/{1}]: Connection sucessfull.", DateTime.Now.ToString(tformat), "INFO"));
+                    conn.Close();
+                    sysLog(conn, "sys", "Server started.", 64);
                 }
                 catch (Exception ex) {
-                    Console.WriteLine("[{0}] [Database/{1}]: {2}", DateTime.Now.ToString(tformat), "ERROR", ex.Message);
+                    Output.WriteLine(string.Format("[{0}] [Database/{1}]: {2}", DateTime.Now.ToString(tformat), "ERROR", ex.Message));
                 }
                 finally {
                     if (conn.State == ConnectionState.Open) conn.Close();
@@ -120,70 +131,73 @@ namespace SMFGC_Server {
                     th_pinger.Start();
                 }
                 catch (Exception ex) {
-                    Console.WriteLine("[{0}] [Pinger Thread/{1}]: {2}", DateTime.Now.ToString(tformat), "ERROR", ex.Message);
+                    Output.WriteLine(string.Format("[{0}] [Pinger Thread/{1}]: {2}", DateTime.Now.ToString(tformat), "ERROR", ex.Message));
                     exitApp = true;
                 }
             }
 
             if (!exitApp) {
                 TimeSpan tspan = DateTime.Now - time_start;
-                Console.WriteLine("[{0}] [main/{1}]: Done({2}s)! For help, type \"/help\"", DateTime.Now.ToString(tformat), "INFO", tspan.TotalSeconds.ToString("n"));
-                Console.WriteLine("[{0}] [main/{1}]: Timings Reset", DateTime.Now.ToString(tformat), "INFO");
+                Output.WriteLine(string.Format("[{0}] [main/{1}]: Done({2}s)! For help, type \"/help\"", DateTime.Now.ToString(tformat), "INFO", tspan.TotalSeconds.ToString("n")));
+                Output.WriteLine(string.Format("[{0}] [main/{1}]: Timings Reset", DateTime.Now.ToString(tformat), "INFO"));
                 time_start = DateTime.Now;
             }
 
             while (!exitApp) {
                 switch (Console.ReadLine()) {
-                    case "/stop":
+                    case "stop":
                         exitApp = true;
 
-                        Console.WriteLine("[{0}] [main/{1}]: Stopping the server...", DateTime.Now.ToString(tformat), "INFO");
-                        Console.WriteLine("[{0}] [Shutdown Thread/{1}]: Closing listener on [0:0:0:0:0:0:0:0:{2}]", DateTime.Now.ToString(tformat), "INFO", port);
+                        Output.WriteLine(string.Format("[{0}] [main/{1}]: Stopping the server...", DateTime.Now.ToString(tformat), "INFO"));
+                        Output.WriteLine(string.Format("[{0}] [Shutdown Thread/{1}]: Closing listener on [0:0:0:0:0:0:0:0:{2}]", DateTime.Now.ToString(tformat), "INFO", port));
                         serverSocket.Stop();
 
-                        Console.WriteLine("[{0}] [Shutdown Thread/{1}]: Closing pending connections", DateTime.Now.ToString(tformat), "INFO");
-                        Console.WriteLine("[{0}] [Shutdown Thread/{1}]: Disconnecting {2} connections", DateTime.Now.ToString(tformat), "INFO", client_count);
+                        Output.WriteLine(string.Format("[{0}] [Shutdown Thread/{1}]: Closing pending connections", DateTime.Now.ToString(tformat), "INFO"));
+                        Output.WriteLine(string.Format("[{0}] [Shutdown Thread/{1}]: Disconnecting {2} connections", DateTime.Now.ToString(tformat), "INFO", client_count));
                         th_server.Abort();
                         th_pinger.Abort();
 
+                        MySqlConnection conn = new MySqlConnection(SMFGC.pVariables.sConn);
+                        sysLog(conn, "sys", "Server stopped.", 64);
+
                         break;
 
-                    case "/help":
-                        Console.WriteLine("[{0}] [main/{1}]: ===============[Commands Help]===============", DateTime.Now.ToString(tformat), "INFO");
-                        Console.WriteLine("[{0}] [main/{1}]:  ", DateTime.Now.ToString(tformat), "INFO");
+                    case "help":
+                        Output.WriteLine(string.Format("[{0}] [main/{1}]: ================[Commands Help]================", DateTime.Now.ToString(tformat), "INFO"));
+                        Output.WriteLine(string.Format("[{0}] [main/{1}]:  ", DateTime.Now.ToString(tformat), "INFO"));
 
-                        Console.WriteLine("[{0}] [main/{1}]:  /clear (clean output window)", DateTime.Now.ToString(tformat), "INFO");
-                        Console.WriteLine("[{0}] [main/{1}]:  /ping (enable and disable ping result output)", DateTime.Now.ToString(tformat), "INFO");
-                        Console.WriteLine("[{0}] [main/{1}]:  /stop (stop and exit the server)", DateTime.Now.ToString(tformat), "INFO");                        
+                        Output.WriteLine(string.Format("[{0}] [main/{1}]:  /clear (clean output window)", DateTime.Now.ToString(tformat), "INFO"));
+                        Output.WriteLine(string.Format("[{0}] [main/{1}]:  /ping (enable and disable ping result output)", DateTime.Now.ToString(tformat), "INFO"));
+                        Output.WriteLine(string.Format("[{0}] [main/{1}]:  /stop (stop and exit the server)", DateTime.Now.ToString(tformat), "INFO"));
 
-                        Console.WriteLine("[{0}] [main/{1}]:  ", DateTime.Now.ToString(tformat), "INFO");
-                        Console.WriteLine("[{0}] [main/{1}]: =============================================", DateTime.Now.ToString(tformat), "INFO");
+                        Output.WriteLine(string.Format("[{0}] [main/{1}]:  ", DateTime.Now.ToString(tformat), "INFO"));
+                        Output.WriteLine(string.Format("[{0}] [main/{1}]: ===============================================", DateTime.Now.ToString(tformat), "INFO"));
                         break;
 
-                    case "/ping":
+                    case "ping":
                         ping_output = (ping_output) ? false : true;
-                        Console.WriteLine("[{0}] [main/{1}]: Client ping result info: {2}", DateTime.Now.ToString(tformat), "INFO", (ping_output ? "ENABLED" : "DISABLED"));
+                        Output.WriteLine(string.Format("[{0}] [main/{1}]: Client ping result info: {2}", DateTime.Now.ToString(tformat), "INFO", (ping_output ? "ENABLED" : "DISABLED")));
                         break;
 
-                    case "/clear":
+                    case "clear":
                         Console.Clear();
-                        Console.WriteLine("[{0}] [main/{1}]: Cleared.", DateTime.Now.ToString(tformat), "INFO");
+                        Output.WriteLine(string.Format("[{0}] [main/{1}]: Cleared.", DateTime.Now.ToString(tformat), "INFO"));
                         break;
 
                     default:
-                        Console.WriteLine("[{0}] [main/{1}]: Unknown command: Use /help to show server commands.", DateTime.Now.ToString(tformat), "WARN");
+                        Output.WriteLine(string.Format("[{0}] [main/{1}]: Unknown command: Use \"help\" to show list of commands.", DateTime.Now.ToString(tformat), "WARN"));
                         break;
                 }
             }
 
             TimeSpan uptime = DateTime.Now - time_start;
-            Console.WriteLine("[{0}] [main/{1}]: Server uptime: {2} Days, {3} Hours, {4} Minutes and {5} Seconds",
-                DateTime.Now.ToString(tformat), "INFO", (int)uptime.TotalDays, (int)uptime.Hours, (int)uptime.Minutes, (int)uptime.Seconds);
+            Output.WriteLine(string.Format("[{0}] [main/{1}]: Uptime: {2} Days, {3} Hours, {4} Minutes and {5} Seconds",
+                DateTime.Now.ToString(tformat), "INFO", (int)uptime.TotalDays, (int)uptime.Hours, (int)uptime.Minutes, (int)uptime.Seconds));
 
 
-            Console.WriteLine("[{0}] [Shutdown Thread/{1}]: Closing IO threads...", DateTime.Now.ToString(tformat), "INFO");
+            Output.WriteLine(string.Format("[{0}] [Shutdown Thread/{1}]: Closing IO threads...", DateTime.Now.ToString(tformat), "INFO"));
             Thread.Sleep(1000);
-            Console.WriteLine("[{0}] [Shutdown Thread/{1}]: Thank you and goodbye", DateTime.Now.ToString(tformat), "INFO");
+            Output.WriteLine(string.Format("[{0}] [Shutdown Thread/{1}]: Thank you and goodbye", DateTime.Now.ToString(tformat), "INFO"));
             Thread.Sleep(5000);
         }
 
@@ -191,7 +205,7 @@ namespace SMFGC_Server {
             TcpClient cl = default(TcpClient);
             string ip, port;
 
-            Console.WriteLine("[{0}] [Listener Thread/{1}]: Started.", DateTime.Now.ToString(tformat), "INFO");
+            Output.WriteLine(string.Format("[{0}] [Listener Thread/{1}]: Started.", DateTime.Now.ToString(tformat), "INFO"));
 
             while (true) {
                 cl = serverSocket.AcceptTcpClient();
@@ -203,16 +217,16 @@ namespace SMFGC_Server {
                 ip = ((IPEndPoint)cl.Client.RemoteEndPoint).Address.ToString();
                 port = ((IPEndPoint)cl.Client.RemoteEndPoint).Port.ToString();
 
-                Console.WriteLine("[{0}] [Handle Client #{1}/{2}]: IP Address of client is {3} connecting...", DateTime.Now.ToString(tformat), client_count, "INFO", ip);
+                Output.WriteLine(string.Format("[{0}] [Handle Client #{1}/{2}]: IP Address of client is {3} connecting...", DateTime.Now.ToString(tformat), client_count, "INFO", ip));
                 Thread.Sleep(100);
 
-                Console.WriteLine("[{0}] [Listener Thread/{1}]: Client #{2}[{3}:{4}] connected.", DateTime.Now.ToString(tformat), "INFO", client_count, ip, port);
+                Output.WriteLine(string.Format("[{0}] [Listener Thread/{1}]: Client #{2}[{3}:{4}] connected.", DateTime.Now.ToString(tformat), "INFO", client_count, ip, port));
                 Thread.Sleep(1000);
             }
         }
 
         private static void clientPinger() {
-            MySqlConnection conn = new MySqlConnection(pVariables.sConn);
+            MySqlConnection conn = new MySqlConnection(SMFGC.pVariables.sConn);
             MySqlCommand cmd;
             MySqlDataReader reader;
 
@@ -224,7 +238,7 @@ namespace SMFGC_Server {
             byte[] buffer = new byte[32];
 
             List<string> ips = new List<string>();
-            Console.WriteLine("[{0}] [Pinger Thread/{1}]: Started.", DateTime.Now.ToString(tformat), "INFO");
+            Output.WriteLine(string.Format("[{0}] [Pinger Thread/{1}]: Started.", DateTime.Now.ToString(tformat), "INFO"));
 
             while (true) {
                 // Clear all previous ipaddress
@@ -232,7 +246,7 @@ namespace SMFGC_Server {
 
                 // Query new list of ipaddress
                 cmd = conn.CreateCommand();
-                cmd.CommandText = pVariables.qDeviceIPs;
+                cmd.CommandText = SMFGC.pVariables.qDeviceIPs;
                 conn.Open();
                 reader = cmd.ExecuteReader();
                 while (reader.Read()) ips.Add(reader["ip_addr"].ToString());
@@ -243,15 +257,15 @@ namespace SMFGC_Server {
                     reply = pingSender.Send(ip_addr, timeout, buffer, options);
 
                     cmd = conn.CreateCommand();
-                    cmd.CommandText = pVariables.qUpdateDevPing_IP;
+                    cmd.CommandText = SMFGC.pVariables.qUpdateDevPing_IP;
 
                     if (reply.Status == IPStatus.Success) {
                         cmd.Parameters.Add("@p1", MySqlDbType.Int32).Value = 1;
-                        if (ping_output) Console.WriteLine("[{0}] [Pinger Thread/{1}]: Client: {2} -> {3}", DateTime.Now.ToString(tformat), "INFO", ip_addr, reply.Status);
+                        if (ping_output) Output.WriteLine(string.Format("[{0}] [Pinger Thread/{1}]: Client: {2} -> {3}", DateTime.Now.ToString(tformat), "INFO", ip_addr, reply.Status));
                     }
                     else {
                         cmd.Parameters.Add("@p1", MySqlDbType.Int32).Value = 0;
-                        if (ping_output) Console.WriteLine("[{0}] [Pinger Thread/{1}]: Client: {2} -> {3}", DateTime.Now.ToString(tformat), "WARN", ip_addr, reply.Status);
+                        if (ping_output) Output.WriteLine(string.Format("[{0}] [Pinger Thread/{1}]: Client: {2} -> {3}", DateTime.Now.ToString(tformat), "WARN", ip_addr, reply.Status));
                     }
 
                     cmd.Parameters.Add("@p2", MySqlDbType.VarChar).Value = ip_addr;
@@ -287,7 +301,7 @@ namespace SMFGC_Server {
                 if (conn != null && conn.State == ConnectionState.Open) conn.Close();
 
                 MySqlCommand cmd = conn.CreateCommand();
-                cmd.CommandText = pVariables.qLogger;
+                cmd.CommandText = SMFGC.pVariables.qLogger;
                 cmd.Parameters.Add("@p1", MySqlDbType.VarChar).Value = process;
                 cmd.Parameters.Add("@p2", MySqlDbType.Int32).Value = alert;
                 cmd.Parameters.Add("@p3", MySqlDbType.VarChar).Value = message;
@@ -296,7 +310,7 @@ namespace SMFGC_Server {
                 conn.Close();
             }
             catch (Exception ex) {
-                Console.WriteLine(ex.Message);
+                Output.WriteLine(string.Format("[{0}] [Logger Thread/{1}]: ", DateTime.Now.ToString(tformat), "ERROR", ex.Message));
             }
         }
     }

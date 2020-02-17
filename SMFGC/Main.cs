@@ -19,9 +19,6 @@ namespace SMFGC {
         int room_index = -1;
         string RFIDTag = "";
 
-        mServer server = new mServer();
-        pingClient client = new pingClient();
-
         public Main() {
             InitializeComponent();
             setMode();
@@ -50,11 +47,7 @@ namespace SMFGC {
 
         private void Main_Load(object sender, EventArgs e) {
             try {
-                if (pVariables.AdminMode) {
-                    //server.startServer();
-                    //client.startPing();
-                }
-                sysLog("sys", "Server started.", 64);
+                sysLog("sys", "System started.", 64);
             }
             catch (Exception ex) {
                 pVariables.confirmExit = false;
@@ -68,7 +61,7 @@ namespace SMFGC {
                 e.Cancel = true;
             }
             else {
-                sysLog("sys", "Server closed.", 64);
+                sysLog("sys", "System closed.", 64);
             }
         }
 
