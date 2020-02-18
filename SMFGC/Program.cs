@@ -16,7 +16,6 @@ namespace SMFGC {
         /// The main entry point for the application.
         /// </summary>
         /// 
-        static MySqlConnection conn = new MySqlConnection(pVariables.sConn);
 
         [STAThread]
         static void Main() {
@@ -25,7 +24,7 @@ namespace SMFGC {
             Application.Run(new Login());
         }
 
-        public static void sysLog(string process, string message, int alert) {
+        public static void sysLog(MySqlConnection conn, string process, string message, int alert) {
             //Error   16
             //The message box contains a symbol consisting of white X in a circle with a red background.
 

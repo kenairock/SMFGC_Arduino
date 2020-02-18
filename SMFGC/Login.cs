@@ -5,7 +5,7 @@ using MySql.Data.MySqlClient;
 
 namespace SMFGC {
     public partial class Login : Form {
-        readonly MySqlConnection conn = new MySqlConnection(pVariables.sConn);
+        MySqlConnection conn;
         MySqlCommand cmd;
         MySqlDataReader reader;
 
@@ -73,14 +73,16 @@ namespace SMFGC {
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.Message);
+                showDBconfig();
             }
             finally {
-                if (conn.State == ConnectionState.Open) conn.Close();
+                if (conn != null && conn.State == ConnectionState.Open) conn.Close();
             }
         }
 
         private void Login_Load(object sender, EventArgs e) {
             try {
+                conn = new MySqlConnection(pVariables.sConn);
                 conn.Open();
                 if (conn.State == ConnectionState.Open) {
                     frm_main.Activate();
@@ -90,13 +92,11 @@ namespace SMFGC {
             }
             catch (Exception ex) {
                 MessageBox.Show("Database Error: " + ex.Message);
+                showDBconfig();
             }
             finally {
-                if (conn.State == ConnectionState.Open) conn.Close();
+                if (conn != null && conn.State == ConnectionState.Open) conn.Close();
             }
-            txt_username.Text = "francis";
-            txt_password.Text = "admin";
-            txt_password.PasswordChar = '●';
         }
 
         private void txt_username_Click(object sender, EventArgs e) {
@@ -117,6 +117,11 @@ namespace SMFGC {
 
         private void Login_FormClosed(object sender, FormClosedEventArgs e) {
             Environment.Exit(0);
+        }
+
+        private void showDBconfig() {
+            dbSettings dbs = new dbSettings();
+            dbs.ShowDialog();
         }
     }
 }

@@ -70,13 +70,31 @@ namespace SMFGC_Server {
 
             XmlDocument doc = new XmlDocument();
             doc.Load(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "app.config"));
+            XmlNode node = doc.DocumentElement.SelectSingleNode("/configuration/databaseSettings");
+            SMFGC.pVariables.sConn = string.Format(SMFGC.pVariables.sConn, node.ChildNodes[0].InnerText,
+                node.ChildNodes[1].InnerText, node.ChildNodes[2].InnerText, node.ChildNodes[3].InnerText, node.ChildNodes[4].InnerText);
+            port = Convert.ToInt32(doc.DocumentElement.SelectSingleNode("/configuration/serverSettings").ChildNodes[0].InnerText);
 
-            XmlNode node = doc.DocumentElement.SelectSingleNode("/configuration/appSettings");
-            string attr = node.Attributes["theattributename"]?.InnerText;
-
-            Output.WriteLine(string.Format("[{0}] [main/{1}]: {2}", DateTime.Now.ToString(tformat), "INFO", attr));
-            
             Output.WriteLine(string.Format("[{0}] [main/{1}]: Client ping result info: {2}", DateTime.Now.ToString(tformat), "INFO", ((ping_output) ? "ENABLED" : "DISABLED")));
+
+            if (!exitApp) {
+                // check database connection
+                MySqlConnection conn = new MySqlConnection(SMFGC.pVariables.sConn);
+                try {
+                    Output.WriteLine(string.Format("[{0}] [Database/{1}]: Checking...", DateTime.Now.ToString(tformat), "INFO"));
+                    conn.Open();
+                    if (conn.State == ConnectionState.Open) Output.WriteLine(string.Format("[{0}] [Database/{1}]: Connection sucessfull.", DateTime.Now.ToString(tformat), "INFO"));
+                    conn.Close();
+                    sysLog(conn, "sys", "Server started.", 64);
+                }
+                catch (MySqlException ex) {
+                    Output.WriteLine(string.Format("[{0}] [Database/{1}]: {2}", DateTime.Now.ToString(tformat), "ERROR", ex.Message));
+                    exitApp = true;
+                }
+                finally {
+                    if (conn.State == ConnectionState.Open) conn.Close();
+                }
+            }
 
             Output.WriteLine(string.Format("[{0}] [main/{1}]: Starting server on ip/port [*:{2}]", DateTime.Now.ToString(tformat), "INFO", port));
             // Evaluate current system tcp connections. This is the same information provided
@@ -112,24 +130,6 @@ namespace SMFGC_Server {
                 catch (Exception ex) {
                     Output.WriteLine(string.Format("[{0}] [Listener Thread/{1}]: {2}", DateTime.Now.ToString(tformat), "ERROR", ex.Message));
                     exitApp = true;
-                }
-            }
-
-            if (!exitApp) {
-                // check database connection
-                MySqlConnection conn = new MySqlConnection(SMFGC.pVariables.sConn);
-                try {
-                    Output.WriteLine(string.Format("[{0}] [Database/{1}]: Checking...", DateTime.Now.ToString(tformat), "INFO"));
-                    conn.Open();
-                    if (conn.State == ConnectionState.Open) Output.WriteLine(string.Format("[{0}] [Database/{1}]: Connection sucessfull.", DateTime.Now.ToString(tformat), "INFO"));
-                    conn.Close();
-                    sysLog(conn, "sys", "Server started.", 64);
-                }
-                catch (Exception ex) {
-                    Output.WriteLine(string.Format("[{0}] [Database/{1}]: {2}", DateTime.Now.ToString(tformat), "ERROR", ex.Message));
-                }
-                finally {
-                    if (conn.State == ConnectionState.Open) conn.Close();
                 }
             }
 
@@ -212,26 +212,31 @@ namespace SMFGC_Server {
         }
 
         private static void clientListener() {
-            TcpClient cl = default(TcpClient);
-            string ip, port;
+            try {
+                TcpClient cl = default(TcpClient);
+                string ip, port;
 
-            Output.WriteLine(string.Format("[{0}] [Listener Thread/{1}]: Started.", DateTime.Now.ToString(tformat), "INFO"));
+                Output.WriteLine(string.Format("[{0}] [Listener Thread/{1}]: Started.", DateTime.Now.ToString(tformat), "INFO"));
 
-            while (true) {
-                cl = serverSocket.AcceptTcpClient();
+                while (true) {
+                    cl = serverSocket.AcceptTcpClient();
 
-                client_count += 1;
-                handleClient hc = new handleClient();
-                hc.startClient(cl, client_count);
+                    client_count += 1;
+                    handleClient hc = new handleClient();
+                    hc.startClient(cl, client_count);
 
-                ip = ((IPEndPoint)cl.Client.RemoteEndPoint).Address.ToString();
-                port = ((IPEndPoint)cl.Client.RemoteEndPoint).Port.ToString();
+                    ip = ((IPEndPoint)cl.Client.RemoteEndPoint).Address.ToString();
+                    port = ((IPEndPoint)cl.Client.RemoteEndPoint).Port.ToString();
 
-                Output.WriteLine(string.Format("[{0}] [Handle Client #{1}/{2}]: IP Address of client is {3} connecting...", DateTime.Now.ToString(tformat), client_count, "INFO", ip));
-                Thread.Sleep(100);
+                    Output.WriteLine(string.Format("[{0}] [Handle Client #{1}/{2}]: IP Address of client is {3} connecting...", DateTime.Now.ToString(tformat), client_count, "INFO", ip));
+                    Thread.Sleep(100);
 
-                Output.WriteLine(string.Format("[{0}] [Listener Thread/{1}]: Client #{2}[{3}:{4}] connected.", DateTime.Now.ToString(tformat), "INFO", client_count, ip, port));
-                Thread.Sleep(1000);
+                    Output.WriteLine(string.Format("[{0}] [Listener Thread/{1}]: Client #{2}[{3}:{4}] connected.", DateTime.Now.ToString(tformat), "INFO", client_count, ip, port));
+                    Thread.Sleep(1000);
+                }
+            }
+            catch (SocketException ex) {
+                //Console.WriteLine("[{0}] [Listener Thread/{1}]: SocketException: {2}", DateTime.Now.ToString(tformat), "ERROR", ex);
             }
         }
 

@@ -17,7 +17,7 @@ namespace SMFGC {
 
         public static readonly String Project_Name = "Safety and Security System";
 
-        public static readonly String sConn = "datasource=localhost;port=3306;database=smfgc_db;username=smfgc;password=P@ssw0rd;";
+        public static String sConn = "datasource={0};port={1};database={2};username={3};password={4};";
 
         public static readonly String qLogin = @"SELECT `fullname`,`role`,`dept_id` FROM `user_tb` WHERE `username` = @user AND `password` = @pass LIMIT 1;";
 

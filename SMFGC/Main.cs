@@ -11,7 +11,7 @@ using static SMFGC.Program;
 namespace SMFGC {
     public partial class Main : Form {
 
-        readonly MySqlConnection conn = new MySqlConnection(pVariables.sConn);
+        MySqlConnection conn;
         MySqlCommand cmd;
         MySqlDataReader reader;
         SerialPort RFID;
@@ -47,7 +47,8 @@ namespace SMFGC {
 
         private void Main_Load(object sender, EventArgs e) {
             try {
-                sysLog("sys", "System started.", 64);
+                conn = new MySqlConnection(pVariables.sConn);
+                sysLog(conn,"sys", "System started.", 64);
             }
             catch (Exception ex) {
                 pVariables.confirmExit = false;
@@ -61,7 +62,7 @@ namespace SMFGC {
                 e.Cancel = true;
             }
             else {
-                sysLog("sys", "System closed.", 64);
+                sysLog(conn, "sys", "System closed.", 64);
             }
         }
 
@@ -152,11 +153,11 @@ namespace SMFGC {
                     lblRmName.Text = "SELECT ROOM";
                 }
             }
-            catch (Exception e) {
-                Console.WriteLine(e.ToString());
+            catch (Exception ex) {
+                Console.WriteLine(ex.ToString());
             }
             finally {
-                if (conn.State == ConnectionState.Open) conn.Close();
+                if (conn != null && conn.State == ConnectionState.Open) conn.Close();
             }
         }
 
@@ -576,7 +577,7 @@ namespace SMFGC {
                     cmd.ExecuteNonQuery();
                     conn.Close();
                     RefreshFacultyDatagrid();
-                    sysLog("data", "Record deleted on: [" + tabFaculty.SelectedTab.Text + "] Ref: (" + tmp_res + ")", 64);
+                    sysLog(conn, "data", "Record deleted on: [" + tabFaculty.SelectedTab.Text + "] Ref: (" + tmp_res + ")", 64);
                     btnNew_Click(sender, e);
                     MessageBox.Show("Record Deleted.");
                 }

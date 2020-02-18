@@ -8,12 +8,14 @@
       <section name="SMFGC.Properties.Settings" type="System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
     </sectionGroup>
   </configSections>
-  <appSettings>
-      <add key="db_host" value="localhost"/>
-      <add key="db_port" value="3306"/>
-      <add key="db_name" value="smfgc_db"/>
-      <add key="db_user" value="smfgc"/>
-      <add key="db_pass" value="P@ssw0rd"/>
-      <add key="server_port" value="2316"/>
-  </appSettings>
+  <databaseSettings>
+    <dbhost>localhost</dbhost>
+    <dbport>3306</dbport>
+    <dbname>smfgc_db</dbname>
+    <dbuser>smfgc</dbuser>
+    <dbpass>P@ssw0rd</dbpass>
+  </databaseSettings>
+  <serverSettings>
+    <port>2316</port>
+  </serverSettings>
 </configuration>
