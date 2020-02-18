@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Data;
+using System.IO;
 using System.Windows.Forms;
+using System.Xml;
 using MySql.Data.MySqlClient;
 
 namespace SMFGC {
@@ -73,7 +75,6 @@ namespace SMFGC {
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.Message);
-                showDBconfig();
             }
             finally {
                 if (conn != null && conn.State == ConnectionState.Open) conn.Close();
@@ -81,21 +82,35 @@ namespace SMFGC {
         }
 
         private void Login_Load(object sender, EventArgs e) {
-            try {
-                conn = new MySqlConnection(pVariables.sConn);
-                conn.Open();
-                if (conn.State == ConnectionState.Open) {
-                    frm_main.Activate();
-                    checkConnection.Text = "Connected!";
-                    conn.Close();
+            string config_file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.xml");
+            if (File.Exists(config_file)) {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(config_file);
+                XmlNode node = doc.DocumentElement.SelectSingleNode("/configuration/databaseSettings");
+                pVariables.sConn = string.Format(pVariables.sConn, node.ChildNodes[0].InnerText, node.ChildNodes[1].InnerText, node.ChildNodes[2].InnerText, node.ChildNodes[3].InnerText, node.ChildNodes[4].InnerText);
+
+                try {
+                    conn = new MySqlConnection(pVariables.sConn);
+                    conn.Open();
+                    if (conn.State == ConnectionState.Open) {
+                        frm_main.Activate();
+                        checkConnection.Text = "Connected!";
+                        conn.Close();
+                    }
+                }
+                catch {
+                    //MessageBox.Show("Database Error: " + ex.Message);
+                    checkConnection.Text = "Database error.";
+                    btnLogin.Enabled = false;
+                }
+                finally {
+                    if (conn != null && conn.State == ConnectionState.Open) conn.Close();
                 }
             }
-            catch (Exception ex) {
-                MessageBox.Show("Database Error: " + ex.Message);
-                showDBconfig();
-            }
-            finally {
-                if (conn != null && conn.State == ConnectionState.Open) conn.Close();
+            else {
+                checkConnection.Text = "Configuration error.";
+                btnLogin.Enabled = false;
+                lkSettings.Enabled = false;
             }
         }
 
@@ -119,9 +134,15 @@ namespace SMFGC {
             Environment.Exit(0);
         }
 
-        private void showDBconfig() {
-            dbSettings dbs = new dbSettings();
-            dbs.ShowDialog();
+        private void lkSettings_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            using (var dbs = new dbSettings()) {
+                if (dbs.ShowDialog() == DialogResult.OK) {
+                    conn = new MySqlConnection(pVariables.sConn);
+                    btnLogin.Enabled = true;
+                    frm_main.Activate();
+                    checkConnection.Text = "Connected!";
+                }
+            }
         }
     }
 }

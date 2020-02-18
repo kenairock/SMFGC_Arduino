@@ -24,31 +24,31 @@
         /// </summary>
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(dbSettings));
-            this.txtDeptname = new System.Windows.Forms.TextBox();
+            this.txtHost = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtDB = new System.Windows.Forms.TextBox();
+            this.txtPass = new System.Windows.Forms.TextBox();
+            this.txtUser = new System.Windows.Forms.TextBox();
+            this.txtPort = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // txtDeptname
+            // txtHost
             // 
-            this.txtDeptname.BackColor = System.Drawing.Color.Black;
-            this.txtDeptname.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtDeptname.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.txtDeptname.Location = new System.Drawing.Point(107, 31);
-            this.txtDeptname.Name = "txtDeptname";
-            this.txtDeptname.Size = new System.Drawing.Size(118, 20);
-            this.txtDeptname.TabIndex = 40;
+            this.txtHost.BackColor = System.Drawing.Color.Black;
+            this.txtHost.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.txtHost.Location = new System.Drawing.Point(107, 31);
+            this.txtHost.Name = "txtHost";
+            this.txtHost.Size = new System.Drawing.Size(118, 20);
+            this.txtHost.TabIndex = 40;
+            this.txtHost.TextChanged += new System.EventHandler(this.txtHost_TextChanged);
             // 
             // groupBox1
             // 
@@ -57,13 +57,13 @@
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.textBox4);
-            this.groupBox1.Controls.Add(this.textBox3);
-            this.groupBox1.Controls.Add(this.textBox2);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.txtDB);
+            this.groupBox1.Controls.Add(this.txtPass);
+            this.groupBox1.Controls.Add(this.txtUser);
+            this.groupBox1.Controls.Add(this.txtPort);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.txtDeptname);
+            this.groupBox1.Controls.Add(this.txtHost);
             this.groupBox1.ForeColor = System.Drawing.Color.White;
             this.groupBox1.Location = new System.Drawing.Point(12, 10);
             this.groupBox1.Name = "groupBox1";
@@ -75,7 +75,7 @@
             // btnCancel
             // 
             this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.Location = new System.Drawing.Point(234, 94);
             this.btnCancel.Name = "btnCancel";
@@ -88,7 +88,7 @@
             // btnSave
             // 
             this.btnSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.ForeColor = System.Drawing.Color.White;
             this.btnSave.Location = new System.Drawing.Point(234, 57);
             this.btnSave.Name = "btnSave";
@@ -96,6 +96,7 @@
             this.btnSave.TabIndex = 50;
             this.btnSave.Text = "TEST";
             this.btnSave.UseVisualStyleBackColor = false;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // label5
             // 
@@ -124,45 +125,46 @@
             this.label3.TabIndex = 47;
             this.label3.Text = "Database Name :";
             // 
-            // textBox4
+            // txtDB
             // 
-            this.textBox4.BackColor = System.Drawing.Color.Black;
-            this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox4.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.textBox4.Location = new System.Drawing.Point(107, 109);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(118, 20);
-            this.textBox4.TabIndex = 46;
+            this.txtDB.BackColor = System.Drawing.Color.Black;
+            this.txtDB.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.txtDB.Location = new System.Drawing.Point(107, 109);
+            this.txtDB.Name = "txtDB";
+            this.txtDB.Size = new System.Drawing.Size(118, 20);
+            this.txtDB.TabIndex = 46;
+            this.txtDB.TextChanged += new System.EventHandler(this.txtDB_TextChanged);
             // 
-            // textBox3
+            // txtPass
             // 
-            this.textBox3.BackColor = System.Drawing.Color.Black;
-            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox3.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.textBox3.Location = new System.Drawing.Point(107, 83);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(118, 20);
-            this.textBox3.TabIndex = 45;
+            this.txtPass.BackColor = System.Drawing.Color.Black;
+            this.txtPass.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.txtPass.Location = new System.Drawing.Point(107, 83);
+            this.txtPass.Name = "txtPass";
+            this.txtPass.PasswordChar = '●';
+            this.txtPass.Size = new System.Drawing.Size(118, 20);
+            this.txtPass.TabIndex = 45;
+            this.txtPass.TextChanged += new System.EventHandler(this.txtPass_TextChanged);
             // 
-            // textBox2
+            // txtUser
             // 
-            this.textBox2.BackColor = System.Drawing.Color.Black;
-            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox2.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.textBox2.Location = new System.Drawing.Point(107, 57);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(118, 20);
-            this.textBox2.TabIndex = 44;
+            this.txtUser.BackColor = System.Drawing.Color.Black;
+            this.txtUser.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.txtUser.Location = new System.Drawing.Point(107, 57);
+            this.txtUser.Name = "txtUser";
+            this.txtUser.Size = new System.Drawing.Size(118, 20);
+            this.txtUser.TabIndex = 44;
+            this.txtUser.TextChanged += new System.EventHandler(this.txtUser_TextChanged);
             // 
-            // textBox1
+            // txtPort
             // 
-            this.textBox1.BackColor = System.Drawing.Color.Black;
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox1.ForeColor = System.Drawing.SystemColors.HighlightText;
-            this.textBox1.Location = new System.Drawing.Point(269, 31);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(70, 20);
-            this.textBox1.TabIndex = 43;
+            this.txtPort.BackColor = System.Drawing.Color.Black;
+            this.txtPort.ForeColor = System.Drawing.SystemColors.HighlightText;
+            this.txtPort.Location = new System.Drawing.Point(269, 31);
+            this.txtPort.Name = "txtPort";
+            this.txtPort.Size = new System.Drawing.Size(70, 20);
+            this.txtPort.TabIndex = 43;
+            this.txtPort.TextChanged += new System.EventHandler(this.txtPort_TextChanged);
             // 
             // label2
             // 
@@ -205,15 +207,15 @@
         }
 
         #endregion
-        private System.Windows.Forms.TextBox txtDeptname;
+        private System.Windows.Forms.TextBox txtHost;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtDB;
+        private System.Windows.Forms.TextBox txtPass;
+        private System.Windows.Forms.TextBox txtUser;
+        private System.Windows.Forms.TextBox txtPort;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnCancel;

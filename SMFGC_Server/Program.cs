@@ -68,12 +68,19 @@ namespace SMFGC_Server {
 
             Output.WriteLine(string.Format("[{0}] [main/{1}]: Loading settings", DateTime.Now.ToString(tformat), "INFO"));
 
-            XmlDocument doc = new XmlDocument();
-            doc.Load(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "app.config"));
-            XmlNode node = doc.DocumentElement.SelectSingleNode("/configuration/databaseSettings");
-            SMFGC.pVariables.sConn = string.Format(SMFGC.pVariables.sConn, node.ChildNodes[0].InnerText,
-                node.ChildNodes[1].InnerText, node.ChildNodes[2].InnerText, node.ChildNodes[3].InnerText, node.ChildNodes[4].InnerText);
-            port = Convert.ToInt32(doc.DocumentElement.SelectSingleNode("/configuration/serverSettings").ChildNodes[0].InnerText);
+            string config_file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.xml");
+            if (File.Exists(config_file)) {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(config_file);
+                XmlNode node = doc.DocumentElement.SelectSingleNode("/configuration/databaseSettings");
+                SMFGC.pVariables.sConn = string.Format(SMFGC.pVariables.sConn, node.ChildNodes[0].InnerText,
+                    node.ChildNodes[1].InnerText, node.ChildNodes[2].InnerText, node.ChildNodes[3].InnerText, node.ChildNodes[4].InnerText);
+                port = Convert.ToInt32(doc.DocumentElement.SelectSingleNode("/configuration/serverSettings").ChildNodes[0].InnerText);
+            }
+            else {
+                exitApp = true;
+                Output.WriteLine(string.Format("[{0}] [main/{1}]: Configuration not found", DateTime.Now.ToString(tformat), "ERROR"));
+            }
 
             Output.WriteLine(string.Format("[{0}] [main/{1}]: Client ping result info: {2}", DateTime.Now.ToString(tformat), "INFO", ((ping_output) ? "ENABLED" : "DISABLED")));
 

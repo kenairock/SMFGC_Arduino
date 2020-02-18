@@ -40,6 +40,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txt_username = new System.Windows.Forms.TextBox();
             this.btnLogin = new System.Windows.Forms.Button();
+            this.lkSettings = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -157,12 +158,26 @@
             this.btnLogin.UseVisualStyleBackColor = false;
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
+            // lkSettings
+            // 
+            this.lkSettings.AutoSize = true;
+            this.lkSettings.BackColor = System.Drawing.Color.GreenYellow;
+            this.lkSettings.Location = new System.Drawing.Point(383, 9);
+            this.lkSettings.Name = "lkSettings";
+            this.lkSettings.Size = new System.Drawing.Size(45, 13);
+            this.lkSettings.TabIndex = 19;
+            this.lkSettings.TabStop = true;
+            this.lkSettings.Text = "Settings";
+            this.lkSettings.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lkSettings.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lkSettings_LinkClicked);
+            // 
             // Login
             // 
             this.AcceptButton = this.btnLogin;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(440, 472);
+            this.Controls.Add(this.lkSettings);
             this.Controls.Add(this.ckRemember);
             this.Controls.Add(this.txt_password);
             this.Controls.Add(this.txt_username);
@@ -198,6 +213,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txt_username;
         private System.Windows.Forms.Button btnLogin;
+        private System.Windows.Forms.LinkLabel lkSettings;
     }
 }
 
