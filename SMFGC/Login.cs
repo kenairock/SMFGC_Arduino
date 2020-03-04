@@ -30,34 +30,15 @@ namespace SMFGC {
                 cmd.Parameters.Add("@pass", MySqlDbType.VarChar).Value = txt_password.Text.Trim();
                 reader = cmd.ExecuteReader();
                 if (reader.Read()) {
-                    switch (reader["role"].ToString()) {
-                        case "admin": {
-                                pVariables.AdminMode = true;
-                                pVariables.DeptMode = false;
-                                pVariables.AcctMode = false;
-                                break;
-                            }
-                        case "depthead": {
-                                pVariables.AdminMode = false;
-                                pVariables.DeptMode = true;
-                                pVariables.AcctMode = false;
 
-                                pVariables.DeptID = Convert.ToInt32(reader["dept_id"]);
-                                break;
-                            }
-                        case "acct": {
-                                pVariables.AdminMode = false;
-                                pVariables.DeptMode = false;
-                                pVariables.AcctMode = true;
-                                break;
-                            }
-                        default: {
-                                MessageBox.Show("You don't have permission!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                break;
-                            }
-                    }
+                    pVariables.DeptID = Convert.ToInt32(reader["dept_id"]);
 
-                    if (pVariables.AdminMode || pVariables.DeptMode || pVariables.AcctMode) {
+                    pVariables.bClassroom = Convert.ToBoolean(reader["perm_class"]);
+                    pVariables.bFaculty = Convert.ToBoolean(reader["perm_faculty"]);
+                    pVariables.bReports = Convert.ToBoolean(reader["perm_reports"]);
+                    pVariables.bAcct = Convert.ToBoolean(reader["perm_acct"]);
+
+                    if (pVariables.bClassroom || pVariables.bFaculty || pVariables.bReports || pVariables.bAcct) {
                         pVariables.confirmExit = true;
                         txt_username.Text = "Username";
                         txt_password.Text = "Password";
@@ -66,7 +47,9 @@ namespace SMFGC {
                         frm_main.setMode();
                         frm_main.Show();
                     }
-
+                    else {
+                        MessageBox.Show("You don't have permission!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 else {
                     MessageBox.Show("You have entered wrong username and password!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -112,6 +95,9 @@ namespace SMFGC {
                 btnLogin.Enabled = false;
                 lkSettings.Enabled = false;
             }
+
+            txt_username.Text = "admin";
+            txt_password.Text = "admin";
         }
 
         private void txt_username_Click(object sender, EventArgs e) {

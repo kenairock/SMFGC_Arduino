@@ -27,30 +27,29 @@ namespace SMFGC {
         }
 
         public void setMode() {
-            if (pVariables.AdminMode) {
+            if (pVariables.bClassroom && pVariables.bFaculty && pVariables.bReports && pVariables.bAcct) {
                 this.Text = "Administrator - " + pVariables.Project_Name;
                 toplabel.Text = pVariables.Project_Name;
-
-                btnFaculty.Show();
-                btnReports.Show();
-                btnAccounting.Show();
             }
-            if (pVariables.DeptMode) {
+
+            if (pVariables.bClassroom) {
                 this.Text = "Department Mode - " + pVariables.Project_Name;
                 toplabel.Text = "College of Arts, Science and Engineering";
-
-                btnFaculty.Hide();
-                btnReports.Hide();
-                btnAccounting.Hide();
             }
-            tabMain.SelectedIndex = 0;
-            RefreshClassrooms();
+
+            if (pVariables.bAcct) {
+                this.Text = "Accounting - " + pVariables.Project_Name;
+                toplabel.Text = "College of Arts, Science and Engineering";
+            }
+
+            tabMain.SelectedIndex = 4;
+            //RefreshClassrooms();
         }
 
         private void Main_Load(object sender, EventArgs e) {
             try {
                 conn = new MySqlConnection(pVariables.sConn);
-                sysLog(conn,"sys", "System started.", 64);
+                sysLog(conn, "sys", "System started.", 64);
             }
             catch (Exception ex) {
                 pVariables.confirmExit = false;
@@ -78,10 +77,20 @@ namespace SMFGC {
         }
 
         private void btnHome_Click(object sender, EventArgs e) {
+            if (!pVariables.bClassroom) {
+                MessageBox.Show("Sorry, You don't have permission!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             tabMain.SelectedIndex = 0;
         }
 
         private void btnFaculty_Click(object sender, EventArgs e) {
+            if (!pVariables.bFaculty) {
+                MessageBox.Show("Sorry, You don't have permission!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             tabMain.SelectedIndex = 1;
             InitRFID();
             RefreshFacultyDatagrid();
@@ -90,11 +99,24 @@ namespace SMFGC {
         }
 
         private void btnReports_Click(object sender, EventArgs e) {
+            if (!pVariables.bReports) {
+                MessageBox.Show("Sorry, You don't have permission!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             tabMain.SelectedIndex = 2;
             RefreshLogDatagrid();
         }
 
+        private void btnAccounting_Click(object sender, EventArgs e) {
+            if (!pVariables.bAcct) {
+                MessageBox.Show("Sorry, You don't have permission!", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
+            tabMain.SelectedIndex = 3;
+            RefreshLogDatagrid();
+        }
 
         private void btnISmall_Click(object sender, EventArgs e) {
             if (btnISmall.ImageIndex == 0) {
@@ -125,9 +147,8 @@ namespace SMFGC {
             try {
                 var rm_list = new List<ListViewItem>();
 
-
                 cmd = conn.CreateCommand();
-                cmd.CommandText = pVariables.qRoom + ((pVariables.DeptMode) ? String.Format(" WHERE dept_id = {0} ORDER BY `number`;", pVariables.DeptID) : "ORDER BY `number`;");
+                cmd.CommandText = pVariables.qRoom + ((pVariables.DeptID > 1) ? String.Format(" WHERE dept_id = {0} ORDER BY `number`;", pVariables.DeptID) : "ORDER BY `number`;");
 
                 conn.Open();
                 reader = cmd.ExecuteReader();
@@ -199,6 +220,7 @@ namespace SMFGC {
                 else if (tabFaculty.SelectedTab.Text == "Classroom") query += "classroom_v";
                 else if (tabFaculty.SelectedTab.Text == "Subject") query += "subject_v";
                 else if (tabFaculty.SelectedTab.Text == "Department") query += "department_v";
+                else if (tabFaculty.SelectedTab.Text == "User's Login") query += "user_v";
 
                 if (txtSearch.Text.Length > 0) query += " WHERE `" + cbSearch.Items[cbSearch.SelectedIndex].ToString() + "` LIKE @search";
 
@@ -209,13 +231,13 @@ namespace SMFGC {
                 dataGrid.DataSource = dt;
                 conn.Close();
 
-                if (tabFaculty.SelectedTab.Text == "Information" || tabFaculty.SelectedTab.Text == "Subject") dataGrid.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                if (tabFaculty.SelectedTab.Text == "Department") dataGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 if (dataGrid.RowCount == 1 && txtSearch.Text != "") {
                     dataGrid.Rows[0].Selected = true;
                     dataGrid_CellClick(dataGrid, new DataGridViewCellEventArgs(dataGrid.CurrentCell.ColumnIndex, dataGrid.CurrentCell.RowIndex));
                 }
                 else { dataGrid.ClearSelection(); }
+
+                dataGrid.AutoResizeColumns();
 
                 if (tabFaculty.SelectedTab.Text == "Schedule") {
                     FillComboBox(cbSHCourse, "course_tb", "id", "name");
@@ -231,10 +253,13 @@ namespace SMFGC {
                     dgProfSched.DataSource = null;
                     dgProfSched.Show();
                 }
+                else if (tabFaculty.SelectedTab.Text == "User's Login") {
+                    FillComboBox(cbUDept, "department_tb", "id", "name");
+                }
+
                 btnDel.Enabled = false;
                 btnSave.Enabled = false;
                 btnCancel.Enabled = false;
-
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.Message, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -319,7 +344,10 @@ namespace SMFGC {
                         break;
 
                     case "Classroom":
-                        cmd.CommandText = @"SELECT * FROM `classroom_tb` WHERE `id`=@id";
+                        cmd.CommandText = @"SELECT `ct`.*,`dt`.`ip_addr`,
+                                              `dt`.`mac_addr`,`dt`.`port`,`dt`.`status` 
+                                            FROM `classroom_tb` `ct` 
+                                            JOIN `device_tb` `dt` ON `dt`.`id` = `ct`.`dev_id` WHERE `ct`.`id`=@id";
                         cmd.Parameters.AddWithValue("@id", s_id);
                         reader = cmd.ExecuteReader();
                         if (reader.Read()) {
@@ -328,8 +356,32 @@ namespace SMFGC {
                             txtRMno.Text = reader["number"].ToString();
                             cbRMDept.SelectedValue = reader["dept_id"];
                             cbRMDev.SelectedValue = reader["dev_id"].ToString();
-                            ckRelay1.Checked = Convert.ToBoolean((int)reader["relay_1"]);
-                            ckRelay2.Checked = Convert.ToBoolean((int)reader["relay_2"]);
+                            ckRelay1.Checked = Convert.ToBoolean(reader["relay_1"]);
+                            ckRelay2.Checked = Convert.ToBoolean(reader["relay_2"]);
+
+                            txtIP.Text = reader["ip_addr"].ToString();
+                            txtMAC.Text = reader["mac_addr"].ToString();
+                            txtPort.Text = reader["port"].ToString();
+
+                            switch ((int)reader["status"]) {
+                                case 0:
+                                    lblStatus.Text = "Offline!";
+                                    lblStatus.ForeColor = Color.Red;
+                                    break;
+                                case 1:
+                                    lblStatus.Text = "Disconnected!";
+                                    lblStatus.ForeColor = Color.Orange;
+                                    break;
+                                case 2:
+                                    lblStatus.Text = "Connected.";
+                                    lblStatus.ForeColor = Color.Lime;
+                                    break;
+                                case 3:
+                                    lblStatus.Text = "In-Use.";
+                                    lblStatus.ForeColor = Color.LightBlue;
+                                    break;
+                            }
+
                         }
                         break;
 
@@ -352,6 +404,23 @@ namespace SMFGC {
                             txtDeptid.Text = s_id;
                             txtDeptname.Text = reader["name"].ToString();
                             txtDeptflr.Text = reader["floor"].ToString();
+                        }
+                        break;
+
+                    case "User's Login":
+                        cmd.CommandText = @"SELECT * FROM `user_tb` WHERE `id`=@id";
+                        cmd.Parameters.AddWithValue("@id", s_id);
+                        reader = cmd.ExecuteReader();
+                        if (reader.Read()) {
+                            txtUserID.Text = s_id;
+                            txtFullname.Text = reader["fullname"].ToString();
+                            txtUsername.Text = reader["username"].ToString();
+                            txtPassword.Text = reader["password"].ToString();
+                            cbUDept.SelectedValue = reader["dept_id"];
+                            ckClassroom.Checked = Convert.ToBoolean(reader["perm_class"]);
+                            ckFaculty.Checked = Convert.ToBoolean(reader["perm_faculty"]);
+                            ckReports.Checked = Convert.ToBoolean(reader["perm_reports"]);
+                            ckAccounting.Checked = Convert.ToBoolean(reader["perm_acct"]);
                         }
                         break;
                 }
@@ -498,6 +567,18 @@ namespace SMFGC {
                     txtDeptname.Clear();
                     txtDeptflr.Clear();
                     break;
+
+                case "User's Login":
+                    txtUserID.Clear();
+                    txtFullname.Clear();
+                    txtUsername.Clear();
+                    txtPassword.Clear();
+                    cbUDept.SelectedIndex = 0;
+                    ckAccounting.Checked = false;
+                    ckClassroom.Checked = false;
+                    ckFaculty.Checked = false;
+                    ckReports.Checked = false;
+                    break;
             }
         }
 
@@ -574,6 +655,12 @@ namespace SMFGC {
                         cmd = new MySqlCommand("DELETE FROM `department_tb` WHERE `id` = " + txtDeptid.Text, conn);
                         tmp_res += txtDeptid.Text;
                         tmp_res += ", Name: " + txtDeptname.Text;
+                        break;
+
+                    case "User's Login":
+                        cmd = new MySqlCommand("DELETE FROM `user_tb` WHERE `id` = " + txtUserID.Text, conn);
+                        tmp_res += txtUserID.Text;
+                        tmp_res += ", Name: " + txtFullname.Text;
                         break;
                 }
                 if (MessageBox.Show("Are you sure you want to delete?", " ", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
@@ -707,6 +794,27 @@ namespace SMFGC {
                         cmd.Parameters.Add("@name", MySqlDbType.VarChar).Value = txtDeptname.Text;
                         cmd.Parameters.Add("@floor", MySqlDbType.VarChar).Value = txtDeptflr.Text;
                         break;
+
+                    case "User's Login":
+                        if (btnSave.Tag.ToString() == "new") {
+                            cmd.CommandText = @"INSERT INTO `user_tb` (`username`,`password`, `fullname`, `dept_id`, `perm_class`, `perm_faculty`, `perm_reports`, `perm_acct`)
+                                                    VALUES(@user, @pass, @fname, @dept, @pclass, @pfac, @prpt, @paact);";
+                        }
+                        else if (btnSave.Tag.ToString() == "edit") {
+                            cmd.CommandText = @"UPDATE `user_tb` SET `username`=@user, `password`=@pass, `fullname`=@fname, `dept_id`=@dept, 
+                                                    `perm_class`=@pclass, `perm_faculty`=@pfac, `perm_reports`=@prpt, `perm_acct`=@paact WHERE `id`=@id;";
+                            cmd.Parameters.Add("@id", MySqlDbType.Int32).Value = txtUserID.Text;
+                        }
+                        cmd.Parameters.Add("@fname", MySqlDbType.VarChar).Value = txtFullname.Text;
+                        cmd.Parameters.Add("@user", MySqlDbType.VarChar).Value = txtUsername.Text;
+                        cmd.Parameters.Add("@pass", MySqlDbType.VarChar).Value = txtPassword.Text;
+                        cmd.Parameters.Add("@dept", MySqlDbType.Int32).Value = cbUDept.SelectedValue;
+
+                        cmd.Parameters.Add("@pclass", MySqlDbType.Int32).Value = (int)ckClassroom.CheckState;
+                        cmd.Parameters.Add("@pfac", MySqlDbType.Int32).Value = (int)ckFaculty.CheckState;
+                        cmd.Parameters.Add("@prpt", MySqlDbType.Int32).Value = (int)ckReports.CheckState;
+                        cmd.Parameters.Add("@paact", MySqlDbType.Int32).Value = (int)ckAccounting.CheckState;
+                        break;
                 }
 
                 if (form && MessageBox.Show("Are you sure you want to save?", this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
@@ -760,29 +868,6 @@ namespace SMFGC {
 
                     room_index = lvRooms.SelectedIndices[0];
                     lblRmName.Text = lvRooms.Items[room_index].SubItems[3].Text + " " + lvRooms.Items[room_index].Text;
-
-                    txtIP.Text = lvRooms.Items[room_index].SubItems[4].Text;
-                    txtMAC.Text = lvRooms.Items[room_index].SubItems[5].Text;
-                    txtPort.Text = lvRooms.Items[room_index].SubItems[6].Text;
-
-                    switch (lvRooms.Items[room_index].ImageIndex) {
-                        case 0:
-                            lblStatus.Text = "Offline!";
-                            lblStatus.ForeColor = Color.Red;
-                            break;
-                        case 1:
-                            lblStatus.Text = "Disconnected!";
-                            lblStatus.ForeColor = Color.Orange;
-                            break;
-                        case 2:
-                            lblStatus.Text = "Connected.";
-                            lblStatus.ForeColor = Color.Lime;
-                            break;
-                        case 3:
-                            lblStatus.Text = "In-Use.";
-                            lblStatus.ForeColor = Color.LightBlue;
-                            break;
-                    }
 
                     cmd = conn.CreateCommand();
                     cmd.CommandText = pVariables.qRoomSel;
@@ -997,15 +1082,8 @@ namespace SMFGC {
             InitRFID();
         }
 
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
-        {
+        private void Users_Click(object sender, EventArgs e) {
 
-        }
-
-        private void btnAccounting_Click(object sender, EventArgs e)
-        {
-            tabMain.SelectedIndex = 3;
-            RefreshLogDatagrid();
         }
     }
 }

@@ -9,7 +9,7 @@ namespace SMFGC {
 
         public static int server_port = 2316;
 
-        public static bool AdminMode = false, DeptMode = false, AcctMode = false;
+        public static bool bClassroom = false, bFaculty = false, bReports = false, bAcct = false;
 
         public static int DeptID = 0;
 
@@ -19,7 +19,7 @@ namespace SMFGC {
 
         public static String sConn = "datasource={0};port={1};database={2};username={3};password={4};";
 
-        public static readonly String qLogin = @"SELECT `fullname`,`role`,`dept_id` FROM `user_tb` WHERE `username` = @user AND `password` = @pass LIMIT 1;";
+        public static readonly String qLogin = @"SELECT * FROM `user_tb` WHERE `username` = @user AND `password` = @pass LIMIT 1;";
 
         public static readonly String qRoom = @"SELECT `ct`.`id`,`ct`.`name`,`ct`.`number`,`ct`.`dev_id`,`dt`.`status`,`dt`.`ip_addr`,`dt`.`mac_addr`,`dt`.`port`
                                         FROM  `classroom_tb` `ct` JOIN `device_tb` `dt` ON `dt`.`id` = `ct`.`dev_id`";
@@ -68,7 +68,7 @@ namespace SMFGC {
         public static readonly String qPZEMLog = @"INSERT INTO `pzem_tb` (`dev_id`, `volt`, `current`, `power`, `energy`, `frequency`, `pf`) VALUES (@p1, @p2, @p3, @p4, @p5, @p6, @p7);";
 
         public static readonly String qDevPingCheck = @"SELECT `id` FROM `device_tb` WHERE `id`=@p1 AND (`status` > 0);";
-        
+
         public static readonly String qLogReport = @"SELECT DATE_FORMAT(`ts`, '%b %d, %Y - %r') AS `Date/Time Logged`,
                                                       IF(`alert` = 64,'Information',
                                                         IF(`alert` = 48,'Warning',
