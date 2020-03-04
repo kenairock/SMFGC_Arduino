@@ -439,7 +439,7 @@ namespace SMFGC {
 
         private void DisplayText(object sender, EventArgs e) {
             if (btnSave.Tag != null) txtUTag.Text = RFIDTag;
-            if (txtSearch.Text == "" && txtSearch.Focused && cbSearch.Items[cbSearch.SelectedIndex].ToString() == "Tag") txtSearch.Text = RFIDTag;
+            if (txtSearch.Text == "" && txtSearch.Focused && cbSearch.Items[cbSearch.SelectedIndex].ToString() == "UIDTag") txtSearch.Text = RFIDTag;
         }
 
         private void cboPort_Click(object sender, EventArgs e) {
@@ -746,6 +746,7 @@ namespace SMFGC {
             btnSave.Enabled = false;
             btnCancel.Enabled = false;
             btnImgBrowse.Enabled = false;
+            btnSave.Tag = null;
             if (dataGrid.SelectedRows.Count > 0) dataGrid_CellClick(dataGrid, new DataGridViewCellEventArgs(dataGrid.CurrentCell.ColumnIndex, dataGrid.CurrentCell.RowIndex));
         }
 
