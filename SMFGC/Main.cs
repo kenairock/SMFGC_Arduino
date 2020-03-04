@@ -33,6 +33,7 @@ namespace SMFGC {
 
                 btnFaculty.Show();
                 btnReports.Show();
+                btnAccounting.Show();
             }
             if (pVariables.DeptMode) {
                 this.Text = "Department Mode - " + pVariables.Project_Name;
@@ -40,6 +41,7 @@ namespace SMFGC {
 
                 btnFaculty.Hide();
                 btnReports.Hide();
+                btnAccounting.Hide();
             }
             tabMain.SelectedIndex = 0;
             RefreshClassrooms();
@@ -91,6 +93,8 @@ namespace SMFGC {
             tabMain.SelectedIndex = 2;
             RefreshLogDatagrid();
         }
+
+
 
         private void btnISmall_Click(object sender, EventArgs e) {
             if (btnISmall.ImageIndex == 0) {
@@ -990,6 +994,17 @@ namespace SMFGC {
 
         private void cboPort_SelectedIndexChanged(object sender, EventArgs e) {
             InitRFID();
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAccounting_Click(object sender, EventArgs e)
+        {
+            tabMain.SelectedIndex = 3;
+            RefreshLogDatagrid();
         }
     }
 }
