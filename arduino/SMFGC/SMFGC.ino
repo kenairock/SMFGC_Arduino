@@ -46,6 +46,7 @@ void setup() {
   Serial.begin(115200);
   Serial.println(dev_id);
   
+  Ethernet.begin(mac);  
   // Check for Ethernet hardware present
   if (Ethernet.hardwareStatus() == EthernetNoHardware) {
     Serial.println(F("Ethernet shield was not found. :("));
@@ -53,7 +54,6 @@ void setup() {
       delay(1000); // do nothing, no point running without Ethernet hardware
     }
   }
-  Ethernet.begin(mac);
   
   Serial.println(F("Initializing NDEF Reader..."));
   nfc.begin();
@@ -97,7 +97,7 @@ void loop() {
   } 
   else {
     Ethernet.maintain();
-    Serial.println(Ethernet.linkStatus());
+    //Serial.println(Ethernet.linkStatus());
     if (client.connect(server, 2316)) {
       conn = true;
       digitalWrite(connledpin, HIGH);
